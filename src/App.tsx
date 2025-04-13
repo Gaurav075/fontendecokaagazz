@@ -12,6 +12,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
+import AllProducts from "./pages/AllProducts";
+import ProductDetails from "./pages/ProductDetails";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/products" element={<AllProducts />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/community" element={<Community />} />

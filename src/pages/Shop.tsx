@@ -1,13 +1,16 @@
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ComingSoon from "../components/ComingSoon";
+import Hero from "../components/shop/Hero";
+import Services from "../components/shop/Services";
+
 
 const Shop = () => {
   return (
     <div className="min-h-screen bg-kaagazz-background">
       <Header />
-      <ComingSoon pageName="Shop" />
+      <Hero/>
+      <Services/>
       <Footer />
     </div>
   );
