@@ -11,48 +11,48 @@ const Values = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f6e183e4-f8cf-4b2c-9afb-f4490c3e7f77.png" 
+                src="/lovable-uploads/eco-consious.png" 
                 alt="Eco-Conscious"
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <h3 className="text-lg font-medium">Eco-Conscious</h3>
+            <h3 className="text-lg font-bold">Eco-Conscious</h3>
           </div>
 
           {/* Reduce, Reuse, Recycle */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f6e183e4-f8cf-4b2c-9afb-f4490c3e7f77.png" 
+                src="/lovable-uploads/3R.png" 
                 alt="Reduce, Reuse, Recycle"
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <h3 className="text-lg font-medium">Reduce, Reuse, Recycle</h3>
+            <h3 className="text-lg font-bold">Reduce, Reuse, Recycle</h3>
           </div>
 
           {/* Global Cooperation */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f6e183e4-f8cf-4b2c-9afb-f4490c3e7f77.png" 
+                src="/lovable-uploads/global.png" 
                 alt="Global Cooperation"
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <h3 className="text-lg font-medium">Global Cooperation</h3>
+            <h3 className="text-lg font-bold">Global Cooperation</h3>
           </div>
 
           {/* Circular Economy */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/f6e183e4-f8cf-4b2c-9afb-f4490c3e7f77.png" 
+                src="/lovable-uploads/economy.png" 
                 alt="Circular Economy"
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <h3 className="text-lg font-medium">Circular Economy</h3>
+            <h3 className="text-lg font-bold">Circular Economy</h3>
           </div>
         </div>
       </div>

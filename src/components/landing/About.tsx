@@ -20,7 +20,7 @@ const About = () => {
             <p className="max-w-3xl mx-auto leading-relaxed">
               Kaagazz is a social enterprise founded by DTU alumni. We create premium paper products while 
               empowering marginalized communities through sustainable employment. Our innovative production 
-              technology transforms urban waste into recycled paper, fostering environmental stewardship and 
+              technology transforms urban waste into exquisite paper, fostering environmental stewardship and 
               social change.
             </p>
           </div>

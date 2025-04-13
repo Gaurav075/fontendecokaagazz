@@ -12,7 +12,7 @@ const Community = () => {
             <h3 className="text-lg font-semibold mb-1">What's New?</h3>
             <p className="text-xs text-gray-600 mb-4">4,200+ members</p>
             <img 
-              src="/lovable-uploads/800eedaa-7509-4979-82a9-f8dd92d173c0.png" 
+              src="/lovable-uploads/dtu.png" 
               alt="Community image" 
               className="w-full h-auto rounded-md"
             />

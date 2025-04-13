@@ -4,14 +4,14 @@ const Founders = () => {
       {
         name: "Srishti Singh",
         title: "Co-Founder & CEO",
-        bio: "A STEM graduate and passionate entrepreneur, our visionary leader is committed to achieving sustainability through innovation.",
-        image: "/lovable-uploads/729bb4b6-1a90-4efc-8190-5be004a7cee9.png"
+        bio: "A DTU alumnus and passionate entrepreneur, our CEO leads with a vision to revolutionize sustainability through innovation",
+        image: "/lovable-uploads/srishti.png"
       },
       {
         name: "Hemant Singh",
         title: "Co-Founder",
-        bio: "A STEM graduate and visionary leader, he pioneers innovation with a passion for technology and impact.",
-        image: "https://randomuser.me/api/portraits/men/32.jpg"
+        bio: "A DTU alumunus and visionary leader , He pioneers sustainable innovation with a passion for technology and impact ",
+        image: "/lovable-uploads/Hemant.png"
       }
     ];
   

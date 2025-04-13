@@ -4,27 +4,27 @@ const WhatWeDo = () => {
   const services = [
     {
       title: "Ability for 'Dis'Ability",
-      description: "Providing the opportunities to the 'Specially-abled people' to make more things allowing them to live with dignity.",
+      description: "Providing the opportunities to the 'Specially-abled people'and financially backwards people helps them to live with dignity.",
       icon: <Accessibility className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/bedfc182-a8b4-4c30-9a20-8d7cd4c3fa7e.png"
+      image: "/lovable-uploads/carousel1.png"
     },
     {
       title: "Sanitation for All",
-      description: "Keeping the environment we live in and our urban landscapes with a sustainable solution. We care for humans and animals that have suffered from the filth that resides around us forever.",
+      description: "We have overturned the waste problem of urban lanscapes into a scalable solution. We care for humans and animals that have suffered from the filth that decays around ourselves",
       icon: <Trash2 className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/bedfc182-a8b4-4c30-9a20-8d7cd4c3fa7e.png"
+      image: "/lovable-uploads/sanitation.png"
     },
     {
       title: "NO to Deforestation",
-      description: "We create tree-free carbon-neutral and chemical-free paper using our patented technology. This helps us to fight climate change, reduce carbon change and greenhouse gas emissions.",
+      description: "We create tree-free carbon-neutral and chemical-free paper using our patented technology. This is the key to our fight against global issues like climate change and greenhouse gas emissions.",
       icon: <TreePine className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/bedfc182-a8b4-4c30-9a20-8d7cd4c3fa7e.png"
+      image: "/lovable-uploads/carousel3.png"
     },
     {
       title: "Inclusive Employment",
       description: "We are an equal opportunity platform that welcomes all genders for dignified employment.",
       icon: <Users className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/bedfc182-a8b4-4c30-9a20-8d7cd4c3fa7e.png"
+      image: "/lovable-uploads/carousel2.png"
     }
   ];
 

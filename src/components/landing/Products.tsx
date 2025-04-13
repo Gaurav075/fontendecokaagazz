@@ -6,17 +6,17 @@ const Products = () => {
     {
       title: "Premium Paper Notebooks",
       description: "Perfect for office supplies and educational activities",
-      image: "/lovable-uploads/145082a8-b00f-4d3d-ac81-08983ab4981c.png",
+      image: "/lovable-uploads/stationary.png",
     },
     {
       title: "Print Your Next Book with Kaagazz",
       description: "Paper with a cause. Excellent for Printers Don't Cause Harm.",
-      image: "/lovable-uploads/282d8935-53d1-438d-a40c-e467006eee2a.png",
+      image: "/lovable-uploads/notebook.jpg",
     },
     {
       title: "Are You An Art Connoisseur?",
       description: "Experience our craft. Blank paper for your masterpieces.",
-      image: "/lovable-uploads/f48f3689-f8b8-4f2c-b728-ff32cf2f6977.png",
+      image: "/lovable-uploads/art.png",
     }
   ];
 
