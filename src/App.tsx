@@ -10,6 +10,8 @@ import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Community from "./pages/Community";
+import Sustainability from "./pages/Sustainability";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/shop" element={<Shop />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/sustainability" element={<Sustainability />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,0 +1,92 @@
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Hero from "../components/community/Hero";
+import React, { useState } from "react";
+
+const tabs = ["About community", "Events", "Insights"];
+
+export default function CommunityTabKaagazz() {
+  const [activeTab, setActiveTab] = useState("About community");
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800">
+      <Header/>
+      <Hero/>
+      {/* Tab Navigation */}
+      <div className="flex flex-wrap justify-center space-x-4 sm:space-x-6 mt-6 border-b border-gray-200">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`pb-2 text-sm font-medium border-b-2 transition duration-300 ${
+              activeTab === tab
+                ? "border-black text-black"
+                : "border-transparent text-gray-500 hover:text-black"
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+      {/* Tab Content */}
+      <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+        {activeTab === "About community" && (
+          <div>
+            <h2 className="text-lg sm:text-xl font-semibold mb-2">Welcome to our Community 👋🌿✨</h2>
+            <p className="text-sm sm:text-base mb-4 text-gray-700">
+              Welcome to the World of Kaagazz! This is more than just a space—it’s a movement. A gathering of creators, dreamers, and conscious individuals who believe in sustainability, craftsmanship, and meaningful connections.
+            </p>
+            <details className="mb-4">
+              <summary className="cursor-pointer text-sm font-medium text-gray-800">What is this community for?</summary>
+              <p className="mt-2 text-sm text-gray-700">
+                By being a part of this community, you gain access to a world of creativity and collaboration. You’ll find inspiration from like-minded individuals who are passionate about sustainable practices and ethical business. Whether you’re looking for advice, resources, or just a space to express your ideas, this is the perfect place to grow and thrive.
+              </p>
+            </details>
+            <p className="text-sm sm:text-base font-medium">
+              Join us as we redefine the future of sustainable stationery and craftsmanship. Let’s learn, create, and grow together—one page at a time. 🌍✨
+            </p>
+          </div>
+        )}
+
+        {activeTab === "Events" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((num) => (
+              <div
+                key={num}
+                className="h-40 bg-gray-200 rounded-xl animate-pulse"
+              ></div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "Insights" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((num) => (
+              <div
+                key={num}
+                className="h-40 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-sm"
+              >
+                Insight {num} coming soon...
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* Social Media Placeholder */}
+      <div className="p-4 sm:p-6 bg-white border-t mt-8">
+        <h3 className="text-base sm:text-lg font-semibold mb-4">Latest from Social Media</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {["Instagram", "LinkedIn", "Twitter"].map((platform) => (
+            <div
+              key={platform}
+              className="h-28 sm:h-32 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-sm"
+            >
+              Embed {platform} Feed
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer/>
+    </div>
+  );
+}
