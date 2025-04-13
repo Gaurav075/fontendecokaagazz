@@ -4,7 +4,7 @@ import { Home, Users, Leaf, ShoppingBag, ShoppingCart } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="py-4 px-6 md:px-12 flex justify-between items-center bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')] border-b border-gray-200">
+    <header className="py-4 px-6 md:px-12 flex justify-between items-center border-b border-gray-200">
       <div className="flex items-center">
         <Link to="/" className="flex items-center">
           <span className="text-2xl font-bold text-[#3d3121]">K</span>

@@ -11,8 +11,9 @@ export default function CommunityTabKaagazz() {
   const [activeTab, setActiveTab] = useState("About community");
 
   return (
+    <>
+          <Header />
     <div className="min-h-screen bg-gray-50 text-gray-800">
-      <Header />
       <Hero />
 
       {/* Tab Navigation */}
@@ -102,8 +103,8 @@ export default function CommunityTabKaagazz() {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
+    </>
   );
 }
