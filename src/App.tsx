@@ -14,6 +14,8 @@ import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
+import PartnerWithUs from "./pages/PartnerWithUs";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
@@ -30,6 +33,7 @@ const App = () => (
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/partner" element={<PartnerWithUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/community" element={<Community />} />
           <Route path="/sustainability" element={<Sustainability />} />
