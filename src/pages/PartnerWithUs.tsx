@@ -1,5 +1,4 @@
 // pages/partner.tsx
-import Head from 'next/head';
 import PartnerForm from '../components/partner/PartnerForm';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,9 +7,9 @@ const PartnerPage = () => {
   return (
     <>
     <Header />
-      <Head>
+      <div>
         <title>Partner With Us | Kaagazz</title>
-      </Head>
+      </div>
 
       <main className="bg-[#faf9f7] py-10 px-6">
         <section className="max-w-4xl mx-auto text-center">
