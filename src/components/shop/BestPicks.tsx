@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const BestPicksSection = () => {
   return (
-    <section className="px-6 py-6">
+    <section className="px-6 py-6 font-serif">
       <h2 className="text-2xl font-medium">Our</h2>
       <h3 className="text-3xl font-bold mb-6">Best Picks For You</h3>
 

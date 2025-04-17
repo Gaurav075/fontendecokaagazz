@@ -1,10 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { products } from "../data/product";
 import Header from "../components/Header";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === id);
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [id]);
 
   if (!product) {
     return <div className="p-8 text-center text-2xl font-light">Product not found</div>;
@@ -31,7 +37,7 @@ const ProductDetails = () => {
           {/* Image Section */}
           <div className="space-y-4">
             <img
-              src={images[0]}
+              src={images[selectedImageIndex]}
               alt={title}
               className="rounded-xl w-full h-[500px] object-cover shadow-lg transition duration-300 ease-in-out hover:scale-105"
             />
@@ -41,7 +47,10 @@ const ProductDetails = () => {
                   key={index}
                   src={img}
                   alt={`Thumbnail ${index}`}
-                  className="w-20 h-20 rounded-md object-cover border cursor-pointer hover:scale-105 transition"
+                  className={`w-20 h-20 rounded-md object-cover border cursor-pointer transition ${
+                    index === selectedImageIndex ? "ring-2 ring-black" : ""
+                  }`}
+                  onClick={() => setSelectedImageIndex(index)}
                 />
               ))}
             </div>
@@ -95,20 +104,19 @@ const ProductDetails = () => {
               .filter((p) => p.category === category && p.id !== id)
               .slice(0, 3)
               .map((related) => (
-                <div
-                  key={related.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group"
-                >
-                  <img
-                    src={related.image}
-                    alt={related.title}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-medium text-neutral-700">{related.title}</h3>
-                    <p className="text-sm text-gray-500 mt-1">₹{related.discountedPrice}</p>
+                <Link to={`/products/${related.id}`} key={related.id}>
+                  <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group">
+                    <img
+                      src={related.image}
+                      alt={related.title}
+                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-lg font-medium text-neutral-700">{related.title}</h3>
+                      <p className="text-sm text-gray-500 mt-1">₹{related.discountedPrice}</p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         </section>

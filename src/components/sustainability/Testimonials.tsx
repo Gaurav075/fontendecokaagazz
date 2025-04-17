@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
-
-const quotes = [
-  "“Kaagazz helped us align our values with our operations.”",
-  "“The quality is impeccable—and it feels good to support a mission.”",
-  "“Our team loves the eco-conscious designs and story behind each product.”",
-  "“Switching to Kaagazz was seamless, and our clients love it too!”",
-];
+import { testimonials } from "../../data/testimonials"; // Adjust the import path as necessary
+import { FaUserAlt } from "react-icons/fa"; // User icon for author
 
 const Testimonials = () => {
   return (
@@ -21,12 +16,25 @@ const Testimonials = () => {
           duration: 30,
         }}
       >
-        {[...quotes, ...quotes].map((quote, i) => (
+        {[...testimonials, ...testimonials].map((testimonial, i) => (
           <div
             key={i}
-            className="min-w-[300px] max-w-xs bg-white p-6 rounded-xl shadow-md italic text-sm text-gray-700"
+            className="min-w-[300px] max-w-xs bg-gradient-to-r from-[#e4e3d2] to-[#F1F6E6] p-6 rounded-xl shadow-lg italic text-sm text-gray-700 space-y-4"
           >
-            {quote}
+            <div className="flex items-center gap-3">
+              {/* User Icon */}
+              <FaUserAlt className="text-2xl text-[#5C5044]" />
+              {/* Author's Name */}
+              <span className="font-semibold text-[#5C5044]">{testimonial.author}</span>
+            </div>
+
+            {/* Testimonial Quote */}
+            <p className="leading-relaxed text-base text-gray-800">{testimonial.quote}</p>
+
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <span>“{testimonial.author}”</span>
+              <span>- A voice of change</span>
+            </div>
           </div>
         ))}
       </motion.div>

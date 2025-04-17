@@ -4,9 +4,9 @@ const Header = () => {
   return (
     <div className="relative bg-white shadow-md rounded-b-2xl overflow-hidden">
       <img
-        src="/exhibition.png"
+        src="/dump.jpg"
         alt="Hero"
-        className="w-full h-48 sm:h-64 object-cover"
+        className="w-full h-72 object-cover"
       />
 
       {/* Dark overlay for better contrast */}

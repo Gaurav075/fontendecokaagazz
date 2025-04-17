@@ -42,7 +42,7 @@ const HeroSection = () => {
 
       {/* Certificate Info */}
       <div className="text-center text-sm text-gray-700 underline underline-offset-4 mb-10">
-        Every Product comes with a Certificate of Sustainability <br />
+        Every product comes with a Certificate of Sustainability <br />
         showcasing your efforts for a better future!
       </div>
     </div>
