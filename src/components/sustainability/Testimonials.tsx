@@ -19,7 +19,7 @@ const Testimonials = () => {
         {[...testimonials, ...testimonials].map((testimonial, i) => (
           <div
             key={i}
-            className="min-w-[300px] max-w-xs bg-gradient-to-r from-[#e4e3d2] to-[#F1F6E6] p-6 rounded-xl shadow-lg italic text-sm text-gray-700 space-y-4"
+            className="min-w-[300px] max-w-xs bg-gradient-to-r from-[#e4e3d2] to-[#f6f2e6] p-6 rounded-xl shadow-lg italic text-sm text-gray-700 space-y-4"
           >
             <div className="flex items-center gap-3">
               {/* User Icon */}

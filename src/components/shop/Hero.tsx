@@ -18,7 +18,7 @@ const HeroSection = () => {
 
         <div className="relative flex items-center justify-center">
           <img
-            src="/A4.jpg"
+            src="/a4/4.jpg"
             alt="Center Image"
             className="w-full h-[300px] object-cover shadow-lg"
           />
@@ -34,7 +34,7 @@ const HeroSection = () => {
         </div>
 
         <img
-          src="/artisanal.png"
+          src="/artisinal/3.png"
           alt="Right Image"
           className="w-full h-[300px] object-cover shadow-lg"
         />

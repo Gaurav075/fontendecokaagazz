@@ -1,66 +1,34 @@
-
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "../ui/carousel";
-import { useEffect, useState } from "react";
-
 const Hero = () => {
-  const [api, setApi] = useState<any>();
-
-  useEffect(() => {
-    if (!api) return;
-
-    // Set up auto-play for the carousel
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 5000); // Change slide every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [api]);
-
   return (
-    <div className="relative">
-      {/* Header text overlay */}
-     
-      
-      <section className="relative h-[80vh] flex items-center justify-center px-4 overflow-hidden mt-24">
-        <Carousel className="w-full h-full absolute top-0 left-0" setApi={setApi}>
-          <CarouselContent>
-            <CarouselItem>
-              <div className="relative h-[80vh] w-full bg-cover bg-center" style={{ backgroundImage: "url('/lovable-uploads/carousel1.png')" }}>
-                <div className="absolute inset-0 bg-black/40"></div>
-              </div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="relative h-[80vh] w-full bg-cover bg-center" style={{ backgroundImage: "url('/lovable-uploads/carousel2.png')" }}>
-                <div className="absolute inset-0 bg-black/40"></div>
-              </div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="relative h-[80vh] w-full bg-cover bg-center" style={{ backgroundImage: "url('/lovable-uploads/carousel3.png')" }}>
-                <div className="absolute inset-0 bg-black/40"></div>
-              </div>
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious className="left-4 z-20" />
-          <CarouselNext className="right-4 z-20" />
-        </Carousel>
-        <div className="relative z-10 max-w-3xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
-  Your Journey To
-  <br />
-  Sustainable Possibilities
-  <br />
-  Begins Here!
-</h1>
+    <section className="relative h-[100vh] w-full overflow-hidden mt-10 flex items-center justify-center px-6">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center z-0"
+        style={{ backgroundImage: "url('/dump.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
+      </div>
 
+      {/* Overlay Content */}
+      <div className="relative z-10 text-white max-w-5xl mx-auto text-center">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
+          Your Journey To <br />
+          <span className="text-primary-400">Sustainable Possibilities</span> <br />
+          Begins Here.
+        </h1>
+        <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8 text-white/90">
+          Discover a future built on mindful innovation, design excellence, and purposeful living.
+        </p>
+        <div className="flex justify-center gap-4">
+          <button className="px-6 py-3 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-all duration-300">
+            Explore Products
+          </button>
+          <button className="px-6 py-3 rounded-full border border-white hover:bg-white hover:text-black font-semibold transition-all duration-300">
+            Learn More
+          </button>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

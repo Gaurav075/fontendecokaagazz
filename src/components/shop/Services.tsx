@@ -14,7 +14,7 @@ const Services = () => {
         {/* Service 1 */}
         <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img
-            src="/artisanal.png"
+            src="/artisinal/3.png"
             alt="Print With Us"
             className="w-full h-80 object-cover"
           />

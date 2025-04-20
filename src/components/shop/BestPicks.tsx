@@ -14,7 +14,7 @@ const BestPicksSection = () => {
               <img
                 src={product.images[0]}
                 alt={product.title}
-                className="rounded-md mb-4 h-60 w-full object-cover"
+                className="rounded-md aspect-[4/5] mb-4 h-60 w-full object-cover"
               />
               <h4 className="font-semibold">{product.title}</h4>
               <p className="text-xs text-gray-600">{product.description}</p>

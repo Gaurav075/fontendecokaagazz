@@ -4,53 +4,70 @@ const WhatWeDo = () => {
   const services = [
     {
       title: "Ability for 'Dis'Ability",
-      description: "Providing the opportunities to the 'Specially-abled people'and financially backwards people helps them to live with dignity.",
-      icon: <Accessibility className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/carousel1.png"
+      description:
+        "Providing the opportunities to the 'Specially-abled people' and financially backwards people helps them to live with dignity.",
+      icon: <Accessibility className="w-8 h-8 text-[#5C4033]" />,
+      image: "/carousel2.png",
     },
     {
       title: "Sanitation for All",
-      description: "We have overturned the waste problem of urban lanscapes into a scalable solution. We care for humans and animals that have suffered from the filth that decays around ourselves",
-      icon: <Trash2 className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/sanitation.png"
+      description:
+        "We have overturned the waste problem of urban landscapes into a scalable solution. We care for humans and animals that have suffered from the filth that decays around ourselves.",
+      icon: <Trash2 className="w-8 h-8 text-[#5C4033]" />,
+      image: "/dump.jpg",
     },
     {
       title: "NO to Deforestation",
-      description: "We create tree-free carbon-neutral and chemical-free paper using our patented technology. This is the key to our fight against global issues like climate change and greenhouse gas emissions.",
-      icon: <TreePine className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/carousel3.png"
+      description:
+        "We create tree-free carbon-neutral and chemical-free paper using our patented technology. This is the key to our fight against global issues like climate change and greenhouse gas emissions.",
+      icon: <TreePine className="w-8 h-8 text-[#5C4033]" />,
+      image: "/carousel3.png",
     },
     {
       title: "Inclusive Employment",
-      description: "We are an equal opportunity platform that welcomes all genders for dignified employment.",
-      icon: <Users className="w-8 h-8 text-black" />,
-      image: "/lovable-uploads/carousel2.png"
-    }
+      description:
+        "We are an equal opportunity platform that welcomes all genders for dignified employment.",
+      icon: <Users className="w-8 h-8 text-[#5C4033]" />,
+      image: "/ladies2.jpg",
+    },
   ];
 
   return (
-    <section className="py-16 px-4 bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')]">
+    <section className="py-24 px-6 bg-gradient-to-b from-[#F9F4EF] to-[#F5EEE7]">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-3xl font-bold uppercase mb-12">WHAT DO WE DO?</h2>
-        
-        <div className="flex flex-col space-y-10">
+        <h2 className="text-center text-4xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
+          What Do We Do?
+        </h2>
+
+        <div className="flex flex-col space-y-20">
           {services.map((service, index) => (
-            <div 
-              key={index} 
-              className={`flex flex-col md:flex-row ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-6`}
+            <div
+              key={index}
+              className={`flex flex-col md:flex-row ${
+                index % 2 !== 0 ? "md:flex-row-reverse" : ""
+              } items-center gap-10`}
             >
-              <div className="w-full md:w-1/2 p-6">
+              {/* Text Section (without background) */}
+              <div className="w-full md:w-1/2 p-2">
                 <div className="flex items-center gap-4 mb-4">
-                  {service.icon}
-                  <h3 className="text-xl font-bold">{service.title}</h3>
+                  <div className="p-3 rounded-full bg-[#EFE1D1] shadow-inner">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-2xl font-semibold text-[#5C4033] font-serif">
+                    {service.title}
+                  </h3>
                 </div>
-                <p className="text-sm">{service.description}</p>
+                <p className="text-[#3A3A3A] text-base leading-relaxed font-light">
+                  {service.description}
+                </p>
               </div>
-              <div className="w-full md:w-1/2">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-64 rounded-lg object-cover"
+
+              {/* Image Section (taller image) */}
+              <div className="w-full md:w-1/2 overflow-hidden rounded-2xl shadow-lg">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
                 />
               </div>
             </div>
