@@ -17,7 +17,7 @@ const Hero = () => {
     // Set up auto-play for the carousel
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 5000); // Change slide every 5 seconds
+    }, 2000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
   }, [api]);
@@ -32,7 +32,7 @@ const Hero = () => {
           <CarouselContent>
             <CarouselItem>
               <div className="relative h-[80vh] w-full bg-cover bg-center" style={{ backgroundImage: "url('/lovable-uploads/carousel1.png')" }}>
-                <div className="absolute inset-0 bg-black/40"></div>
+                <div className="absolute inset-0 bg-/40"></div>
               </div>
             </CarouselItem>
             <CarouselItem>
@@ -50,13 +50,14 @@ const Hero = () => {
           <CarouselNext className="right-4 z-20" />
         </Carousel>
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
+        <h1 className="font-Outfit font-bold text-[64px] leading-[100%] text-white text-center capitalize mb-6">
   Your Journey To
   <br />
   Sustainable Possibilities
   <br />
   Begins Here!
 </h1>
+
 
         </div>
       </section>

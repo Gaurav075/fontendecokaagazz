@@ -20,10 +20,15 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <main>
-      <div className=" top-0 left-0 w-full z-10 text-center py-10 bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')]">
-        <h1 className="text-5xl md:text-7xl font-bold text-[#3d3121] uppercase">KAAGAZZ</h1>
-        <p className="text-lg md:text-xl text-[#5d4b32] mt-2">Building a safe future for all, one sheet at a time.</p>
-      </div>
+      <div className="top-0 left-0 w-full z-10 text-center py-10 bg-white">
+  <h1 className="font-Inter font-extrabold text-[72px] leading-[72px] text-[#4A3F35] text-center uppercase">
+    KAAGAZZ
+  </h1>
+  <p className="font-Libre font-normal text-[20px] leading-[28px] text-[#6B5D4D] text-center mt-2">
+    Building a safe future for all, one sheet at a time.
+  </p>
+</div>
+
         <Hero />
         <About />
         <Stats />
