@@ -1,4 +1,3 @@
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Hero from "../components/landing/Hero";
@@ -20,7 +19,13 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <main>
-        <div className="relative w-full z-10 text-center pt-16 px-4 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')" }}>
+        <div
+          className="relative w-full z-10 text-center pt-16 px-4 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage:
+              "url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')",
+          }}
+        >
           <div className="absolute inset-0 bg-[#fdf7f0]/70 backdrop-blur-sm"></div>
           <div className="relative z-10 max-w-4xl mx-auto">
             <h1 className="text-6xl md:text-8xl font-serif font-bold text-[#3d3121] uppercase tracking-wide drop-shadow-md">
@@ -31,6 +36,7 @@ const Index = () => {
             </p>
           </div>
         </div>
+
         <Hero />
         <About />
         <Stats />

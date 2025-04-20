@@ -1,5 +1,5 @@
-
 const About = () => {
+
     return (
 <section className="py-20 px-6 bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')] bg-cover bg-center bg-no-repeat">
   <div className="max-w-5xl mx-auto text-center">
