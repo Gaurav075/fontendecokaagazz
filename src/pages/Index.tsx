@@ -9,7 +9,7 @@ import WhatWeDo from "../components/landing/WhatWeDo";
 import HowItWorks from "../components/landing/HowItWorks";
 import Goals from "../components/landing/Goals";
 import Products from "../components/landing/Products";
-import Testimonials from "../components/landing/Testimonials";
+import Testimonials from "../components/sustainability/Testimonials";
 import Founders from "../components/landing/Founders";
 import Community from "../components/landing/Community";
 import RevolutionCTA from "../components/landing/RevolutionCTA";
