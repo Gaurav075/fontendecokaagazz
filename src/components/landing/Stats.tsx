@@ -1,50 +1,139 @@
-import { Eye, Target } from "lucide-react";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import eye from "../../../public/eye.jpg";
+import mission from "../../../public/target.jpg";
 
 const Stats = () => {
+  const navigate = useNavigate();
+
+  const handleLearnOurStoryClick = () => {
+    navigate("/about");
+  };
+
   return (
-    <section className="py-24 px-6 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+    <section className="py-12 px-4 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
           {/* Vision Section */}
-          <div className="text-center px-4">
-            <div className="flex justify-center mb-4">
-              <Eye size={60} strokeWidth={1.8} className="text-[#3d3121] drop-shadow-md" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#3d3121] uppercase mb-4 tracking-wide">
-              Our Vision
+          <div className="text-center">
+            <h2 className="text-5xl font-Outfit font-bold mb-6 capitalize">
+              OUR VISION
             </h2>
-            <h3 className="text-lg md:text-xl font-semibold text-[#5d4b32] italic mb-3">
+            <div className="flex justify-center mb-6">
+              <img
+                src={eye}
+                alt="Vision Icon"
+                className="w-[186px] h-[174px] object-contain"
+              />
+            </div>
+            <h3
+              className="font-Outfit font-bold text-2xl mb-4"
+              style={{
+                fontWeight: 700,
+                fontSize: "32px",
+                lineHeight: "100%",
+                letterSpacing: "0",
+                textTransform: "capitalize",
+              }}
+            >
               From Peel To Paper: A Sustainable Revolution
             </h3>
-            <p className="text-base md:text-lg text-[#5d4b32] leading-relaxed max-w-md mx-auto">
-              Kaagazz is transforming the paper industry by creating high-quality, tree-free paper from fruit peels.
-              We envision a world where waste becomes a resource, and sustainable living is the norm.
+            <p
+              className="font-Outfit text-sm mb-6 px-4"
+              style={{
+                fontWeight: 400,
+                fontSize: "16px",
+                lineHeight: "100%",
+                letterSpacing: "0",
+                textTransform: "capitalize",
+              }}
+            >
+              Kaagazz envisions a world where waste becomes a valuable resource.
+              Our Tree-free Paper from Everyday Fruit Peel brings Beauty,
+              Offering Sustainability, Zero Waste Products Designed for Action
+              and Sustainable Solutions.
             </p>
+            <Button
+              variant="default"
+              className="rounded-[33554400px] bg-black text-white hover:bg-gray-800 w-[255px] h-[48px] mt-4 px-10"
+              style={{
+                paddingTop: "12px",
+                paddingRight: "40px",
+                paddingBottom: "12px",
+                paddingLeft: "40px",
+                borderRadius: "33554400px",
+              }}
+              onClick={handleLearnOurStoryClick}
+            >
+              Learn Our Story
+            </Button>
+          </div>
+
+          {/* Vertical Line */}
+          <div className="flex justify-center">
+            <div
+              className="bg-black"
+              style={{
+                width: "1px",
+                height: "488px",
+              }}
+            ></div>
           </div>
 
           {/* Mission Section */}
-          <div className="text-center px-4">
-            <div className="flex justify-center mb-4">
-              <Target size={60} strokeWidth={1.8} className="text-[#3d3121] drop-shadow-md" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#3d3121] uppercase mb-4 tracking-wide">
-              Our Mission
+          <div className="text-center">
+            <h2 className="text-5xl font-Outfit font-bold mb-6 capitalize">
+              OUR MISSION
             </h2>
-            <h3 className="text-lg md:text-xl font-semibold text-[#5d4b32] italic mb-3">
+            <div className="flex justify-center mb-6">
+              <img
+                src={mission}
+                alt="Mission Icon"
+                className="w-[186px] h-[174px] object-contain"
+              />
+            </div>
+            <h3
+              className="font-Outfit font-bold text-2xl mb-4"
+              style={{
+                fontWeight: 700,
+                fontSize: "32px",
+                lineHeight: "100%",
+                letterSpacing: "0",
+                textTransform: "capitalize",
+              }}
+            >
               From Peel To Paper: A Sustainable Revolution
             </h3>
-            <p className="text-base md:text-lg text-[#5d4b32] leading-relaxed max-w-md mx-auto">
-              Kaagazz is committed to empowering communities by converting waste into wonder. We craft sustainable,
-              zero-waste paper goods while driving social change and innovation from the ground up.
+            <p
+              className="font-Outfit text-sm mb-6 px-4"
+              style={{
+                fontWeight: 400,
+                fontSize: "16px",
+                lineHeight: "100%",
+                letterSpacing: "0",
+                textTransform: "capitalize",
+              }}
+            >
+              Kaagazz transforms everyday fruit waste into premium paper
+              products. Our Tree-free Paper from Everyday Fruit Peels Creates
+              Beauty, Offering Sustainability, Zero Waste Products Designed for
+              Action and Sustainable Solutions.
             </p>
+            <Button
+              variant="default"
+              className="rounded-[33554400px] bg-black text-white hover:bg-gray-800 w-[255px] h-[48px] mt-4 px-10"
+              style={{
+                paddingTop: "12px",
+                paddingRight: "40px",
+                paddingBottom: "12px",
+                paddingLeft: "40px",
+                borderRadius: "33554400px",
+              }}
+              onClick={handleLearnOurStoryClick}
+            >
+              Learn Our Story
+            </Button>
           </div>
-        </div>
-
-        {/* Unified Button */}
-        <div className="mt-16 text-center">
-          <button className="rounded-full bg-[#3d3121] hover:bg-[#2b2319] text-white text-sm md:text-base font-medium px-6 py-3 shadow-md transition">
-            Learn Our Story
-          </button>
         </div>
       </div>
     </section>
