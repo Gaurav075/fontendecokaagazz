@@ -3,11 +3,13 @@ import { products } from "../data/product";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { IoFilter } from "react-icons/io5"; // For filter icon on mobile
 
 const categories = ["All", "Stationery", "Gift Sets", "Paper"];
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const filteredProducts =
     selectedCategory === "All"
@@ -27,10 +29,21 @@ const AllProducts = () => {
             </p>
           </div>
 
+          {/* Mobile Filter Toggle Button */}
+          <div className="lg:hidden mb-6 flex justify-end">
+            <button
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-300 rounded-full shadow-sm bg-white"
+            >
+              <IoFilter className="text-xl" />
+              <span>Filter</span>
+            </button>
+          </div>
+
           {/* Layout Container */}
           <div className="flex gap-10 flex-col lg:flex-row">
-            {/* Integrated Filter Panel */}
-            <div className="w-[250px] bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-gray-200 sticky top-28 self-start">
+            {/* Desktop Sidebar Filter */}
+            <div className="hidden lg:block w-[250px] bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-gray-200 sticky top-28 self-start">
               <h3 className="text-xl font-semibold mb-4 tracking-tight">Categories</h3>
               <ul className="space-y-3">
                 {categories.map((cat) => (
@@ -38,7 +51,7 @@ const AllProducts = () => {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
-          ${selectedCategory === cat
+                      ${selectedCategory === cat
                         ? "bg-black text-white border-black"
                         : "bg-white text-gray-600 border-gray-300 hover:border-black"
                       }`}
@@ -49,6 +62,31 @@ const AllProducts = () => {
               </ul>
             </div>
 
+            {/* Mobile Filter Dropdown */}
+            {isMobileFilterOpen && (
+              <div className="lg:hidden bg-white p-4 rounded-xl shadow-md mb-6">
+                <h3 className="text-lg font-semibold mb-3">Categories</h3>
+                <ul className="space-y-3">
+                  {categories.map((cat) => (
+                    <li
+                      key={cat}
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setIsMobileFilterOpen(false);
+                      }}
+                      className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
+                        ${selectedCategory === cat
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-gray-600 border-gray-300 hover:border-black"
+                        }`}
+                    >
+                      {cat}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
               {filteredProducts.map((product) => (
@@ -57,7 +95,7 @@ const AllProducts = () => {
                   key={product.id}
                   className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all group"
                 >
-                  {/* Image */}
+                  {/* Product Image */}
                   <div className="w-full aspect-[4/5] overflow-hidden">
                     <img
                       src={product.images[0]}
@@ -66,14 +104,16 @@ const AllProducts = () => {
                     />
                   </div>
 
-                  {/* Content */}
+                  {/* Product Content */}
                   <div className="p-4 space-y-2">
                     <h3 className="text-base font-semibold truncate">{product.title}</h3>
                     <p className="text-xs text-gray-500 line-clamp-2">{product.description}</p>
 
                     <div className="text-yellow-500 text-xs">
                       {"★".repeat(Math.floor(product.rating))}
-                      <span className="text-gray-400 ml-1">({Math.floor(Math.random() * 2000) + 1000})</span>
+                      <span className="text-gray-400 ml-1">
+                        ({Math.floor(Math.random() * 2000) + 1000})
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm font-medium">
@@ -89,7 +129,6 @@ const AllProducts = () => {
                     </button>
                   </div>
                 </Link>
-
               ))}
             </div>
           </div>
