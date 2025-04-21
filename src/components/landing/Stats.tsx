@@ -7,7 +7,7 @@ const Stats = () => {
   const navigate = useNavigate();
 
   const handleLearnOurStoryClick = () => {
-    navigate("/about");
+    navigate("/community");
   };
 
   return (
