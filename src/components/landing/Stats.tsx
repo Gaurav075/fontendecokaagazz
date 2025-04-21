@@ -70,7 +70,7 @@ const Stats = () => {
           </div>
 
           {/* Vertical Line */}
-          <div className="flex justify-center">
+          <div className="hidden md:flex justify-center">
             <div
               className="bg-black"
               style={{
