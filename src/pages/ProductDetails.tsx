@@ -8,8 +8,11 @@ const ProductDetails = () => {
   const product = products.find((p) => p.id === id);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [feedback, setFeedback] = useState("");
+
   useEffect(() => {
     setSelectedImageIndex(0);
+    setFeedback(""); // reset message on new product
   }, [id]);
 
   if (!product) {
@@ -29,12 +32,33 @@ const ProductDetails = () => {
     category,
   } = product;
 
+  const handleAddToCart = () => {
+    const existingCart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    const index = existingCart.findIndex((item) => item.id === product.id);
+    if (index > -1) {
+      existingCart[index].quantity += 1;
+    } else {
+      existingCart.push({
+        id: product.id,
+        title: product.title,
+        price: product.discountedPrice,
+        quantity: 1,
+        image: product.images[0],
+      });
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(existingCart));
+    setFeedback("✅ Added to cart!");
+    setTimeout(() => setFeedback(""), 2000);
+  };
+
   return (
     <>
       <Header />
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Image Section */}
+          {/* Images */}
           <div className="space-y-6">
             <img
               src={images[selectedImageIndex]}
@@ -58,14 +82,14 @@ const ProductDetails = () => {
 
           {/* Product Info */}
           <div className="space-y-6">
-            <h1 className="text-4xl font-bold tracking-tight leading-snug text-neutral-900">{title} [A4]</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-900">{title}</h1>
             <p className="text-sm text-neutral-500 italic">
               {certifiedSustainable ? "🌿 Certified Sustainable • " : ""}
               Category: {category}
             </p>
             <p className="text-base text-neutral-700 leading-7">{description}</p>
 
-            {/* Price + Stock */}
+            {/* Price & Stock */}
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-3">
                 <p className="text-3xl font-extrabold text-green-700">₹{discountedPrice}</p>
@@ -84,14 +108,26 @@ const ProductDetails = () => {
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-6">
-              <button className="bg-black text-white px-8 py-3 rounded-full font-medium shadow-lg hover:opacity-90 transition">
-                🛒 Add to Cart
+            {/* Buttons */}
+            <div className="flex flex-col gap-4 mt-6">
+              <div className="flex flex-wrap gap-4">
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-black text-white px-8 py-3 rounded-full font-medium shadow-lg hover:opacity-90 transition"
+                >
+                  🛒 Add to Cart
+                </button>
+                <button className="border border-black px-8 py-3 rounded-full font-medium hover:bg-black hover:text-white transition">
+                  🔥 Buy Now
+                </button>
+              </div>
+              <button className="bg-gray-100 text-black border border-gray-300 px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition self-start">
+                📦 Bulk Order
               </button>
-              <button className="border border-black px-8 py-3 rounded-full font-medium hover:bg-black hover:text-white transition">
-                🔥 Buy Now
-              </button>
+
+              {feedback && (
+                <div className="text-green-600 text-sm font-medium mt-2">{feedback}</div>
+              )}
             </div>
           </div>
         </div>
@@ -99,7 +135,7 @@ const ProductDetails = () => {
         {/* Related Products */}
         <section className="mt-24 pt-14">
           <h2 className="text-2xl font-bold text-neutral-800 mb-6 border-b pb-2">Related Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {products
               .filter((p) => p.category === category && p.id !== id)
               .slice(0, 3)
@@ -117,13 +153,14 @@ const ProductDetails = () => {
                       </span>
                     </div>
                     <div className="p-4 space-y-1">
-                      <h3 className="text-lg font-semibold text-neutral-800 group-hover:text-black">{related.title}</h3>
+                      <h3 className="text-lg font-semibold text-neutral-800 group-hover:text-black">
+                        {related.title}
+                      </h3>
                       <div className="flex items-center gap-2">
                         <p className="text-green-700 font-bold text-base">₹{related.discountedPrice}</p>
                         <span className="text-sm line-through text-gray-400">₹{related.price}</span>
                       </div>
                       <div className="flex gap-1">
-                        {/* Placeholder for future rating stars */}
                         {[...Array(5)].map((_, i) => (
                           <span key={i} className="text-yellow-400 text-xs">★</span>
                         ))}

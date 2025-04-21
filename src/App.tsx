@@ -17,6 +17,8 @@ import ProductDetails from "./pages/ProductDetails";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import ScrollToTop from "./components/ScrollToTop";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderSummary from "./pages/OrderSummary";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/summary" element={<OrderSummary />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/partner" element={<PartnerWithUs />} />
           <Route path="/contact" element={<Contact />} />

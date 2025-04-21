@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Hero = () => {
   return (
     <section className="relative h-[100vh] w-full overflow-hidden mt-10 flex items-center justify-center px-6">
@@ -20,12 +22,16 @@ const Hero = () => {
           Discover a future built on mindful innovation, design excellence, and purposeful living.
         </p>
         <div className="flex justify-center gap-4">
+          <Link to="/products">
           <button className="px-6 py-3 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-all duration-300">
             Explore Products
           </button>
+          </Link>
+          <Link to="/sustainability">
           <button className="px-6 py-3 rounded-full border border-white hover:bg-white hover:text-black font-semibold transition-all duration-300">
             Learn More
           </button>
+          </Link>
         </div>
       </div>
     </section>
