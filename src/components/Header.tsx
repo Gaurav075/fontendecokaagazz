@@ -15,7 +15,7 @@ const Header = () => {
       <div className="flex items-center">
         <Link to="/" className="flex items-center">
           <img
-            src="/logo.png.png"
+            src="/logo.png"
             alt="Kaagazz Logo"
             className="h-14 w-auto"
           />

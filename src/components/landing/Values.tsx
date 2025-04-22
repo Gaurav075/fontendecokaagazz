@@ -11,7 +11,7 @@ const Values = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/eco-consious.png" 
+                src="/v1.png" 
                 alt="Eco-Conscious"
                 className="w-24 h-24 object-contain"
               />
@@ -23,7 +23,7 @@ const Values = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/3R.png" 
+                src="/v2.png" 
                 alt="Reduce, Reuse, Recycle"
                 className="w-24 h-24 object-contain"
               />
@@ -35,7 +35,7 @@ const Values = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/global.png" 
+                src="/v3.png" 
                 alt="Global Cooperation"
                 className="w-24 h-24 object-contain"
               />
@@ -47,7 +47,7 @@ const Values = () => {
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
               <img 
-                src="/lovable-uploads/economy.png" 
+                src="/v4.png" 
                 alt="Circular Economy"
                 className="w-24 h-24 object-contain"
               />

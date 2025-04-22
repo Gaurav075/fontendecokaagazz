@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative h-[100vh] w-full overflow-hidden mt-10 flex items-center justify-center px-6">
+    <section className="relative h-[100vh] w-full overflow-hidden  flex items-center justify-center px-6">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"

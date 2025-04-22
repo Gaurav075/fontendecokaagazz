@@ -3,31 +3,32 @@ import { Link } from "react-router-dom";
 const Community = () => {
   return (
     <section className="py-20 px-4 bg-[#fffefc]">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl font-serif font-bold text-[#3e2f22] mb-12">
-          Our Community
-        </h2>
-
-        <div className="max-w-md mx-auto text-center">
-          <div className="bg-[#f6f3e7] p-6 rounded-xl shadow-md mb-8">
-            <h3 className="text-lg font-semibold text-[#5D4037] mb-1">What's New?</h3>
-            <p className="text-xs text-gray-600 mb-4">4,200+ members</p>
-            <img
-              src="/lovable-uploads/dtu.png"
-              alt="Community image"
-              className="w-full h-auto rounded-lg"
-            />
-          </div>
-
-          <h3 className="text-xl font-semibold text-[#4b3b30] mb-4">
-            Be a Part of Our Vibrant Community
-          </h3>
-
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+        {/* Left Side: Text + Button */}
+        <div className="md:w-1/2">
+          <h2 className="text-4xl font-serif font-bold text-[#3e2f22] mb-6">
+            Our Community
+          </h2>
+          <ul className="mb-6 space-y-4 text-[#4b3b30] text-lg">
+            <li>🌱 Connect with sustainability enthusiasts</li>
+            <li>📢 Participate in events and discussions</li>
+            <li>🤝 Collaborate on real-world projects</li>
+            <li>🗳️ Influence future initiatives</li>
+          </ul>
           <Link to="/community">
-            <button className="px-6 py-2 bg-[#5D4037] text-white rounded-full text-sm hover:bg-[#3e2f22] transition-colors duration-300">
-              View Community
+            <button className="mt-4 px-6 py-3 bg-[#5D4037] text-white rounded-full text-sm hover:bg-[#3e2f22] transition-colors duration-300">
+              Join Our Community
             </button>
           </Link>
+        </div>
+
+        {/* Right Side: Image */}
+        <div className="md:w-1/2">
+          <img
+            src="/community.jpeg"
+            alt="Community"
+            className="w-full h-auto rounded-xl shadow-md"
+          />
         </div>
       </div>
     </section>

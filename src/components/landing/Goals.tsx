@@ -13,7 +13,7 @@ const Goals = () => {
       icon: <Recycle className="w-8 h-8 text-[#8a7b61]" />
     },
     {
-      value: "100+",
+      value: "10000+",
       label: "Jobs Created",
       icon: <Briefcase className="w-8 h-8 text-[#6a8c61]" />
     },
