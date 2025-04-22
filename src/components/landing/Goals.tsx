@@ -20,7 +20,7 @@ const Goals: React.FC = () => {
       suffix: 'T+',
     },
     {
-      value: 100,
+      value: 10000,
       label: 'Local Jobs Created',
       suffix: '+',
     },
