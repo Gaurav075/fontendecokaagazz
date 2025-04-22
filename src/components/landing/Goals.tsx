@@ -1,50 +1,111 @@
-import { TreePine, Recycle, Briefcase, Users } from "lucide-react";
+import React, { useEffect, useRef, useState } from 'react';
 
-const Goals = () => {
-  const goals = [
+interface Stat {
+  value: number;
+  label: string;
+  prefix?: string;
+  suffix?: string;
+}
+
+const Goals: React.FC = () => {
+  const stats: Stat[] = [
     {
-      value: "50K+",
-      label: "Trees Saved",
-      icon: <TreePine className="w-8 h-8 text-[#4a6741]" />
+      value: 50,
+      label: 'Trees Saved',
+      suffix: 'K+',
     },
     {
-      value: "200T+",
-      label: "Waste Recycled",
-      icon: <Recycle className="w-8 h-8 text-[#8a7b61]" />
+      value: 200,
+      label: 'Tons of Waste Recycled',
+      suffix: 'T+',
     },
     {
-      value: "10000+",
-      label: "Jobs Created",
-      icon: <Briefcase className="w-8 h-8 text-[#6a8c61]" />
+      value: 100,
+      label: 'Local Jobs Created',
+      suffix: '+',
     },
     {
-      value: "150+",
-      label: "Business Partners",
-      icon: <Users className="w-8 h-8 text-[#5D4037]" />
-    }
+      value: 150,
+      label: 'Business Partners',
+      suffix: '+',
+    },
   ];
 
-  return (
-    <section className="py-20 px-4 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')" }}>
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl font-bold font-serif text-[#3e2f22] mb-12">Our Impact Goals</h2>
+  const [isVisible, setIsVisible] = useState(false);
+  const statsSectionRef = useRef<HTMLDivElement>(null);
+  const [animatedValues, setAnimatedValues] = useState<number[]>(stats.map(() => 0));
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {goals.map((goal, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center p-6 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-lg transition duration-300"
-            >
-              <div className="mb-4">
-                {goal.icon}
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (statsSectionRef.current) {
+      observer.observe(statsSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      stats.forEach((stat, index) => {
+        const duration = 2000;
+        const steps = 60;
+        const increment = stat.value / steps;
+        let currentValue = 0;
+        let currentStep = 0;
+
+        const interval = setInterval(() => {
+          currentStep++;
+          currentValue = Math.min(currentValue + increment, stat.value);
+
+          setAnimatedValues((prev) => {
+            const newValues = [...prev];
+            newValues[index] = Math.round(currentValue);
+            return newValues;
+          });
+
+          if (currentStep >= steps) {
+            clearInterval(interval);
+          }
+        }, duration / steps);
+
+        return () => clearInterval(interval);
+      });
+    }
+  }, [isVisible]);
+
+  return (
+    <div
+      ref={statsSectionRef}
+      style={{ backgroundColor: '#4c3c34' }}
+      className="py-16"
+    >
+      <div className="container mx-auto px-4 text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-white font-serif">Our Impact Goals</h2>
+      </div>
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <div key={index} className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">
+                {stat.prefix || ''}
+                {animatedValues[index].toLocaleString()}
+                {stat.suffix || ''}
               </div>
-              <h3 className="text-3xl font-bold text-[#2e2e2e] mb-1">{goal.value}</h3>
-              <p className="text-sm text-[#5D4037] font-medium text-center">{goal.label}</p>
+              <div className="text-lg text-white font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
