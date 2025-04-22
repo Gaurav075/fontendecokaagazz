@@ -7,7 +7,7 @@ const Timeline = () => {
         <img
           src="/timeline.png" // Update path if needed
           alt="Our Journey Through Time Timeline"
-          className="w-full h-auto rounded-lg shadow-lg"
+          className="w-full h-auto rounded-lg "
         />
       </div>
     </section>
