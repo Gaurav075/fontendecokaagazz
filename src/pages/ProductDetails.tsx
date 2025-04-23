@@ -2,19 +2,19 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { products } from "../data/product";
 import Header from "../components/Header";
-import { useCart } from "../context/CartContext"; // Import useCart
+import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === id);
-  const { addToCart } = useCart(); // Use the cart context
+  const { addToCart } = useCart();
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
     setSelectedImageIndex(0);
-    setFeedback(""); // reset message on new product
+    setFeedback("");
   }, [id]);
 
   if (!product) {
@@ -35,7 +35,6 @@ const ProductDetails = () => {
   } = product;
 
   const handleAddToCart = () => {
-    // Use context method instead of directly modifying localStorage
     addToCart({
       id: product.id,
       title: product.title,
@@ -43,7 +42,7 @@ const ProductDetails = () => {
       quantity: 1,
       image: product.images[0],
     });
-    
+
     setFeedback("✅ Added to cart!");
     setTimeout(() => setFeedback(""), 2000);
   };
@@ -51,16 +50,18 @@ const ProductDetails = () => {
   return (
     <>
       <Header />
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Images */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Product Images */}
           <div className="space-y-6">
-            <img
-              src={images[selectedImageIndex]}
-              alt={title}
-              className="rounded-2xl w-full h-full object-cover shadow-xl transition duration-300 ease-in-out hover:scale-[1.015]"
-            />
-            <div className="flex gap-3 overflow-x-auto scrollbar-hide p-2">
+            <div className="w-full">
+              <img
+                src={images[selectedImageIndex]}
+                alt={title}
+                className="rounded-2xl w-full h-auto max-h-[500px] object-cover shadow-xl transition duration-300 ease-in-out hover:scale-[1.015]"
+              />
+            </div>
+            <div className="flex gap-3 overflow-x-auto scrollbar-hide p-1">
               {images.map((img, index) => (
                 <img
                   key={index}
@@ -77,7 +78,9 @@ const ProductDetails = () => {
 
           {/* Product Info */}
           <div className="space-y-6">
-            <h1 className="text-4xl font-bold tracking-tight text-neutral-900">{title}</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 mt-2">
+              {title}
+            </h1>
             <p className="text-sm text-neutral-500 italic">
               {certifiedSustainable ? "🌿 Certified Sustainable • " : ""}
               Category: {category}
@@ -85,7 +88,7 @@ const ProductDetails = () => {
             <p className="text-base text-neutral-700 leading-7">{description}</p>
 
             {/* Price & Stock */}
-            <div className="mt-4 space-y-2">
+            <div className="space-y-2 mt-2">
               <div className="flex items-center gap-3">
                 <p className="text-3xl font-extrabold text-green-700">₹{discountedPrice}</p>
                 <span className="text-lg line-through text-gray-400">₹{price}</span>
@@ -103,28 +106,24 @@ const ProductDetails = () => {
               )}
             </div>
 
-            {/* Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-col gap-4 mt-6">
               <div className="flex flex-wrap gap-4">
                 <button
                   onClick={handleAddToCart}
                   disabled={stockLeft <= 0}
                   className={`${
-                    stockLeft > 0 
-                      ? "bg-black text-white hover:opacity-90" 
-                      : "bg-gray-300 cursor-not-allowed"
+                    stockLeft > 0
+                      ? "bg-black text-white hover:opacity-90"
+                      : "bg-gray-300 text-gray-700 cursor-not-allowed"
                   } px-8 py-3 rounded-full font-medium shadow-lg transition`}
                 >
                   🛒 Add to Cart
                 </button>
-                <button className="border border-black px-8 py-3 rounded-full font-medium hover:bg-black hover:text-white transition">
-                  🔥 Buy Now
-                </button>
-              </div>
-              <button className="bg-gray-100 text-black border border-gray-300 px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition self-start">
+                <button className="bg-gray-100 text-black border border-gray-300 px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition self-start">
                 📦 Bulk Order
               </button>
-
+              </div>
               {feedback && (
                 <div className="text-green-600 text-sm font-medium mt-2">{feedback}</div>
               )}
@@ -141,7 +140,7 @@ const ProductDetails = () => {
               .slice(0, 3)
               .map((related) => (
                 <Link to={`/products/${related.id}`} key={related.id}>
-                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group border border-gray-100 mx-5">
+                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group border border-gray-100">
                     <div className="relative">
                       <img
                         src={related.images?.[0] || related.image}
