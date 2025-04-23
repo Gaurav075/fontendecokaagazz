@@ -17,7 +17,7 @@ const Header = () => {
           <img
             src="/logo.png"
             alt="Kaagazz Logo"
-            className="h-14 w-auto"
+            className="h-10 max-w-40"
           />
         </Link>
       </div>

@@ -1,59 +1,44 @@
+import { Leaf, RefreshCcw, Globe2, Recycle } from "lucide-react";
 
+const values = [
+  {
+    icon: <Leaf size={40} className="text-green-600" />,
+    title: "Eco-Conscious",
+  },
+  {
+    icon: <RefreshCcw size={40} className="text-blue-500" />,
+    title: "Reduce, Reuse, Recycle",
+  },
+  {
+    icon: <Globe2 size={40} className="text-indigo-600" />,
+    title: "Global Cooperation",
+  },
+  {
+    icon: <Recycle size={40} className="text-yellow-600" />,
+    title: "Circular Economy",
+  },
+];
 
 const Values = () => {
   return (
-    <section className="py-16 px-4 bg-white">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-center text-3xl font-bold uppercase mb-12">OUR VALUES</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Eco-Conscious */}
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-4">
-              <img 
-                src="/v1.png" 
-                alt="Eco-Conscious"
-                className="w-24 h-24 object-contain"
-              />
-            </div>
-            <h3 className="text-lg font-bold">Eco-Conscious</h3>
-          </div>
+    <section className="py-20 px-6 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-center text-4xl font-extrabold tracking-tight uppercase text-gray-800 mb-16">
+          Our Values
+        </h2>
 
-          {/* Reduce, Reuse, Recycle */}
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-4">
-              <img 
-                src="/v2.png" 
-                alt="Reduce, Reuse, Recycle"
-                className="w-24 h-24 object-contain"
-              />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+          {values.map((value, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center text-center transition-all duration-300 transform hover:scale-105 hover:shadow-xl bg-gray-50 p-6 rounded-2xl"
+            >
+              <div className="mb-4">{value.icon}</div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                {value.title}
+              </h3>
             </div>
-            <h3 className="text-lg font-bold">Reduce, Reuse, Recycle</h3>
-          </div>
-
-          {/* Global Cooperation */}
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-4">
-              <img 
-                src="/v3.png" 
-                alt="Global Cooperation"
-                className="w-24 h-24 object-contain"
-              />
-            </div>
-            <h3 className="text-lg font-bold">Global Cooperation</h3>
-          </div>
-
-          {/* Circular Economy */}
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-4">
-              <img 
-                src="/v4.png" 
-                alt="Circular Economy"
-                className="w-24 h-24 object-contain"
-              />
-            </div>
-            <h3 className="text-lg font-bold">Circular Economy</h3>
-          </div>
+          ))}
         </div>
       </div>
     </section>
