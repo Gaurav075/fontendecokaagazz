@@ -1,4 +1,5 @@
 import { Eye, Target } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 const Stats = () => {
@@ -44,9 +45,11 @@ const Stats = () => {
 
     {/* Unified Button */}
     <div className="mt-16 text-center">
+      <Link to="/sustainability">
       <button className="rounded-full bg-[#3d3121] hover:bg-[#2b2319] text-white text-sm md:text-base font-medium px-6 py-3 shadow-md transition">
         Learn Our Story
       </button>
+      </Link>
     </div>
   </div>
 </section>

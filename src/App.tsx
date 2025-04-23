@@ -19,6 +19,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import Order from "./pages/Order";
+import OrderComplete from "./pages/OrderComplete";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/community" element={<Community />} />
           <Route path="/sustainability" element={<Sustainability />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/order/completed" element={<OrderComplete />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         </CartProvider>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface CartItem {
   id: number;
@@ -125,12 +126,14 @@ const OrderForm: React.FC = () => {
 
           {/* Submit Button */}
           <div className="md:col-span-2 text-center">
+            <Link to='/order/completed'>
             <button
               type="submit"
               className="bg-black text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-neutral-800 transition-all duration-300"
             >
               Place Order
             </button>
+            </Link>
           </div>
         </form>
       </div>
