@@ -11,17 +11,17 @@ const Goals: React.FC = () => {
   const stats: Stat[] = [
     {
       value: 50,
-      label: 'Trees Saved',
+      label: 'Trees Save',
       suffix: 'K+',
     },
     {
       value: 200,
-      label: 'Tons of Waste Recycled',
+      label: 'Tons of Waste Recycle',
       suffix: 'T+',
     },
     {
       value: 10000,
-      label: 'Local Jobs Created',
+      label: 'Local Jobs Creation',
       suffix: '+',
     },
     {
