@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Mail, MapPin, Instagram,  Linkedin,  } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -17,20 +17,11 @@ const Footer: React.FC = () => {
               while empowering communities and preserving our environment.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="Facebook">
-                <Facebook size={20} />
-              </a>
               <a href="https://instagram.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="https://twitter.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="Twitter">
-                <Twitter size={20} />
-              </a>
               <a href="https://linkedin.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="LinkedIn">
                 <Linkedin size={20} />
-              </a>
-              <a href="https://youtube.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="YouTube">
-                <Youtube size={20} />
               </a>
             </div>
           </div>

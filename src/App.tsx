@@ -19,6 +19,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderSummary from "./pages/OrderSummary";
+import { CartProvider } from "./context/CartContext";
+import Order from "./pages/Order";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +31,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
       <ScrollToTop />
+      <CartProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
@@ -43,8 +46,10 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/community" element={<Community />} />
           <Route path="/sustainability" element={<Sustainability />} />
+          <Route path="/order" element={<Order />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </CartProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

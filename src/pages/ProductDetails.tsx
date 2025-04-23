@@ -2,10 +2,12 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { products } from "../data/product";
 import Header from "../components/Header";
+import { useCart } from "../context/CartContext"; // Import useCart
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === id);
+  const { addToCart } = useCart(); // Use the cart context
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -33,22 +35,15 @@ const ProductDetails = () => {
   } = product;
 
   const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem("cartItems") || "[]");
-
-    const index = existingCart.findIndex((item) => item.id === product.id);
-    if (index > -1) {
-      existingCart[index].quantity += 1;
-    } else {
-      existingCart.push({
-        id: product.id,
-        title: product.title,
-        price: product.discountedPrice,
-        quantity: 1,
-        image: product.images[0],
-      });
-    }
-
-    localStorage.setItem("cartItems", JSON.stringify(existingCart));
+    // Use context method instead of directly modifying localStorage
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.discountedPrice,
+      quantity: 1,
+      image: product.images[0],
+    });
+    
     setFeedback("✅ Added to cart!");
     setTimeout(() => setFeedback(""), 2000);
   };
@@ -113,7 +108,12 @@ const ProductDetails = () => {
               <div className="flex flex-wrap gap-4">
                 <button
                   onClick={handleAddToCart}
-                  className="bg-black text-white px-8 py-3 rounded-full font-medium shadow-lg hover:opacity-90 transition"
+                  disabled={stockLeft <= 0}
+                  className={`${
+                    stockLeft > 0 
+                      ? "bg-black text-white hover:opacity-90" 
+                      : "bg-gray-300 cursor-not-allowed"
+                  } px-8 py-3 rounded-full font-medium shadow-lg transition`}
                 >
                   🛒 Add to Cart
                 </button>
@@ -144,7 +144,7 @@ const ProductDetails = () => {
                   <div className="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group border border-gray-100 mx-5">
                     <div className="relative">
                       <img
-                        src={related.image}
+                        src={related.images?.[0] || related.image}
                         alt={related.title}
                         className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                       />

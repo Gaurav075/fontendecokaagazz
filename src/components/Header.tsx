@@ -13,11 +13,11 @@ const Header = () => {
     <header className="py-2 px-8 md:px-16 flex justify-between items-center border-b border-gray-200 relative">
       {/* Logo */}
       <div className="flex items-center">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center py-2">
           <img
             src="/logo.png"
             alt="Kaagazz Logo"
-            className="h-10 max-w-40"
+            className="h-8 max-w-40"
           />
         </Link>
       </div>
