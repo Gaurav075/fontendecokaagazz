@@ -1,4 +1,7 @@
+import SocialMediaSection from "./SocialMediaSection";
+
 const AboutCommunity = () => (
+  <>
     <div>
       <h2 className="text-lg sm:text-xl font-semibold mb-2">Welcome to our Community 👋🌿✨</h2>
       <p className="text-sm sm:text-base mb-4 text-gray-700">
@@ -16,6 +19,9 @@ const AboutCommunity = () => (
         Join us as we redefine the future of sustainable stationery and craftsmanship...
       </p>
     </div>
+    <SocialMediaSection/>
+    </>
+    
   );
   
   export default AboutCommunity;

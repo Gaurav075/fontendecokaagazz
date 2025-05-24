@@ -17,10 +17,10 @@ const Footer: React.FC = () => {
               while empowering communities and preserving our environment.
             </p>
             <div className="flex space-x-4">
-              <a href="https://instagram.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/kaagazzp2p" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="https://linkedin.com" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/kaagazz-peel-to-paper" className="text-gray-300 hover:text-kaagazz-gold transition-colors" aria-label="LinkedIn">
                 <Linkedin size={20} />
               </a>
             </div>

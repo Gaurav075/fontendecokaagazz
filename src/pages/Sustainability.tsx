@@ -7,9 +7,9 @@ import VideoPlaceholder from "../components/sustainability/VideoPlaceholder";
 import OurApproach from "../components/sustainability/OurApproach";
 import CircularEconomy from "../components/sustainability/CircularEconomy";
 import OurStory from "../components/sustainability/OurStory";
-import Testimonials from "../components/sustainability/Testimonials";
 import CorporateSustainability from "../components/sustainability/CorporateSustainability";
 import FinalCTA from "../components/sustainability/FinalCTA";
+import TheirVoices from "../components/sustainability/TheirVoices";
 
 const Sustainability = () => {
   return (
@@ -34,7 +34,7 @@ const Sustainability = () => {
         <OurApproach />
         <CircularEconomy />
         <OurStory />
-        <Testimonials />
+        <TheirVoices/>
         <CorporateSustainability />
         <FinalCTA />
       </div>
