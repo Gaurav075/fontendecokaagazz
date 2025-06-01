@@ -28,7 +28,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/fontendecokaagazz">
+      <BrowserRouter>
       <ScrollToTop />
       <CartProvider>
         <Routes>
