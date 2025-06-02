@@ -32,7 +32,7 @@ const App = () => (
       <ScrollToTop />
       <CartProvider>
         <Routes>
-          <Route path="/fontendecokaagazz/" element={<Index />} />
+          <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/products" element={<AllProducts />} />
