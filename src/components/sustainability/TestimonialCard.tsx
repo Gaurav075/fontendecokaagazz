@@ -28,7 +28,7 @@ const TestimonialCard = ({ testimonial, index, maxLength = 120 }: TestimonialCar
         />
         <div>
           <h4 className="font-semibold text-[#5C5044]">{testimonial.author}</h4>
-          <p className="text-xs text-[#7A6B52]">{testimonial.company}</p>
+          {/* <p className="text-xs text-[#7A6B52]">{testimonial.company}</p> */}
           {testimonial.industry && (
             <p className="text-xs text-[#A89B7E]">{testimonial.industry}</p>
           )}
