@@ -44,9 +44,9 @@ const FeaturedTestimonial = ({ testimonial, currentIndex }: FeaturedTestimonialP
               <p className="text-[#7A6B52] text-sm">
                 {testimonial.role}
               </p>
-              <p className="text-[#A89B7E] text-xs font-medium">
+              {/* <p className="text-[#A89B7E] text-xs font-medium">
                 {testimonial.company}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
