@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Instagram,  Linkedin,  } from 'lucide-react';
+import { Mail, MapPin, Instagram,  Linkedin, Phone } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -73,10 +73,10 @@ const Footer: React.FC = () => {
                Delhi, India
                 </span>
               </li>
-              {/* <li className="flex items-center">
+              <li className="flex items-center">
                 <Phone size={20} className="text-kaagazz-gold mr-2 flex-shrink-0" />
-                <span className="text-gray-300">+91 98765 43210</span>
-              </li> */}
+                <span className="text-gray-300">+91 7037709162</span>
+              </li>
               <li className="flex items-center">
                 <Mail size={20} className="text-kaagazz-gold mr-2 flex-shrink-0" />
                 <span className="text-gray-300">Contact@ecokaagazz.com</span>

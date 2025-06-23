@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 interface CartItem {
   id: number;
@@ -37,11 +36,75 @@ const OrderForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const createOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/payment/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: totalAmount }),
+      });
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Order creation failed", error);
+      return null;
+    }
+  };
+
+  const openRazorpay = async () => {
+    const orderData = await createOrder();
+    if (!orderData) return;
+
+    const options = {
+      key: "rzp_live_HKAnIKAM9R6I8j", // Replace with your Razorpay key_id
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "EcoKaagazz Store",
+      description: "Product Purchase",
+      image: "logo.png", // Optional logo
+      order_id: orderData.orderId,
+      handler: async function (response: any) {
+        const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            userData: formData,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+        if (verifyData.success) {
+          alert("Payment successful!");
+          window.location.href = "/order/completed";
+        } else {
+          alert("Payment verification failed.");
+        }
+      },
+      prefill: {
+        name: formData.name,
+        email: formData.email,
+        contact: formData.phone,
+      },
+      theme: {
+        color: "#121212",
+      },
+    };
+
+    const razorpayInstance = new (window as any).Razorpay(options);
+    razorpayInstance.open();
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const orderData = { ...formData, products: cartItems, totalAmount };
-    console.log('Order Placed:', orderData);
-    // Implement order submission logic here
+    await openRazorpay();
   };
 
   return (
@@ -126,14 +189,12 @@ const OrderForm: React.FC = () => {
 
           {/* Submit Button */}
           <div className="md:col-span-2 text-center">
-            <Link to='/order/completed'>
             <button
               type="submit"
               className="bg-black text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-neutral-800 transition-all duration-300"
             >
               Place Order
             </button>
-            </Link>
           </div>
         </form>
       </div>
