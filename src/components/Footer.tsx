@@ -75,11 +75,20 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Phone size={20} className="text-kaagazz-gold mr-2 flex-shrink-0" />
-                <span className="text-gray-300">+91 7037709162</span>
+                <a href="tel:+917037709162" className="text-gray-300 hover:text-kaagazz-gold transition">
+                  +91 7037709162
+                </a>
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="text-kaagazz-gold mr-2 flex-shrink-0" />
-                <span className="text-gray-300">Contact@ecokaagazz.com</span>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&to=Contact@ecokaagazz.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-kaagazz-gold transition"
+                >
+                  Contact@ecokaagazz.com
+                </a>
               </li>
             </ul>
           </div>
