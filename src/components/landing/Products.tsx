@@ -37,14 +37,11 @@ const Products = () => {
               } items-center gap-10 group transition-all duration-300 animate-fadeInUp`}
             >
               <div className="w-full md:w-1/2">
-              <Link to="/shop">
-              
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-[550px] object-cover rounded-xl shadow-xl group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-auto object-cover rounded-xl shadow-xl group-hover:scale-105 transition-transform duration-300"
                 />
-              </Link>
               </div>
               <div className="w-full md:w-1/2 px-4 text-center md:text-left">
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">

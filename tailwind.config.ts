@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,11 +25,6 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        'kaagazz-background': '#f9fafb',
-        'kaagazz-text': '#333333',
-        'kaagazz-green': '#4a6741',
-        'kaagazz-brown': '#8a7b61',
-        'kaagazz-lightGreen': '#6a8c61',
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -67,6 +63,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        kaagazz: {
+          background: "#f5f2e9",
+          text: "#333333",
+          green: "#4a6741",
+          brown: "#8a7b61",
+          lightGreen: "#6a8c61",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -93,5 +96,5 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [],
 } satisfies Config;

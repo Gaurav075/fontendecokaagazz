@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Home, Users, Leaf, ShoppingBag, ShoppingCart, AlbumIcon } from "lucide-react";
+import { Home, Users, Leaf, ShoppingBag, ShoppingCart } from "lucide-react";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -40,11 +40,6 @@ const Header = () => {
           <ShoppingBag size={18} />
           <span>Store</span>
         </Link>
-        <Link to="/chitrayan" className="text-sm text-[#033500] font-semibold hover:text-kaagazz-green transition-colors flex items-center gap-2">
-          <AlbumIcon size={18} />
-          <span>Chitrayan</span>
-        </Link>
-
         <Link to="/cart" className="text-[#3d3121] hover:text-kaagazz-green">
           <ShoppingCart size={20} />
         </Link>
