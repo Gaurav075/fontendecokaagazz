@@ -1,15 +1,39 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+
+const images = [
+  "/dump.jpg",
+  "/dump1.png",
+  "/dump2.png",
+  "/dump3.png", // Add your image URLs
+];
 const Hero = () => {
+  const [currentIndex,setcurrentIndex] = useState(0);
+
+  useEffect(()=>{
+    const interval = setInterval(() => {
+      setcurrentIndex((prev)=>(prev+1)%images.length)
+    }, 3000);
+    return ()=>clearInterval(interval)
+  },[])
+
   return (
     <section className="relative h-[100vh] w-full overflow-hidden  flex items-center justify-center px-6">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center z-0"
-        style={{ backgroundImage: "url('/dump.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
-      </div>
+     { images.map((img,index)=>(
+       <div
+          key={index}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+            index === currentIndex ? "opacity-100 z-0" : "opacity-0 z-0"
+          }`}
+          style={{ backgroundImage: `url('${img}')` }}
+        >
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
+        </div>
+      ))} 
+      
 
       {/* Overlay Content */}
       <div className="relative z-10 text-white max-w-5xl mx-auto text-center">

@@ -19,7 +19,7 @@ const Stats = () => {
         <h3 className="text-lg md:text-xl font-semibold text-[#5d4b32] italic mb-3">
           From Peel To Paper: A Sustainable Revolution
         </h3>
-        <p className="text-base md:text-lg text-[#5d4b32] leading-relaxed max-w-md mx-auto">
+        <p className="text-base md:text-lg text-[#3A3A3A] leading-relaxed max-w-md mx-auto font-light">
           Kaagazz is transforming the paper industry by creating high-quality, tree-free paper from fruit peels.
           We envision a world where waste becomes a resource, and sustainable living is the norm.
         </p>
@@ -36,7 +36,7 @@ const Stats = () => {
         <h3 className="text-lg md:text-xl font-semibold text-[#5d4b32] italic mb-3">
           From Peel To Paper: A Sustainable Revolution
         </h3>
-        <p className="text-base md:text-lg text-[#5d4b32] leading-relaxed max-w-md mx-auto">
+        <p className="text-base md:text-lg text-[#3A3A3A] leading-relaxed max-w-md mx-auto font-light">
           Kaagazz is committed to empowering communities by converting waste into wonder. We craft sustainable,
           zero-waste paper goods while driving social change and innovation from the ground up.
         </p>

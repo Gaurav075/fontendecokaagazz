@@ -30,7 +30,7 @@ const HowItWorks = () => {
         <h2 className="text-center text-4xl md:text-5xl font-serif font-bold text-[#5C4033] mb-6">
           How Kaagazz Works
         </h2>
-        <p className="text-center text-lg max-w-3xl mx-auto text-[#4B3A2A] mb-16">
+        <p className="text-center text-lg max-w-3xl mx-auto text-[#3A3A3A] mb-16 leading-relaxed font-light">
           Our innovative process transforms organic waste into premium paper products through a sustainable production cycle.
         </p>
 

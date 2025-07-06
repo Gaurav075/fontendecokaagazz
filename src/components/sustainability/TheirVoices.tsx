@@ -1,60 +1,50 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { reviews } from "../../data/review";
-import SectionHeader from "./SectionHeader";
-import FeaturedTestimonial from "./FeaturedTestimonial";
-import ImpactShowcase from "./ImpactShowcase";
-import CarouselDots from "./CarouselDots";
 import TestimonialCard from "./TestimonialCard";
-import BackgroundElements from "./BackgroundElements";
 
 const TheirVoices = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const featuredReviews = reviews.filter(review => review.featured !== false);
-  
-  const bottomCardReviews = reviews.slice(0, 3);
+  const featuredReviews = reviews.filter((review) => review.featured !== false);
 
   useEffect(() => {
-    setIsVisible(true);
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % featuredReviews.length);
     }, 5000);
     return () => clearInterval(interval);
   }, [featuredReviews.length]);
 
-  return (
-    <section className="relative py-20 px-6 bg-gradient-to-br from-[#FAF8F3] via-[#F2EFE6] to-[#EAE4D3] overflow-hidden">
-      <BackgroundElements />
+  const getVisibleReviews = () => {
+    const total = featuredReviews.length;
+    const prev = (currentIndex - 1 + total) % total;
+    const next = (currentIndex + 1) % total;
+    return [
+      { ...featuredReviews[prev], position: "left" },
+      { ...featuredReviews[currentIndex], position: "center" },
+      { ...featuredReviews[next], position: "right" },
+    ];
+  };
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <SectionHeader
-          badge="VOICES OF CHANGE"
-          title="Stories of Impact"
-          subtitle="Discover how EcoKaagazz is transforming waste into sustainable paper solutions, one partnership at a time"
-          isVisible={isVisible}
-        />
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          <FeaturedTestimonial 
-            testimonial={featuredReviews[currentIndex]} 
-            currentIndex={currentIndex}
-          />
-          <ImpactShowcase />
-        </div>
-        <CarouselDots
-          total={featuredReviews.length}
-          current={currentIndex}
-          onDotClick={setCurrentIndex}
-        />
-        <div className="grid md:grid-cols-3 gap-6">
-          {bottomCardReviews.map((testimonial, index) => (
-            <TestimonialCard
+  const visibleReviews = getVisibleReviews();
+
+  return (
+    <section className="py-16 px-4 bg-[#F2EFE6]">
+      <h2 className="text-3xl font-bold text-center text-[#5C5044] mb-10">Stories of Impact</h2>
+      <div className="flex justify-center items-center gap-6 transition-all duration-500 ease-in-out">
+        {visibleReviews.map((testimonial, index) => {
+          let scale = "scale-90 opacity-60 z-10";
+          if (testimonial.position === "center") scale = "scale-110 opacity-100 z-20";
+
+          return (
+            <div
               key={testimonial.id}
-              testimonial={testimonial}
-              index={index}
-            />
-          ))}
-        </div>
+              className={`transition-transform duration-700 ease-in-out transform ${scale}`}
+            >
+              <div className="w-[280px] sm:w-[320px]">
+                <TestimonialCard testimonial={testimonial} index={index} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
