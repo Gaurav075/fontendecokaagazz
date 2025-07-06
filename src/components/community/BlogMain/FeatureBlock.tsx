@@ -3,7 +3,7 @@ import { Card, CardContent } from "../../ui/card";
 import { Button } from "../../ui/button";
 import { Link } from "react-router-dom";
 import { getLatestBlogs } from "../../../data/blogs";
-import OtherWebsitesSection from "./OtherWebsitesSection";
+// import OtherWebsitesSection from "./OtherWebsitesSection";
 
 export const FeatureBlocks = () => {
   const latestBlogs = getLatestBlogs();
@@ -53,7 +53,7 @@ export const FeatureBlocks = () => {
 ))}
         </div>
 
-<OtherWebsitesSection/>
+{/* <OtherWebsitesSection/> */}
         <div className="text-center">
           <Link to="/allBlogs">
             <Button className="px-8 py-3 text-lg hover:bg-amber-800 text-white">
