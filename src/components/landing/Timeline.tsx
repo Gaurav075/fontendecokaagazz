@@ -24,7 +24,7 @@ const milestones = [
   },
   {
     date: 'Jan 2025',
-    title: 'HerSTART 4.0',
+    title: 'HerSTART 4.0 Completed',
     description: 'Bootcamp with GUSEC & UNICEF.',
     icon: Rocket,
     image: '/herCamp.jpg',
@@ -62,17 +62,13 @@ export default function ResponsiveTimeline() {
                   <div className="z-10 w-5 h-5 rounded-full bg-[#3b3a36] border-4 border-[#fefaf6] mb-4 md:mb-0 md:mt-6" />
 
                   {/* Card */}
-                  <div className="bg-white border border-[#eae4d3] shadow-lg rounded-xl overflow-hidden w-full max-w-sm flex flex-col min-h-[320px]">
-                  <div className="w-full h-[200px] overflow-hidden">
+                  <div className="bg-white border border-[#eae4d3] shadow-lg rounded-xl overflow-hidden w-full max-w-sm group-hover:shadow-xl transition-all">
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className="h-40 w-full object-cover"
                     />
-                  </div>
-
-                  <div className="p-4 flex flex-col justify-between flex-1">
-                    <div>
+                    <div className="p-4 text-left">
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-lg font-semibold text-[#3b3a36]">
                           {item.title}
@@ -81,7 +77,6 @@ export default function ResponsiveTimeline() {
                           {item.date}
                         </span>
                       </div>
-
                       <div className="flex items-start gap-2">
                         <div className="p-2 bg-[#f5f2eb] rounded-xl">
                           <Icon className="w-5 h-5 text-[#7a7467]" />
@@ -92,8 +87,6 @@ export default function ResponsiveTimeline() {
                       </div>
                     </div>
                   </div>
-                </div>
-
 
                   {/* Vertical connector for mobile */}
                   {index !== milestones.length - 1 && (
