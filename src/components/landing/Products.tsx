@@ -20,9 +20,9 @@ const Products = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')] bg-cover bg-no-repeat bg-center font-serif">
+    <section className="py-16 px-4 bg-[url('/bg.png')] bg-cover bg-no-repeat bg-center font-serif">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl font-extrabold tracking-wide uppercase text-gray-800 mb-16 animate-fadeIn">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
           Our Products
         </h2>
 
@@ -47,15 +47,16 @@ const Products = () => {
               </Link>
               </div>
               <div className="w-full md:w-1/2 px-4 text-center md:text-left">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl font-serif font-bold text-[#5C4033] mb-3">
                   {product.title}
                 </h3>
-                <p className="text-gray-700 text-base leading-relaxed mb-6 font-light">
+                <p className="text-[#5C4033] text-xl text-base leading-relaxed mb-6 font-light">
                   {product.description}
                 </p>
                 <Link to="/shop">
-                  <button className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-900 transition duration-300 shadow-md">
-                    Shop Now
+                  
+                  <button className="text-[#5C4033] hover:text-[#3d2a20] text-sm md:text-xl font-large px-0 py-2 rounded-md transition-all duration-200">
+                    Shop Now→
                   </button>
                 </Link>
               </div>

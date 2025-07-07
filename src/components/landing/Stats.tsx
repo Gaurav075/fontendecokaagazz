@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Stats = () => {
   return (
-<section className="py-24 px-6 bg-white">
+<section className="py-24 px-6 pb-10 bg-white">
   <div className="max-w-7xl mx-auto">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
       {/* Vision Section */}
@@ -44,11 +44,14 @@ const Stats = () => {
     </div>
 
     {/* Unified Button */}
-    <div className="mt-16 text-center">
+    <div className="mt-10 text-center">
       <Link to="/sustainability">
-      <button className="rounded-full bg-[#3d3121] hover:bg-[#2b2319] text-white text-sm md:text-base font-medium px-6 py-3 shadow-md transition">
-        Learn Our Story
+     <button
+        className="underline text-[#5C4033] hover:text-[#3d2a20] text-sm md:text-xl font-large px-6 sm:px-8 py-3 rounded-md transition-all duration-200 w-full sm:w-auto"
+      >
+        Learn Our Story →
       </button>
+
       </Link>
     </div>
   </div>

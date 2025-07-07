@@ -33,9 +33,9 @@ const milestones = [
 
 export default function ResponsiveTimeline() {
   return (
-    <section className="bg-[#fefaf6] py-24 px-4 sm:px-8">
+    <section className="bg-[#fefaf6] py-10 px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-5xl font-serif text-center mb-16 text-[#3b3a36]">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] tracking-wide mb-8">
           Our Journey Through Time
         </h2>
 

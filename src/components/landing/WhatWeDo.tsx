@@ -14,7 +14,7 @@ const WhatWeDo = () => {
       description:
         "We have overturned the waste problem of urban landscapes into a scalable solution. We care for humans and animals that have suffered from the filth that decays around ourselves.",
       icon: <Trash2 className="w-8 h-8 text-[#5C4033]" />,
-      image: "/dump.jpg",
+      image: "/cows.png",
     },
     {
       title: "NO to Deforestation",
@@ -33,9 +33,9 @@ const WhatWeDo = () => {
   ];
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-[#F9F4EF] to-[#F5EEE7]">
+    <section className="py-24 px-6 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat relative">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
           What Do We Do?
         </h2>
 

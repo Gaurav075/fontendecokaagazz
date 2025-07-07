@@ -15,9 +15,9 @@ const Founders = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-[#fefaf6] bg-[url('/lovable-uploads/dbc41764-109f-4797-863d-67fa66b682f1.png')] bg-cover bg-no-repeat bg-center">
+    <section className="py-20 px-6 bg-[#fefaf6] bg-[url('/bg.png')] bg-cover bg-no-repeat bg-center">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl sm:text-5xl font-serif text-[#3b3a36] mb-16">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
           Our Founders
         </h2>
 
@@ -27,7 +27,7 @@ const Founders = () => {
               key={index}
               className="bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-6 p-6 sm:p-8 border border-[#eae4d3]"
             >
-              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#f4eee2] shrink-0">
+              <div className="w-32 h-32 rounded-xl overflow-hidden border-4 border-[#f4eee2] shrink-0">
                 <img
                   src={founder.image}
                   alt={founder.name}

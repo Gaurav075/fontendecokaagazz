@@ -37,11 +37,9 @@ const TheirVoices = () => {
           return (
             <div
               key={testimonial.id}
-              className={`transition-transform duration-700 ease-in-out transform ${scale}`}
+              className={`transition-transform duration-700 ease-in-out transform ${scale} w-[280px] sm:w-[320px]`}
             >
-              <div className="w-[280px] sm:w-[320px]">
-                <TestimonialCard testimonial={testimonial} index={index} />
-              </div>
+              <TestimonialCard testimonial={testimonial} index={index} />
             </div>
           );
         })}

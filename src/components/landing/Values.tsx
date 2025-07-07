@@ -21,9 +21,9 @@ const values = [
 
 const Values = () => {
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl font-extrabold tracking-tight uppercase text-gray-800 mb-16">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] tracking-wide mb-10">
           Our Values
         </h2>
 

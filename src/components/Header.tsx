@@ -10,7 +10,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-2 px-8 md:px-16 flex justify-between items-center bg-[#FEFAF6] border-b border-gray-200 relative">
+    <header className="py-2 px-8 md:px-16 flex justify-between items-center bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat relative border-b border-gray-200 relative">
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" className="flex items-center py-2">
@@ -23,7 +23,7 @@ const Header = () => {
       </div>
 
       {/* Desktop Nav */}
-      <nav className="hidden md:flex items-center space-x-10">
+      <nav className="hidden md:flex items-center space-x-10 ">
         <Link to="/" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition-colors flex items-center gap-2">
           <Home size={18} />
           <span>Home</span>
