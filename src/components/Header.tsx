@@ -25,7 +25,7 @@ const Header = () => {
       {/* Desktop Nav */}
       <nav className="hidden md:flex items-center space-x-10 ">
         <Link to="/" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition-colors flex items-center gap-2">
-          <Home size={18} />
+          <Home size={17} />
           <span>Home</span>
         </Link>
         <Link to="/community" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition-colors flex items-center gap-2">

@@ -4,12 +4,12 @@ const Products = () => {
   const products = [
     {
       title: "Premium Paper Notebooks",
-      description: "Perfect for office supplies and educational activities",
+      description: "Perfect for office supplies and educational activities.",
       image: "/lovable-uploads/stationary.png",
     },
     {
       title: "Print Your Next Book with Kaagazz",
-      description: "Paper with a cause. Excellent for Printers Don't Cause Harm.",
+      description: "Paper with a cause. Excellent for printers that don't harm.",
       image: "/lovable-uploads/notebook.jpg",
     },
     {
@@ -20,47 +20,41 @@ const Products = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-[url('/bg.png')] bg-cover bg-no-repeat bg-center font-serif">
+    <section className="py-20 px-6 bg-[url('/bg1.png')] bg-cover bg-no-repeat bg-center font-serif">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
+        <h2 className="text-center text-3xl md:text-5xl font-bold text-[#5C4033] mb-16">
           Our Products
         </h2>
 
-        <div className="flex flex-col space-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {products.map((product, index) => (
-            <div
-              key={index}
-              className={`flex ${
-                index % 2 === 1
-                  ? "flex-col md:flex-row-reverse"
-                  : "flex-col md:flex-row"
-              } items-center gap-10 group transition-all duration-300 animate-fadeInUp`}
-            >
-              <div className="w-full md:w-1/2">
-              <Link to="/shop">
-              
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-[550px] object-cover rounded-xl shadow-xl group-hover:scale-105 transition-transform duration-300"
-                />
-              </Link>
-              </div>
-              <div className="w-full md:w-1/2 px-4 text-center md:text-left">
-                <h3 className="text-2xl font-serif font-bold text-[#5C4033] mb-3">
-                  {product.title}
-                </h3>
-                <p className="text-[#5C4033] text-xl text-base leading-relaxed mb-6 font-light">
-                  {product.description}
-                </p>
-                <Link to="/shop">
-                  
-                  <button className="text-[#5C4033] hover:text-[#3d2a20] text-sm md:text-xl font-large px-0 py-2 rounded-md transition-all duration-200">
-                    Shop Now→
-                  </button>
-                </Link>
-              </div>
-            </div>
+            <div key={index} className="group perspective h-[400px]">
+  <div className="flip-card">
+    {/* Front Side */}
+    <div className="flip-front shadow-md">
+      <img
+        src={product.image}
+        alt={product.title}
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute bottom-0 bg-[#5C4033]/70 w-full p-4 text-white text-center font-semibold text-lg">
+        {product.title}
+      </div>
+    </div>
+
+    {/* Back Side */}
+    <div className="flip-back shadow-md bg-white p-6 flex flex-col justify-center items-center text-center">
+      <h3 className="text-xl font-bold text-[#5C4033] mb-3">{product.title}</h3>
+      <p className="text-sm text-[#3A3A3A] mb-4">{product.description}</p>
+      <Link to="/shop">
+        <button className="text-[#5C4033] hover:text-[#3d2a20] text-sm font-medium">
+          Shop Now →
+        </button>
+      </Link>
+    </div>
+  </div>
+</div>
+
           ))}
         </div>
       </div>

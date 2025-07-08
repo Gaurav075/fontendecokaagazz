@@ -33,7 +33,7 @@ const WhatWeDo = () => {
   ];
 
   return (
-    <section className="py-24 px-6 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat relative">
+    <section className="py-24 px-6 bg-[url('/bg1.png')] bg-cover bg-center bg-no-repeat relative">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
           What Do We Do?
