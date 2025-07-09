@@ -24,7 +24,7 @@ const Index = () => {
         <Stats />
         <Timeline />
         <Values />
-        <WhatWeDo />
+        <WhatWeDo/>
         <HowItWorks />
         <Goals />
         <Community />
