@@ -10,7 +10,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-2 px-8 md:px-16 flex justify-between items-center bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat relative border-b border-gray-200">
+    <header className="py-2 px-8 md:px-16 flex justify-between items-center bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat sticky top-0 z-50 border-b border-gray-200 ">
 
       {/* Logo */}
       <div className="flex items-center">
@@ -24,7 +24,7 @@ const Header = () => {
       </div>
 
       {/* Desktop Nav */}
-      <nav className="hidden md:flex items-center space-x-10 ">
+      <nav className="max-lg:hidden lg:flex items-center space-x-10 ">
         <Link to="/" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition-colors flex items-center gap-2">
           <Home size={17} />
           <span>Home</span>
@@ -52,7 +52,7 @@ const Header = () => {
       </nav>
 
       {/* Hamburger Button (Mobile) */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <button className="p-3" onClick={toggleMobileMenu}>
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -64,7 +64,7 @@ const Header = () => {
 
       {/* Animated Mobile Nav */}
       <div
-        className={`absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-md md:hidden z-50 transform transition-all duration-300 ease-in-out ${
+        className={`absolute top-full left-0 w-full bg-white border-t border-gray-200 shadow-md lg:hidden z-50 transform transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"
         }`}
       >
