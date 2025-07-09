@@ -12,7 +12,7 @@ const RevolutionCTA = () => {
   }}
 >
   <div className="absolute inset-0 bg-black/50"></div>
-  <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+  <div className="relative z-10 max-w-4xl mx-auto text-center px-4 ">
     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
       Join the Kaagazz Revolution
     </h2>

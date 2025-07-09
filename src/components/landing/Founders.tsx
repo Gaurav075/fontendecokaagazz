@@ -15,9 +15,9 @@ const Founders = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-[#fefaf6] bg-[url('/bg.png')] bg-cover bg-no-repeat bg-center">
+    <section className="py-10 px-6 bg-[#fefaf6] bg-[url('/bg.png')] bg-cover bg-no-repeat bg-center">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-20 tracking-wide">
+        <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-10 tracking-wide">
           Our Founders
         </h2>
 

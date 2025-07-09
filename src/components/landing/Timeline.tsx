@@ -41,7 +41,8 @@ const milestones = [
 
 export default function JourneyTimeline() {
   return (
-    <section className="bg-[#fffdf9] px-4 py-10">
+    <section className="bg-[url('/bg1.png')] px-4 py-10">
+
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-12 font-serif text-[#2f2f2f]">
           Our Journey Through Time

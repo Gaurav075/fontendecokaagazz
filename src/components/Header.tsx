@@ -11,6 +11,7 @@ const Header = () => {
 
   return (
     <header className="py-2 px-8 md:px-16 flex justify-between items-center bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat relative border-b border-gray-200">
+
       {/* Logo */}
       <div className="flex items-center">
         <Link to="/" className="flex items-center py-2">
