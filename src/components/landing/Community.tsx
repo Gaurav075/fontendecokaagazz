@@ -9,7 +9,7 @@ const Community = () => {
           <h2 className="text-4xl font-serif font-bold text-[#3e2f22] mb-6">
             Our Community
           </h2>
-          <ul className="mb-6 space-y-4 text-[#4b3b30] text-lg">
+          <ul className="mb-6 space-y-4 text-[#4b3b30] text-lg text-center md:text-left">
             <li>🌱 Connect with sustainability enthusiasts</li>
             <li>📢 Participate in events and discussions</li>
             <li>🤝 Collaborate on real-world projects</li>

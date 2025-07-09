@@ -9,9 +9,9 @@ const values = [
 
 const Values = () => {
   return (
-    <section className="py-24 px-6 bg-white font-serif">
+    <section className="hidden md:block py-10 px-6 bg-white font-serif">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl md:text-5xl font-bold text-[#5C4033] mb-20">
+        <h2 className="text-center text-4xl md:text-5xl font-bold text-[#5C4033] mb-10">
           Our Values
         </h2>
 
