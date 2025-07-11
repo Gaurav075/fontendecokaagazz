@@ -6,25 +6,24 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMedium, setIsMedium] = useState(false);
   const total = testimonials.length;
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartX = useRef<number | null>(null);
 
   // Check for mobile
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const checkMedium = () => setIsMedium(window.innerWidth < 1024);
+    checkMedium();
+    window.addEventListener("resize", checkMedium);
+    return () => window.removeEventListener("resize", checkMedium);
   }, []);
 
   // Auto-scroll only for desktop
   const startAutoScroll = () => {
-    stopAutoScroll();
     autoScrollRef.current = setInterval(() => {
       handleNextClick();
-    }, 4000);
+    }, 3000);
   };
 
   const stopAutoScroll = () => {
@@ -34,7 +33,7 @@ export default function Testimonials() {
   useEffect(() => {
     startAutoScroll();
     return stopAutoScroll;
-  }, [current, isMobile]);
+  }, [current, isMedium]);
 
   const handlePreviousClick = () => {
     setCurrent((prev) => (prev - 1 + total) % total);
@@ -46,7 +45,7 @@ export default function Testimonials() {
 
   const getIndex = (offset: number) => (current + offset + total) % total;
 
-  const cards = isMobile
+  const cards = isMedium
     ? [{ index: getIndex(0), position: 0 }]
     : [
         { index: getIndex(-1), position: -1 },
@@ -71,8 +70,8 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-16 px-4 bg-[#F2EFE6] text-[#5C5044] min-h-[200px] max-sm:py-8">
-      <h2 className="text-4xl font-bold text-center mb-7 font-serif tracking-wide">
+    <section className="py-16 p-5 bg-[#F2EFE6] text-[#5C5044] min-h-[600px] max-sm:min-h-[600px]">
+      <h2 className="text-4xl font-bold text-center mb-12 font-serif tracking-wide">
         Their Voice
       </h2>
       <div
@@ -81,29 +80,29 @@ export default function Testimonials() {
         onTouchEnd={handleTouchEnd}
       >
         <div
-          className="relative h-[420px] flex justify-center items-center gap-4 transition-all duration-1000 ease-in-out"
+          className="relative h-[380px] flex justify-center items-center gap-4 transition-all duration-1000 ease-in-out"
           style={{ perspective: "1200px" }}
         >
-          {isMobile ? (
+          {isMedium ? (
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
-                initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
+                initial={{ opacity: 0, scale: 0.9,rotateY:60 }}
                 animate={{
                   opacity: 1,
                   scale: 1,
                   rotateY: 0,
-                  transition: { duration: 0.8, ease: [0.55, 0.06, 0.68, 0.19] },
+                  transition: { duration: 0.7, ease: [0.55, 0.06, 0.68, 0.19] },
                 }}
                 exit={{
                   opacity: 0,
-                  scale: 0.9,
-                  rotateY: 25,
-                  transition: { duration: 0.6, ease: "easeOut" },
+                  scale: 0.8,
+                  rotateY: -60,
+                  transition: { duration: 0.7, ease: "easeOut" },
                 }}
-                className="absolute w-full max-w-[400px] transform-gpu"
+                className="absolute w-full mx-4 transform-gpu"
               >
-                <Card className="bg-gradient-to-r from-[#e4e3d2] to-[#f6f2e6] rounded-2xl shadow-md min-h-[380px] h-full">
+                <Card className="bg-gradient-to-r from-[#e4e3d2] to-[#f6f2e6] rounded-2xl shadow-md min-h-[400px] h-full">
                   <CardContent className="p-6 space-y-4 h-full flex flex-col justify-between overflow-hidden">
                     <div className="flex items-center gap-3">
                       <FaUserAlt className="text-2xl text-[#5C5044]" />
@@ -128,10 +127,10 @@ export default function Testimonials() {
                 position === 0
                   ? "translateZ(0px) scale(1)"
                   : position === -1
-                  ? "translateX(-110%) scale(0.85) rotateY(15deg)"
-                  : "translateX(110%) scale(0.85) rotateY(-15deg)";
+                  ? "translateX(-110%) scale(0.85) rotateY(18deg)"
+                  : "translateX(110%) scale(0.85) rotateY(-18deg)";
               const zIndex = position === 0 ? 30 : 10;
-              const opacity = position === 0 ? 1 : 0.85;
+              const opacity = position === 0 ? 1 :0.9;
 
               return (
                 <div
@@ -168,8 +167,8 @@ export default function Testimonials() {
           )}
         </div>
 
-        {/* Desktop Buttons */}
-        <div className="flex justify-between mt-8 mx-4 max-sm:mt-4 ">
+        {/* Buttons */}
+        <div className="flex justify-between mt-10 mx-3">
           <button
             className="w-10 h-10 flex items-center justify-center bg-neutral-200 rounded-full hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 rotate-180"
             title="Previous"
