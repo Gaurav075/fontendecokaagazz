@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Home, Users, Leaf, ShoppingBag, ShoppingCart, AlbumIcon } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const { totalItems } = useCart();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -46,8 +47,13 @@ const Header = () => {
           <span>Chitrayan</span>
         </Link>
 
-        <Link to="/cart" className="text-[#3d3121] hover:text-kaagazz-green">
+        <Link to="/cart" className="relative text-[#3d3121] hover:text-kaagazz-green">
           <ShoppingCart size={20} />
+          {totalItems > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full shadow-md">
+              {totalItems}
+            </span>
+          )}
         </Link>
       </nav>
 
@@ -85,9 +91,13 @@ const Header = () => {
             <ShoppingBag size={18} />
             <span>Store</span>
           </Link>
-          <Link to="/cart" className="flex items-center gap-2 text-[#3d3121]" onClick={toggleMobileMenu}>
+         <Link to="/cart" className="relative text-[#3d3121] hover:text-kaagazz-green">
             <ShoppingCart size={20} />
-            <span>Cart</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full shadow-md">
+                {totalItems}
+              </span>
+            )}
           </Link>
         </div>
       </div>

@@ -8,19 +8,23 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="text-center border-t border-gray-200 pt-12 mt-12">
-      <p className="text-sm font-medium mb-4 text-gray-800">🌿 Join Us in Making a Difference</p>
-      <p className="text-sm text-gray-700 max-w-xl mx-auto mb-6">
-        Whether you’re a writer, artist, or business—your choice matters. Choose Kaagazz and be part of a movement.
+    <section className="text-center border-t border-gray-200 pt-16 mt-0 px-4">
+      <h2 className="text-xl font-semibold text-[#3C2F2F] mb-3">
+        🌱 Be the Change with Kaagazz
+      </h2>
+      <p className="text-base text-gray-700 max-w-2xl mx-auto leading-relaxed mb-6">
+        Whether you're an artist, writer, student, or business — your choices shape the future. 
+        Join Kaagazz in redefining sustainability with every sheet of paper.
       </p>
       <button
         onClick={handleJoinClick}
-        className="px-6 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition font-medium shadow-sm"
+        className="inline-block bg-[#2E7D32] text-white px-8 py-3 rounded-full font-medium hover:bg-[#1B5E20] transition-all shadow-md"
       >
-        Join Kaagazz
+        Join the Movement
       </button>
-      <p className="text-xs text-gray-500 mt-6">
-        Dive into an eco-friendly shopping experience<br />with Kaagazz.
+      <p className="text-xs text-gray-500 mt-8 leading-relaxed">
+        Let your creativity bloom on paper that cares for the planet.<br />
+        Start your eco-conscious journey with Kaagazz today.
       </p>
     </section>
   );

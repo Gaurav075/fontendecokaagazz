@@ -25,7 +25,7 @@ const HowItWorksTimeline = () => {
   ];
 
   return (
-    <section className="py-10 px-6 bg-gradient-to-b from-[#ffffff] to-[#ffffff]">
+    <section className="py-10 px-6 bg-gradient-to-b from-[#f2efe6] to-[#ffffff]">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-4xl md:text-5xl font-serif font-bold text-[#5C4033] mb-6">
           How Kaagazz Works

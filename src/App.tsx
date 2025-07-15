@@ -16,6 +16,8 @@ import Sustainability from "./pages/Sustainability";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
 import PartnerWithUs from "./pages/PartnerWithUs";
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
 import ScrollToTop from "./components/ScrollToTop";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
@@ -46,6 +48,8 @@ const App = () => (
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
+            <Route path = "/signup" element={<Signup/>}/>
+            <Route path = "/login" element={<Login/>}/>
             <Route path="/partner" element={<PartnerWithUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/community" element={<Community />} />
