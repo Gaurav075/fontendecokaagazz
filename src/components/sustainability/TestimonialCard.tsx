@@ -13,6 +13,8 @@ const TestimonialCard = ({ testimonial, index, maxLength = 120 }: TestimonialCar
       ? `${testimonial.quote.substring(0, maxLength)}...`
       : testimonial.quote;
 
+  const placeholderImage = "https://ui-avatars.com/api/?name=User&background=E8DCC0&color=5C5044";
+
   return (
     <motion.div
       className="w-full bg-gradient-to-br from-white/60 to-[#FAF8F3]/60 backdrop-blur-sm p-6 rounded-2xl border border-[#E8DCC0]/30 shadow-lg hover:shadow-xl transition-all duration-300"
@@ -23,7 +25,7 @@ const TestimonialCard = ({ testimonial, index, maxLength = 120 }: TestimonialCar
     >
       <div className="flex items-center gap-3 mb-4">
         <img
-          src={testimonial.image}
+          src={testimonial.image || placeholderImage}
           alt={testimonial.author}
           className="w-12 h-12 rounded-full object-cover ring-2 ring-[#E8DCC0]/50"
         />
