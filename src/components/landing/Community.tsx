@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Community = () => {
   return (
-    <section className="py-20 px-4 bg-[#fffefc]">
+    <section className="py-20 px-4 bg-[#f2efe6]">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
         {/* Left Side: Text + Button */}
         <div className="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">

@@ -59,16 +59,20 @@ const Signup = () => {
       </div>
 
       {/* Form Section */}
-      <div className="flex flex-col md:flex-row justify-center items-center px-6 md:px-16">
-        <div className="bg-white w-full md:max-w-4xl flex rounded-xl shadow-lg overflow-hidden border border-gray-200">
+      <div className="flex flex-col md:flex-row justify-center items-center px-6 md:px-16 mb-12">
+        <div className="bg-white w-full md:max-w-4xl flex flex-col md:flex-row rounded-xl shadow-lg overflow-hidden border border-gray-200">
           {/* Left Image */}
-          <div className="w-full md:w-1/2">
-            <img src="/signup-image.jpg" alt="Visual" className="w-full h-full object-cover" />
+          <div className="w-full md:w-1/2 h-[250px] md:h-[450px]">
+            <img
+              src="/login.jpg"
+              alt="Visual"
+              className="w-full h-full object-cover object-center"
+            />
           </div>
 
           {/* Right Form */}
-          <div className="w-full md:w-1/2 p-8 relative">
-            <form onSubmit={handleSignup} className="space-y-4">
+          <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
+            <form onSubmit={handleSignup} className="space-y-4 w-full">
               <div>
                 <label className="text-sm font-medium">Full Name:</label>
                 <input
