@@ -1,51 +1,28 @@
-import { useEffect, useState } from "react";
-import { reviews } from "../../data/review";
-import TestimonialCard from "./TestimonialCard";
+import React from "react";
 
-const TheirVoices = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const featuredReviews = reviews.filter((review) => review.featured !== false);
+const HeroSection = () => (
+  <div className="relative h-[360px] md:h-[420px] w-full font-serif overflow-hidden">
+    {/* Background Image */}
+    <img
+      src="/carousel.png"
+      alt="Sustainability Banner"
+      className="absolute inset-0 w-full h-full object-cover brightness-75"
+    />
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % featuredReviews.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [featuredReviews.length]);
+    {/* Gradient Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-[#4E342E]/70 via-transparent to-transparent" />
 
-  const getVisibleReviews = () => {
-    const total = featuredReviews.length;
-    const prev = (currentIndex - 1 + total) % total;
-    const next = (currentIndex + 1) % total;
-    return [
-      { ...featuredReviews[prev], position: "left" },
-      { ...featuredReviews[currentIndex], position: "center" },
-      { ...featuredReviews[next], position: "right" },
-    ];
-  };
+    {/* Heading */}
+    <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6">
+      <h1 className="text-white text-center font-bold leading-tight drop-shadow-md 
+        text-balance break-words
+        max-w-[95%] sm:max-w-[85%] md:max-w-4xl lg:max-w-5xl
+        text-[16px] sm:text-[20px] md:text-[30px] lg:text-[36px] xl:text-[42px]
+        whitespace-normal">
+        Sustainability at Kaagazz: Preserving Nature, One Page at a Time
+      </h1>
+    </div>
+  </div>
+);
 
-  const visibleReviews = getVisibleReviews();
-
-  return (
-    <section className="py-16 px-4 bg-[#F2EFE6]">
-      <h2 className="text-3xl font-bold text-center text-[#5C5044] mb-10">Stories of Impact</h2>
-      <div className="flex justify-center items-center gap-6 transition-all duration-500 ease-in-out">
-        {visibleReviews.map((testimonial, index) => {
-          let scale = "scale-90 opacity-60 z-10";
-          if (testimonial.position === "center") scale = "scale-110 opacity-100 z-20";
-
-          return (
-            <div
-              key={testimonial.id}
-              className={`transition-transform duration-700 ease-in-out transform ${scale} w-[280px] sm:w-[320px]`}
-            >
-              <TestimonialCard testimonial={testimonial} index={index} />
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-};
-
-export default TheirVoices;
+export default HeroSection;

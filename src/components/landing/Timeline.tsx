@@ -41,22 +41,23 @@ const milestones = [
 
 export default function JourneyTimeline() {
   return (
-    <section className="bg-[url('/bg1.png')] px-4 py-10">
+    <div className="hidden md:block">
 
+      <section className="bg-[url('/bg1.png')] px-4 py-10">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-12 font-serif text-[#2f2f2f]">
           Our Journey Through Time
         </h2>
 
         <div className="relative flex flex-col md:flex-row md:justify-between items-center md:items-start gap-8 md:gap-4">
-       
+          {/* Timeline line for desktop */}
           <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-[#e2ddd3] z-0" />
 
           {milestones.map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
-                key={index}
+              key={index}
                 className="relative z-10 flex flex-col items-center w-full md:w-1/4 text-center group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -67,14 +68,15 @@ export default function JourneyTimeline() {
                 }}
                 viewport={{ once: true, amount: 0.4 }}
               >
-
+                {/* Milestone number circle */}
                 <div className="w-9 h-9 rounded-full bg-black text-white text-sm font-bold flex items-center justify-center mb-3 shadow-md">
                   {item.number}
                 </div>
 
-
-                <div className="bg-white border border-[#ece7dc] rounded-2xl shadow-md px-4 py-4 w-full max-w-[260px] md:max-w-[220px] text-left hover:shadow-lg transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-3">
+                {/* Milestone card */}
+                <div className="bg-white border border-[#ece7dc] rounded-2xl shadow-md px-4 py-4 w-full max-w-[260px] md:max-w-[220px] text-left hover:shadow-lg transition-all duration-300 flex flex-col gap-y-3">
+                  {/* Title and date with image */}
+                  <div className="flex items-center gap-3">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -88,7 +90,8 @@ export default function JourneyTimeline() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-2 mt-2">
+                  {/* Icon and description */}
+                  <div className="flex items-start gap-2">
                     <div className="p-1.5 bg-[#f4f1ea] rounded-md">
                       <Icon className="w-4 h-4 text-[#7a7467]" />
                     </div>
@@ -98,7 +101,7 @@ export default function JourneyTimeline() {
                   </div>
                 </div>
 
-
+                {/* Vertical connector on mobile */}
                 {index !== milestones.length - 1 && (
                   <div className="md:hidden w-px h-5 bg-[#e0d8c3] my-2" />
                 )}
@@ -108,5 +111,7 @@ export default function JourneyTimeline() {
         </div>
       </div>
     </section>
+
+    </div>
   );
 }
