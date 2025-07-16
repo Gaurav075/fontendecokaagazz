@@ -9,7 +9,7 @@ const values = [
 
 const Values = () => {
   return (
-    <section className="hidden md:block bg-[#f2efe6] py-10 px-6 bg-white font-serif">
+    <section className="hidden md:block bg-[#f2efe6] py-10 px-6 font-serif">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-center text-4xl md:text-5xl font-bold text-[#5C4033] mb-10">
           Our Values
