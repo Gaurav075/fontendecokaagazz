@@ -14,7 +14,11 @@ const HeroSection = () => (
 
     {/* Heading */}
     <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8">
-      <h1 className="text-white text-center font-bold leading-tight drop-shadow-md max-w-[90vw] md:max-w-4xl lg:max-w-5xl text-[20px] sm:text-[24px] md:text-[30px] lg:text-[36px] xl:text-[42px] whitespace-normal lg:whitespace-nowrap overflow-hidden text-ellipsis">
+      <h1
+        className="text-white text-center font-bold leading-tight drop-shadow-md
+                  max-w-[90vw] md:max-w-4xl lg:max-w-full
+                  text-[20px] sm:text-[24px] md:text-[30px] lg:text-[36px] xl:text-[42px]
+                  whitespace-normal lg:whitespace-nowrap">
         Sustainability at Kaagazz: Preserving Nature, One Page at a Time
       </h1>
     </div>
