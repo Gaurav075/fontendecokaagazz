@@ -19,18 +19,18 @@ const Sustainability = () => {
       <div className="relative z-10 max-w-6xl mx-auto -mt-24 py-16 bg-white shadow-2xl rounded-3xl font-serif">
         <VideoPlaceholder />
         <div className="mx-10 mb-10">
-          <h1 className="text-3xl font-extrabold tracking-tight mb-5 text-gray-900 leading-tight">
-            Sustainability at Kaagazz: Preserving Nature, One Page at a Time
-          </h1>
-          <p className="text-base text-gray-700 mb-4">
-          At Kaagazz, sustainability isn't just a business practice—it's the foundation of everything we do. Our innovative approach transforms 
-          organic waste into premium paper products, addressing multiple environmental challenges while creating social impact.
-          </p>
-          <p className="text-base text-gray-700">
-          From sourcing raw materials to the final product, every stage of our process is
-          designed to minimize environmental impact and maximize social benefit.
-          </p>
-        </div>
+  <h1 className="text-3xl font-extrabold tracking-tight mb-5 text-gray-900 leading-tight">
+    Sustainability at Kaagazz: Preserving Nature, One Page at a Time
+  </h1>
+  <p className="text-base text-gray-700 mb-4">
+    At Kaagazz, sustainability isn’t just a goal—it’s the core of our mission. Through our innovative process, we convert organic waste into premium paper products, reducing environmental burden while driving purposeful impact.
+  </p>
+  <p className="text-base text-gray-700">
+    From sourcing to final product, every stage is thoughtfully crafted to reduce carbon footprint and uplift communities. With Kaagazz, sustainability becomes a way of life, not just a choice.
+  </p>
+</div>
+
+
         <OurApproach />
         <CircularEconomy />
         <OurStory />

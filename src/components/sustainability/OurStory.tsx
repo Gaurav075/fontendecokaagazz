@@ -8,23 +8,32 @@ const OurStory = () => (
     <div className="flex justify-center mb-6 text-5xl text-[#1F1F1F]">
       <BookOpen strokeWidth={1.5} size={60} />
     </div>
+
     <p className="text-sm text-gray-800 leading-relaxed mb-4">
-      In June 2022, under New Delhi’s scorching sun, we observed a ragpicker tirelessly
-      collecting domestic waste. He carefully separated plastic for recycling but discarded
-      organic waste by the roadside. Nearby, suffering scavenged through the waste, often
-      falling ill. Communities also suffered from diseases linked to improper disposal.
+      It all began in June 2022, under the blistering summer sun of New Delhi. We watched a
+      ragpicker silently working—painstakingly separating plastic from domestic waste. The
+      plastic found its way into recycling, but the organic waste was simply tossed aside,
+      left to decay.
     </p>
+
     <p className="text-sm text-gray-800 leading-relaxed mb-4">
-      This scene revealed a glaring gap: while plastic recycling is prioritized, organic
-      waste remains largely ignored. No major efforts exist to upcycle household organic and
-      wet waste. Yet, waste holds immense potential unexploited. Ragpickers, hailed as
-      “Swachhagrahis” by India’s Prime Minister, lack resources to fully utilize the waste
-      they collect.
+      Just a few feet away, stray animals scavenged through the discarded waste, often
+      falling sick. The surrounding community bore the brunt too, with rising cases of
+      disease and foul odors in the air. In that moment, we saw a clear gap—while plastic
+      recycling is widely acknowledged, organic waste remains forgotten.
     </p>
+
+    <p className="text-sm text-gray-800 leading-relaxed mb-4">
+      Despite being called “Swachhagrahis” by India’s Prime Minister, ragpickers often lack
+      the tools and opportunities to fully harness the waste they collect. No meaningful
+      efforts existed to upcycle household organic or wet waste. Yet, this waste carries
+      enormous untapped potential.
+    </p>
+
     <p className="text-sm text-gray-800 leading-relaxed">
-      This challenge is global, but solutions can start locally. We aspire to address this by
-      creating high-quality recycled paper products from organic waste, promoting
-      sustainability and economically empowering ragpickers.
+      That day sparked a vision—to transform what’s ignored into something impactful. By
+      turning organic waste into high-quality recycled paper, we aim not only to promote
+      sustainability but also to uplift the unsung heroes of our cities: the ragpickers.
     </p>
   </section>
 );

@@ -19,7 +19,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "Kaagazz enabled me to gain independence and cover hospital expenses",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   },
   {
@@ -29,7 +29,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "Thanks to Kaagazz, I could afford my children's education and secure their future",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   },
   {
@@ -39,7 +39,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "Kaagazz enabled me to rebuild my life after losing my husband and father-in-law",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/3.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   },
   {
@@ -49,7 +49,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "Kaagazz empowered me to save for emergencies and secure my family’s well-being",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   },
   {
@@ -59,7 +59,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "With Kaagazz, I can now buy basic necessities for my family of eight members",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   },
   {
@@ -69,7 +69,7 @@ export const reviews: Review[] = [
     company: "Kaagazz",
     quote: "With Kaagazz's help, I was able to start a new chapter in life after my divorce",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+    image: "./dummy-women.jpeg",
     dateAdded: "2025-06-02",
   }
 ];

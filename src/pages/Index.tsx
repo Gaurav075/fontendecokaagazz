@@ -16,15 +16,15 @@ import RevolutionCTA from "../components/landing/RevolutionCTA";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       <Header />
-      <main>
+      <main className="overflow-hidden">
         <Hero />
         <About />
         <Stats />
         <Timeline />
         <Values />
-        <WhatWeDo />
+        <WhatWeDo/>
         <HowItWorks />
         <Goals />
         <Community />

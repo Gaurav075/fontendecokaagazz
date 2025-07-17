@@ -1,103 +1,90 @@
-import { FileText, Building, Award, Rocket } from 'lucide-react';
+import { Building, Award, Rocket, DraftingCompass } from "lucide-react";
+import { motion } from "framer-motion";
 
 const milestones = [
   {
-    date: 'Jan 2024',
-    title: 'MVP Created',
-    description: 'Business plan drafted.',
-    icon: FileText,
-    image: '/artisinal/3.png',
+    number: 1,
+    date: "Jan 2024",
+    title: "MVP Created",
+    description:
+      "Sustainable impact meets strategy — Kaagazz business plan completed.",
+    icon: DraftingCompass,
+    image: "/artisinal/3.png",
+    height: "min-h-[170px]",
   },
   {
-    date: 'May 2024',
-    title: 'Incubated at DTU',
-    description: 'Delhi Technological University.',
+    number: 2,
+    date: "May 2024",
+    title: "Incubated at DTU",
+    description:
+      "Joined DTU’s prestigious innovation cell for early-stage startups.",
     icon: Building,
-    image: '/lovable-uploads/dtu.png',
+    image: "/lovable-uploads/dtu.png",
+    height: "min-h-[170px]",
   },
   {
-    date: 'Nov 2024',
-    title: 'MSME Hackathon',
-    description: 'Shortlisted by FITT at IIT Delhi.',
+    number: 3,
+    date: "Nov 2024",
+    title: "MSME Hackathon",
+    description: "Shortlisted by FITT at IIT Delhi for national challenge.",
     icon: Award,
-    image: '/iit.jpg',
+    image: "/iit.jpg",
+    height: "min-h-[170px]",
   },
   {
-    date: 'Jan 2025',
-    title: 'HerSTART 4.0 Completed',
-    description: 'Bootcamp with GUSEC & UNICEF.',
+
     icon: Rocket,
-    image: '/herCamp.jpg',
+    image: "/herCamp.jpg",
+    height: "min-h-[170px]",
   },
 ];
 
-export default function ResponsiveTimeline() {
+export default function JourneyTimeline() {
   return (
-    <section className="bg-[#fefaf6] py-24 px-4 sm:px-8">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-5xl font-serif text-center mb-16 text-[#3b3a36]">
-          Our Journey Through Time
-        </h2>
+    <div className="hidden md:block">
+      <section className="bg-[url('/bg1.png')] bg-cover bg-center px-4 py-10">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 font-serif text-[#5C4033]">
+            Our Journey Through Time
+          </h2>
 
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="hidden md:block absolute top-1/2 w-full h-1 bg-[#e0d8c3] z-0" />
+          <div className="relative flex flex-col md:flex-row md:justify-between items-center md:items-start gap-8 md:gap-4">
+            {/* Horizontal timeline line */}
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-[#e2ddd3] z-0" />
 
-          {/* Cards */}
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-16 md:gap-4">
             {milestones.map((item, index) => {
               const Icon = item.icon;
-
               return (
-                <div
+                <motion.div
                   key={index}
-                  className="relative flex flex-col md:w-1/4 items-center group"
+                  className="relative z-10 flex flex-col items-center w-full md:w-1/4 text-center group"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                    delay: index * 0.1,
+                  }}
+                  viewport={{ once: true, amount: 0.4 }}
                 >
-                  {/* Connecting Line for Desktop */}
-                  {index !== milestones.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 right-0 w-full h-0.5 bg-gradient-to-r from-[#e0d8c3] to-transparent z-[-1]" />
-                  )}
 
-                  {/* Dot Marker */}
-                  <div className="z-10 w-5 h-5 rounded-full bg-[#3b3a36] border-4 border-[#fefaf6] mb-4 md:mb-0 md:mt-6" />
-
-                  {/* Card */}
-                  <div className="bg-white border border-[#eae4d3] shadow-lg rounded-xl overflow-hidden w-full max-w-sm group-hover:shadow-xl transition-all">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-40 w-full object-cover"
-                    />
-                    <div className="p-4 text-left">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-semibold text-[#3b3a36]">
                           {item.title}
                         </h3>
-                        <span className="text-sm text-[#7a7467] font-medium">
-                          {item.date}
-                        </span>
+                        <p className="text-xs text-gray-500">{item.date}</p>
                       </div>
-                      <div className="flex items-start gap-2">
-                        <div className="p-2 bg-[#f5f2eb] rounded-xl">
-                          <Icon className="w-5 h-5 text-[#7a7467]" />
-                        </div>
-                        <p className="text-[#7a7467] text-sm leading-relaxed">
-                          {item.description}
-                        </p>
+
                       </div>
+                      <p className="text-xs text-[#5a5a5a] leading-snug">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Vertical connector for mobile */}
-                  {index !== milestones.length - 1 && (
-                    <div className="md:hidden w-px h-8 bg-[#e0d8c3] my-4" />
-                  )}
-                </div>
               );
             })}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

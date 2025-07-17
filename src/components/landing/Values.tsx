@@ -1,42 +1,31 @@
 import { Leaf, RefreshCcw, Globe2, Recycle } from "lucide-react";
 
 const values = [
-  {
-    icon: <Leaf size={40} className="text-green-600" />,
-    title: "Eco-Conscious",
-  },
-  {
-    icon: <RefreshCcw size={40} className="text-blue-500" />,
-    title: "Reduce, Reuse, Recycle",
-  },
-  {
-    icon: <Globe2 size={40} className="text-indigo-600" />,
-    title: "Global Cooperation",
-  },
-  {
-    icon: <Recycle size={40} className="text-yellow-600" />,
-    title: "Circular Economy",
-  },
+  { icon: <Leaf size={48} />, title: "Eco-Conscious", color: "text-green-600" },
+  { icon: <RefreshCcw size={48} />, title: "Reduce, Reuse, Recycle", color: "text-blue-500" },
+  { icon: <Globe2 size={48} />, title: "Global Cooperation", color: "text-indigo-600" },
+  { icon: <Recycle size={48} />, title: "Circular Economy", color: "text-yellow-500" },
 ];
 
 const Values = () => {
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="hidden md:block bg-[#f2efe6] py-10 px-6 font-serif">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-center text-4xl font-extrabold tracking-tight uppercase text-gray-800 mb-16">
+        <h2 className="text-center text-4xl md:text-5xl font-bold text-[#5C4033] mb-10">
           Our Values
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="flex justify-center gap-24 flex-wrap">
           {values.map((value, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center text-center transition-all duration-300 transform hover:scale-105 hover:shadow-xl bg-gray-50 p-6 rounded-2xl"
-            >
-              <div className="mb-4">{value.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-800">
+            <div key={index} className="group flex flex-col items-center text-center">
+              <div
+                className={`w-28 h-28 rounded-full bg-gray-100 shadow-lg flex items-center justify-center transition-transform group-hover:scale-110 ${value.color}`}
+              >
+                {value.icon}
+              </div>
+              <div className="mt-5 text-lg md:text-xl text-[#5C4033] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {value.title}
-              </h3>
+              </div>
             </div>
           ))}
         </div>
