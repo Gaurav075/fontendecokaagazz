@@ -1,15 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  Home,
-  Users,
-  Leaf,
-  ShoppingBag,
-  ShoppingCart,
-  AlbumIcon,
-  ChevronDown,
-} from "lucide-react";
-import { useCart } from "../context/CartContext";
+
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -52,50 +43,6 @@ const Header = () => {
           <span>Home</span>
         </Link>
 
-        {/* About Dropdown */}
-        <div
-          className="relative"
-          onMouseEnter={() => handleMouseEnter("about")}
-          onMouseLeave={handleMouseLeave}
-        >
-          <button className="flex items-center gap-1 text-sm text-[#3d3121] hover:text-kaagazz-green transition">
-            About <ChevronDown size={20} />
-          </button>
-          {hoveredMenu === "about" && (
-            <div className="absolute left-0 top-full mt-2 bg-white shadow-md rounded-md border border-gray-200 w-44 z-50 py-2">
-              <Link to="/community" className="block px-4 py-2 text-sm hover:bg-gray-100">
-                Community
-              </Link>
-              <Link to="/sustainability" className="block px-4 py-2 text-sm hover:bg-gray-100">
-                Sustainability
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Shop Dropdown */}
-        <div
-          className="relative"
-          onMouseEnter={() => handleMouseEnter("shop")}
-          onMouseLeave={handleMouseLeave}
-        >
-          <button className="flex items-center gap-1 text-sm text-[#3d3121] hover:text-kaagazz-green transition">
-            Shop <ChevronDown size={20} />
-          </button>
-          {hoveredMenu === "shop" && (
-            <div className="absolute left-0 top-full mt-2 bg-white shadow-md rounded-md border border-gray-200 w-44 z-50 py-2">
-              <Link to="/shop" className="block px-4 py-2 text-sm hover:bg-gray-100">
-                Store
-              </Link>
-              <Link to="/chitrayan" className="block px-4 py-2 text-sm hover:bg-gray-100">
-                Chitrayan
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Cart */}
-        <Link to="/cart" className="relative text-[#3d3121] hover:text-kaagazz-green">
           <ShoppingCart size={20} />
           {totalItems > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full shadow-md">

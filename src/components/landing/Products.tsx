@@ -28,32 +28,6 @@ const Products = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {products.map((product, index) => (
-            <div key={index} className="group perspective h-[400px]">
-  <div className="flip-card">
-    {/* Front Side */}
-    <div className="flip-front shadow-md">
-      <img
-        src={product.image}
-        alt={product.title}
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute bottom-0 bg-[#5C4033]/70 w-full p-4 text-white text-center font-semibold text-lg">
-        {product.title}
-      </div>
-    </div>
-
-    {/* Back Side */}
-    <div className="flip-back shadow-md bg-white p-6 flex flex-col justify-center items-center text-center">
-      <h3 className="text-xl font-bold text-[#5C4033] mb-3">{product.title}</h3>
-      <p className="text-sm text-[#3A3A3A] mb-4">{product.description}</p>
-      <Link to="/shop">
-        <button className="text-[#5C4033] hover:text-[#3d2a20] text-sm font-medium">
-          Shop Now →
-        </button>
-      </Link>
-    </div>
-  </div>
-</div>
 
           ))}
         </div>

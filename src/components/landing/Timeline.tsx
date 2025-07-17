@@ -32,11 +32,7 @@ const milestones = [
     height: "min-h-[170px]",
   },
   {
-    number: 4,
-    date: "Jan 2025",
-    title: "HerSTART Bootcamp",
-    description:
-      "Completed Bootcamp with GUSEC & UNICEF for women-led startups.",
+
     icon: Rocket,
     image: "/herCamp.jpg",
     height: "min-h-[170px]",
@@ -71,41 +67,19 @@ export default function JourneyTimeline() {
                   }}
                   viewport={{ once: true, amount: 0.4 }}
                 >
-                  {/* Milestone number */}
-                  <div className="w-9 h-9 rounded-full bg-black text-white text-sm font-bold flex items-center justify-center mb-3 shadow-md">
-                    {item.number}
-                  </div>
 
-                  {/* Milestone card */}
-                  <div
-                    className={`bg-white border border-[#ece7dc] rounded-2xl shadow-md px-4 py-4 w-full max-w-[260px] md:max-w-[220px] text-left hover:shadow-lg transition-all duration-300 flex flex-col gap-y-3 ${item.height ?? "min-h-[240px]"}`}
-                  >
-                    {/* Title and date */}
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-10 h-10 rounded-full object-cover border border-gray-200"
-                      />
-                      <div className="flex flex-col text-left">
-                        <h3 className="font-medium text-sm text-[#2e2e2e]">
                           {item.title}
                         </h3>
                         <p className="text-xs text-gray-500">{item.date}</p>
                       </div>
-                    </div>
 
-                    {/* Icon and description */}
-                    <div className="flex items-start gap-2">
-                      <div className="p-1.5 bg-[#f4f1ea] rounded-md">
-                        <Icon className="w-4 h-4 text-[#7a7467]" />
                       </div>
                       <p className="text-xs text-[#5a5a5a] leading-snug">
                         {item.description}
                       </p>
                     </div>
                   </div>
-                </motion.div>
+
               );
             })}
           </div>
