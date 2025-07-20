@@ -8,8 +8,9 @@ import TabNavigation from "../components/community/TabNavigation";
 import AboutCommunity from "../components/community/AboutCommunity";
 import EventsGrid from "../components/community/EventsGrid";
 import InsightsGrid from "../components/community/InsightsGrid";
+import Blog from "../components/community/Blog";
 
-const tabs = ["About community", "Events", "Insights"];
+const tabs = ["About community", "Events", "Insights","Blogs"];
 
 export default function CommunityTabKaagazz() {
   const [activeTab, setActiveTab] = useState("About community");
@@ -30,6 +31,7 @@ export default function CommunityTabKaagazz() {
           {activeTab === "About community" && <AboutCommunity />}
           {activeTab === "Events" && <EventsGrid events={events} />}
           {activeTab === "Insights" && <InsightsGrid insights={insights} />}
+          {activeTab === "Blogs" && <Blog/>}
         </div>
         <Footer />
       </div>
