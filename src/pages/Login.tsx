@@ -2,7 +2,8 @@ import { useState } from "react";
 
 const Login = () => {
   const [form, setForm] = useState({
-    identifier: "", // email or phone
+    identifier: "",
+    otp:"" // email or phone
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -13,20 +14,119 @@ const Login = () => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSendCode = () => {
-    const value = form.identifier.trim();
-    const isEmail = /^\S+@\S+\.\S+$/.test(value);
-    const isPhone = /^[0-9]{10}$/.test(value);
+ const handleSendCode = async () => {
+  const value = form.identifier.trim();
+  const isEmail = /^\S+@\S+\.\S+$/.test(value);
+  const isPhone = /^[0-9]{10}$/.test(value);
 
-    if (!isEmail && !isPhone) {
-      setErrors({ identifier: "Enter a valid email or 10-digit phone number." });
-      return;
+  if (!isEmail && !isPhone) {
+    setErrors({ identifier: "Enter a valid email or 10-digit phone number." });
+    return;
+  }
+
+  try {
+    const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: isEmail ? value : undefined,
+        phone: isPhone ? value : undefined,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Failed to send code");
+
+    setCodeSent(true);
+    setErrors({});
+    alert("Code sent successfully ✔");
+  } catch (err: any) {
+    setErrors({ identifier: err.message || "Send code failed" });
+  }
+};
+const handleVerifyCode = async () => {
+  const value = form.identifier.trim();
+  const { otp } = form;
+  const isEmail = /^\S+@\S+\.\S+$/.test(value);
+  const isPhone = /^[0-9]{10}$/.test(value);
+
+  const newErrors: Record<string, string> = {};
+
+  if (!otp || otp.length !== 6) {
+    newErrors.otp = "Enter a valid 6-digit code.";
+  }
+
+  if (!isEmail && !isPhone) {
+    newErrors.identifier = "Invalid identifier.";
+  }
+
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
+
+  try {
+    const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/verify-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: isEmail ? value : undefined,
+        phone: isPhone ? value : undefined,
+        otp,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Verification failed");
+
+    alert("Login successful 🎉");
+    // Optionally: save token, redirect, etc.
+  } catch (err: any) {
+    setErrors({ otp: err.message || "Login failed" });
+  }
+};
+const handleResendOtp = async () => {
+  if (!form.identifier.trim()) {
+    setErrors((prev) => ({
+      ...prev,
+      identifier: "Please enter your email or phone first.",
+    }));
+    return;
+  }
+
+  const isEmail = /^\S+@\S+\.\S+$/.test(form.identifier);
+  const isPhone = /^[0-9]{10}$/.test(form.identifier);
+
+  if (!isEmail && !isPhone) {
+    setErrors((prev) => ({
+      ...prev,
+      identifier: "Enter a valid email or 10-digit phone number.",
+    }));
+    return;
+  }
+
+  try {
+    const response = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/resend-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: isEmail ? form.identifier : undefined,
+        phone: isPhone ? form.identifier : undefined,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to resend OTP.");
     }
 
-    setErrors({});
-    alert("Code sent successfully ✔"); // Replace with toast if needed
-    setCodeSent(true);
-  };
+    alert("OTP resent successfully ✔");
+  } catch (error: any) {
+    alert(error.message || "Something went wrong while resending OTP.");
+  }
+};
+
 
   return (
     <section className="min-h-screen flex flex-col">
@@ -58,58 +158,85 @@ const Login = () => {
 
     {/* Right form */}
     <div className="w-full md:w-1/2 p-8 flex items-center justify-center relative">
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-5 w-full max-w-sm">
+  <form
+    onSubmit={(e) => e.preventDefault()}
+    className="space-y-5 w-full max-w-sm"
+  >
+    {/* Identifier input */}
+    <div>
+      <label className="text-sm font-medium">Email or Phone:</label>
+      <input
+        type="text"
+        name="identifier"
+        value={form.identifier}
+        onChange={handleChange}
+        className="w-full border-b border-gray-400 py-2 focus:outline-none"
+        placeholder="Enter email or 10-digit phone"
+      />
+      {errors.identifier && (
+        <p className="text-red-500 text-xs">{errors.identifier}</p>
+      )}
+    </div>
+
+    {/* Show "Login with Code" only if OTP not sent */}
+    {!codeSent && (
+      <div>
+        <button
+          type="button"
+          onClick={handleSendCode}
+          className="w-full bg-black text-white py-2 rounded-md transition hover:opacity-90"
+        >
+          Login with Code
+        </button>
+      </div>
+    )}
+
+    {/* OTP input and verify */}
+    {codeSent && (
+      <div className="space-y-4">
         <div>
-          <label className="text-sm font-medium">Email or Phone :</label>
+          <label className="text-sm font-medium">Enter OTP:</label>
           <input
             type="text"
-            name="identifier"
-            value={form.identifier}
+            name="otp"
+            value={form.otp}
             onChange={handleChange}
             className="w-full border-b border-gray-400 py-2 focus:outline-none"
-            placeholder="Enter email or 10-digit phone"
+            placeholder="6-digit code"
           />
-          {errors.identifier && (
-            <p className="text-red-500 text-xs">{errors.identifier}</p>
+          {errors.otp && (
+            <p className="text-red-500 text-xs">{errors.otp}</p>
           )}
         </div>
 
-        <div>
-          <button
-            type="button"
-            onClick={handleSendCode}
-            disabled={codeSent}
-            className={`w-full text-white py-2 rounded-md transition ${
-              codeSent
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-black hover:opacity-90"
-            }`}
-          >
-            Login with Code
-          </button>
-        </div>
+        {/* Verify button styled like login button */}
+        <button
+          type="button"
+          onClick={handleVerifyCode}
+          className="w-full bg-black text-white py-2 rounded-md transition hover:opacity-90"
+        >
+          Verify & Login
+        </button>
 
-        <p className="text-sm text-center mt-4">
-          Didn’t have an account?{" "}
-          <a href="/signup" className="text-black font-semibold underline">
-            Sign up
-          </a>
+        {/* Resend OTP */}
+        <p
+          className="text-xs text-blue-500 mt-1 cursor-pointer hover:underline w-fit"
+          onClick={handleResendOtp}
+        >
+          Resend OTP
         </p>
-      </form>
+      </div>
+    )}
 
-      {/* Resend Link */}
-      {codeSent && (
-        <div className="absolute bottom-4 right-6 text-sm text-blue-600 cursor-pointer hover:underline">
-          <button
-            onClick={() => {
-              alert("Code resent successfully ✔");
-            }}
-          >
-            Resend
-          </button>
-        </div>
-      )}
-    </div>
+    {/* Signup link */}
+    <p className="text-sm text-center mt-4">
+      Didn’t have an account?{" "}
+      <a href="/signup" className="text-black font-semibold underline">
+        Sign up
+      </a>
+    </p>
+  </form>
+</div>
   </div>
 </div>
 
