@@ -19,6 +19,7 @@ import PartnerWithUs from "./pages/PartnerWithUs";
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider } from "./context/authContext";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import Order from "./pages/Order";
@@ -39,6 +40,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <AuthProvider>
+          {/* Wrap your application with AuthProvider to provide auth context */}
         <CartProvider>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -66,6 +69,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CartProvider>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

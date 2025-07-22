@@ -1,14 +1,17 @@
 import { useState } from "react";
+import{useNavigate} from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { useContext } from "react";
 
 const Login = () => {
   const [form, setForm] = useState({
     identifier: "",
     otp:"" // email or phone
   });
-
+const { setUser } = useContext(AuthContext);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [codeSent, setCodeSent] = useState(false);
-
+const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
@@ -25,7 +28,7 @@ const Login = () => {
   }
 
   try {
-    const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -64,7 +67,7 @@ const handleVerifyCode = async () => {
   if (Object.keys(newErrors).length > 0) return;
 
   try {
-    const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/verify-otp", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -78,6 +81,9 @@ const handleVerifyCode = async () => {
     if (!res.ok) throw new Error(data.message || "Verification failed");
 
     alert("Login successful 🎉");
+    localStorage.setItem("token", data.token);
+    setUser(data.user); // ✅ updates header reactively
+    navigate("/");
     // Optionally: save token, redirect, etc.
   } catch (err: any) {
     setErrors({ otp: err.message || "Login failed" });
@@ -104,7 +110,7 @@ const handleResendOtp = async () => {
   }
 
   try {
-    const response = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/resend-otp", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/resend-otp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

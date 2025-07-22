@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { useContext } from "react";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -9,7 +12,8 @@ const Signup = () => {
     otp: "",
 });
 
-
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [otpSent, setOtpSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [resendStatus, setResendStatus] = useState("");
@@ -47,7 +51,7 @@ const handleSendOtp = async () => {
   if (Object.keys(newErrors).length > 0) return;
 
   try {
-    const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/register", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -80,7 +84,7 @@ const handleResendOtp = async () => {
   try {
     setResendStatus("Sending OTP...");
 
-    const response = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/resend-otp", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/resend-otp`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +142,7 @@ const handleSignup = async (e: React.FormEvent) => {
     };
 
     try {
-      const res = await fetch("https://organic-enigma-w6pjx7wqj7g2g66-4003.app.github.dev/api/auth/verify-otp", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -148,6 +152,9 @@ const handleSignup = async (e: React.FormEvent) => {
       if (!res.ok) throw new Error(data.message || "Signup failed");
 
       alert("Signup successful 🎉");
+      localStorage.setItem("token", data.token);
+    setUser(data.user); // ✅ updates header reactively
+    navigate("/");
     } catch (err: any) {
       alert(err.message || "Signup error");
     }
