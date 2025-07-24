@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
+import Profile from "./pages/Profile";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
 import PartnerWithUs from "./pages/PartnerWithUs";
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path = "/signup" element={<Signup/>}/>
+            <Route path="/profile" element={<Profile />} />
             <Route path = "/login" element={<Login/>}/>
             <Route path="/partner" element={<PartnerWithUs />} />
             <Route path="/contact" element={<Contact />} />
