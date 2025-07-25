@@ -1,45 +1,56 @@
-function Hero() {
-  return (
-    <div
-      id="hero1"
-      className="relative py-14 md:py-20 px-2 sm:px-6 lg:px-8 overflow-hidden bg-[#033500] text-center"
-    >
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white">
-        Chitrayan - The Indian Arts Affair
-      </h1>
-      <h4 className="text-lg sm:text-2xl md:text-3xl text-white font-light my-4 md:my-6">
-        Crafting India's Folk Art Through Kaagazz
-      </h4>
-      <p className="text-base sm:text-lg text-gray-200 mx-auto max-w-xl md:max-w-3xl mb-6 md:mb-10">
-        A premium DIY paper‐kit series celebrating the richness of Indian folk
-        traditions, sustainably handmade on Kaagazz's tree‑free sheets.
-      </p>
+import image from "../../assets/whatischitrayan.png";
+const HeroImage = "/public/Chitrayan/HeroImage.png";
 
-      <div
-        id="buttons"
-        className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
-      >
-        <button
-          className="hover:text-gray-400 text-white px-6 sm:px-8 py-3 rounded-md transition-all duration-200 w-full sm:w-auto underline"
-          onClick={() => {
-            const el = document.getElementById("collection-section");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }}
-        >
-          Explore Collection 
-        </button>
-        <button
-          className="hover:text-gray-400 text-white px-6 sm:px-8 py-3 rounded-md transition-all duration-200 w-full sm:w-auto"
-          onClick={() => {
-            const section = document.getElementById("learn-more");
-            if (section) section.scrollIntoView({ behavior: "smooth" });
-          }}
-        >
-          Find More →
-        </button>
+const Hero = () => {
+  return (
+    <section className="mt-12 w-full bg-white text-center">
+      <div className="grid grid-cols-1 md:grid-cols-7 max-w-10xl mx-auto items-center">
+        {/* Left Image */}
+        <div className="hidden md:block col-span-1">
+          <img
+            src={image}
+            alt="Left Hand Drawing"
+            className="w-full h-[350px] object-cover"
+          />
+        </div>
+
+        {/* Center Hero (spans 3 columns for dominance) */}
+        <div className="relative col-span-5">
+          {/* <a href="/products?category=Chitrayan"> */}
+            <img
+              src={HeroImage}
+              alt="Chitrayan Banner"
+              className="w-full h-[500px] object-cover object-center rounded-xl"
+            />
+          {/* </a> */}
+          <div className="absolute inset-0 bg-black/30 rounded-xl flex flex-col justify-center items-center text-white px-6 text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow">
+              Create Your Own Traditional Art
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg mt-4 max-w-xl">
+              Discover the beauty of Madhubani and Kalamkari art with our
+              premium DIY kits. Each kit includes everything you need to create
+              stunning art pieces.
+            </p>
+            <a href="/products?category=Chitrayan">
+              <button className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-md shadow-lg transition-all duration-200">
+                Shop Now
+              </button>
+            </a>
+          </div>
+        </div>
+
+        {/* Right Image */}
+        <div className="hidden md:block col-span-1">
+          <img
+            src={image}
+            alt="Right Hand Drawing"
+            className="w-full h-[350px] object-cover"
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
 
 export default Hero;
