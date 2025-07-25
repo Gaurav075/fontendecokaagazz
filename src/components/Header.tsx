@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import {useContext} from "react";
 import {
   Home,
   Users,
@@ -12,6 +14,7 @@ import {
 import { useCart } from "../context/CartContext";
 
 const Header = () => {
+   const { user } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -105,9 +108,17 @@ const Header = () => {
         </Link>
 
         {/* Login/Signup */}
-        <Link to="/login" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition">
+        {user ? (
+        <Link to="/profile">
+          <img src={user.profilePic || "/dummy-men.png"} alt="Profile" className="w-8 h-8 rounded-full" />
+        </Link>
+      ) : (
+        <div className="flex gap-4">
+          <Link to="/login" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition">
           Login / Signup
         </Link>
+        </div>
+      )}
       </nav>
 
       {/* Mobile Nav Toggle */}
@@ -132,7 +143,16 @@ const Header = () => {
           <Link to="/shop" className="text-[#3d3121]" onClick={toggleMobileMenu}>Store</Link>
           <Link to="/chitrayan" className="text-[#3d3121]" onClick={toggleMobileMenu}>Chitrayan</Link>
           <Link to="/cart" className="text-[#3d3121]" onClick={toggleMobileMenu}>Cart</Link>
-          <Link to="/login" className="text-[#3d3121]" onClick={toggleMobileMenu}>Login / Signup</Link>
+          {user ? (
+            <Link to="/profile" className="flex items-center gap-2 text-[#3d3121]" onClick={toggleMobileMenu}>
+              <img src={user.profilePic || "/dummy-men.png"} alt="Profile" className="w-6 h-6 rounded-full" />
+              <span>Profile</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="text-[#3d3121]" onClick={toggleMobileMenu}>
+              Login / Signup
+            </Link>
+          )}
         </div>
       </div>
     </header>

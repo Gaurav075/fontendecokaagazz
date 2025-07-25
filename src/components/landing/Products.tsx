@@ -20,7 +20,7 @@ const Products = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-[url('/bg1.png')] bg-cover bg-no-repeat bg-center font-serif">
+    <section className="py-20 px-6 bg-[url('/bg2.jpg')] bg-cover bg-no-repeat bg-center font-serif">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-center text-3xl md:text-5xl font-bold text-[#5C4033] mb-16">
           Our Products
