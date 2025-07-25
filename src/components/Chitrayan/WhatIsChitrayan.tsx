@@ -1,13 +1,19 @@
 // const image = "../../assets/whatischitrayan.png";
 
-import image from "../../assets/whatischitrayan.png"
+import image from "../../assets/whatischitrayan.png";
 
 function WhatIsChitrayan() {
   return (
     <>
-      <div id="learn-more" className="w-full grid grid-cols-2 gap-2 px-20 py-16 px-4 sm:px-6 lg:px-8 bg-[#eaddc8]">
+      <div
+        id="learn-more"
+        className="w-full grid grid-cols-2 gap-2 px-20 py-16 px-4 sm:px-6 lg:px-8 relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden"
+      >
+        {/*bg-[#eaddc8]*/}
         <div id="left" className="px-12 text-justify">
-          <h2 className="text-4xl font-bold mb-6 text-black">What is Chitrayan?</h2>
+          <h2 className="font-semibold text-3xl sm:text-4xl md:text-4xl mb-10 text-center">
+            What is Chitrayan?
+          </h2>
           <p className="text-xl text-gray-900 leading-relaxed font-thin">
             Chitrayan is Kaagazz's homage to India's vibrant folk‑art legacy.
             Each kit draws inspiration from regional styles—Madhubani, Warli,
@@ -22,7 +28,9 @@ function WhatIsChitrayan() {
           </p>
         </div>
 
-        <div id="right" className="h-50 w-50"><img src={image} alt="" className="rounded-lg shadow-lg"/></div>
+        <div id="right" className="h-50 w-50">
+          <img src={image} alt="" className="rounded-lg shadow-lg" />
+        </div>
       </div>
     </>
   );
