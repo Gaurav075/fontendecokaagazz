@@ -71,7 +71,7 @@ const handleVerifyCode = async () => {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // credentials: "include",
+      credentials: "include",
       body: JSON.stringify({
         email: isEmail ? value : undefined,
         phone: isPhone ? value : undefined,
