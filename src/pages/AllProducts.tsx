@@ -4,17 +4,33 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5"; // For filter icon on mobile
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper", "Chitrayan"];
 
 const AllProducts = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialCategory = queryParams.get("category") || "All";
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+
+  // Sync state if URL changes (optional but robust)
+  useEffect(() => {
+    const cat = new URLSearchParams(location.search).get("category");
+    if (cat && cat !== selectedCategory) {
+      setSelectedCategory(cat);
+    }
+  }, [location.search]);
+
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const filteredProducts =
     selectedCategory === "All"
       ? products
       : products.filter((p) => p.category === selectedCategory);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -23,7 +39,9 @@ const AllProducts = () => {
       <section className="bg-[#f6f4ef] px-6 py-10 font-serif text-[#1e1e1e]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-14 text-center">
-            <h2 className="text-5xl font-bold tracking-tight">Ecokaagazz Collection</h2>
+            <h2 className="text-5xl font-bold tracking-tight">
+              Ecokaagazz Collection
+            </h2>
             <p className="mt-2 text-lg text-gray-600">
               Curated elegance. Sustainable luxury.
             </p>
@@ -44,16 +62,22 @@ const AllProducts = () => {
           <div className="flex gap-10 flex-col lg:flex-row">
             {/* Desktop Sidebar Filter */}
             <div className="hidden lg:block w-[250px] bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-gray-200 sticky top-28 self-start">
-              <h3 className="text-xl font-semibold mb-4 tracking-tight">Categories</h3>
+              <h3 className="text-xl font-semibold mb-4 tracking-tight">
+                Categories
+              </h3>
               <ul className="space-y-3">
                 {categories.map((cat) => (
                   <li
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => {
+                      setSelectedCategory(cat);
+                      navigate(`/products?category=${encodeURIComponent(cat)}`);
+                    }}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
-                      ${selectedCategory === cat
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-gray-600 border-gray-300 hover:border-black"
+                      ${
+                        selectedCategory === cat
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-gray-600 border-gray-300 hover:border-black"
                       }`}
                   >
                     {cat}
@@ -72,12 +96,16 @@ const AllProducts = () => {
                       key={cat}
                       onClick={() => {
                         setSelectedCategory(cat);
+                        navigate(
+                          `/products?category=${encodeURIComponent(cat)}`
+                        );
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
-                        ${selectedCategory === cat
-                          ? "bg-black text-white border-black"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-black"
+                        ${
+                          selectedCategory === cat
+                            ? "bg-black text-white border-black"
+                            : "bg-white text-gray-600 border-gray-300 hover:border-black"
                         }`}
                     >
                       {cat}
@@ -106,8 +134,12 @@ const AllProducts = () => {
 
                   {/* Product Content */}
                   <div className="p-4 space-y-2">
-                    <h3 className="text-base font-semibold truncate">{product.title}</h3>
-                    <p className="text-xs text-gray-500 line-clamp-2">{product.description}</p>
+                    <h3 className="text-base font-semibold truncate">
+                      {product.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-2">
+                      {product.description}
+                    </p>
 
                     <div className="text-yellow-500 text-xs">
                       {"★".repeat(Math.floor(product.rating))}
@@ -118,9 +150,17 @@ const AllProducts = () => {
 
                     <div className="flex items-center gap-2 text-sm font-medium">
                       <span>₹{product.discountedPrice}</span>
-                      <span className="line-through text-gray-400">₹{product.price}</span>
+                      <span className="line-through text-gray-400">
+                        ₹{product.price}
+                      </span>
                       <span className="text-red-500 text-xs">
-                        -{Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
+                        -
+                        {Math.round(
+                          ((product.price - product.discountedPrice) /
+                            product.price) *
+                            100
+                        )}
+                        %
                       </span>
                     </div>
 

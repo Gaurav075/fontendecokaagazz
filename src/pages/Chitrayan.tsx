@@ -6,18 +6,26 @@ import Benefit from "../components/Chitrayan/Benefit";
 import HowItWorks from "../components/Chitrayan/HowItWorks";
 import TheCollections from "../components/Chitrayan/TheCollections";
 import Impact from "../components/Chitrayan/Impact";
+import Testimonial from "../components/Chitrayan/Testimonial";
+import Sustainability from "../components/Chitrayan/Sustainablity";
+import RevolutionCTA from "../components/landing/RevolutionCTA";
 
 const Chitrayan = () => {
   return (
     <>
-      <Header />
-      <Hero />
-      <WhatIsChitrayan />
-      <Benefit/>
-      <HowItWorks/>
-      <TheCollections/>
-      <Impact/>
-      <Footer />
+      <div className="bg-white">
+        <Header />
+        <Hero />
+        <WhatIsChitrayan />
+        <Benefit />
+        <HowItWorks />
+        <TheCollections />
+        <Impact />
+        <Testimonial />
+        <Sustainability />
+        <RevolutionCTA />
+        <Footer />
+      </div>
     </>
   );
 };

@@ -133,7 +133,7 @@ export const blogs: BlogPost[] = [
     author: "Kaagazz Team",
     category: "Entrepreneurship",
     readTime: "4 min read"
-  }
+  },
 ];
 
 // Get latest 3 blogs for the homepage
