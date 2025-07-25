@@ -31,7 +31,7 @@ const HowItWorks = () => {
   return (
     <>
       <div>
-        <h2 className="font-semibold text-center text-3xl py-12 sm:text-4xl md:text-4xl">How It Works</h2>
+        <h2 className="font-semibold text-center text-3xl py-12 sm:text-4xl md:text-4xl">How To Use</h2>
 
         <div className="px-16 pb-12 grid md:grid-cols-4 gap-8">
           {steps.map((step, index) => (

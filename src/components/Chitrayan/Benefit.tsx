@@ -13,7 +13,7 @@ import { Card, CardContent } from "../ui/card";
 const benefits = [
   {
     icon: <Heart className="w-8 h-8 text-orange-600" />,
-    title: "Celebrating Folk Artistery",
+    title: "Promoting Folk Artistery",
     description:
       "Rediscover regional folk arts, from the geometries of Warli to the mythic stories of Madhubani.",
   },
@@ -36,7 +36,7 @@ const Benefit = () => {
     <>
       <div className="bg-[#033500] text-center">
         <h2 className="font-semibold text-center text-3xl pt-12 sm:text-4xl md:text-4xl text-white">
-          Why Chitrayan Matters
+          Why Chitrayan ?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mx-4 sm:mx-8 md:mx-24 py-8 md:py-12">
           {benefits.map((benefit, index) => (

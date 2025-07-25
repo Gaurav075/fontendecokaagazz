@@ -9,7 +9,7 @@ const Impact = () => {
         </h2>
         <p className="text-center text-lg text-gray-600 max-w-4xl mx-auto">
           "From tree‑free papers to meaningful employment and folk‑art revival,
-          Chitrayan carries forward Kaagazz's mission—one sheet and brushstroke
+          Chitrayan extends Kaagazz's dream by one sheet and brushstroke
           at a time."
         </p>
 
