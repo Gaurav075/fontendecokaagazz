@@ -7,7 +7,7 @@ const testimonials = [
       "I absolutely loved the Madhubani kit! The instructions were clear, and the materials were of excellent quality. My painting turned out beautiful!",
     likes: 12,
     comments: 2,
-    avatar: "https://i.pravatar.cc/40?img=47", // random female avatar
+    avatar: "https://i.pravatar.cc/40?img=47",
   },
   {
     name: "Arjun Patel",
@@ -17,17 +17,17 @@ const testimonials = [
       "The Kalamkari kit was a great experience. It was challenging but rewarding. The finished piece is a stunning addition to my home decor.",
     likes: 8,
     comments: 1,
-    avatar: "https://i.pravatar.cc/40?img=12", // random male avatar
+    avatar: "https://i.pravatar.cc/40?img=12",
   },
 ];
 
 const Testimonial = () => {
   return (
-    <section className="bg-white py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden">
-      <h2 className="font-semibold text-3xl sm:text-4xl md:text-4xl mb-10 text-center">
+    <section className="bg-white py-10 sm:py-12 px-2 sm:px-6 lg:px-8 max-w-4xl mx-auto rounded-xl overflow-hidden">
+      <h2 className="font-semibold text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10 text-center">
         Customer Testimonials
       </h2>
-      <div className="space-y-10">
+      <div className="space-y-8 sm:space-y-10">
         {testimonials.map((t, index) => (
           <div key={index} className="space-y-3">
             {/* Header */}
@@ -43,32 +43,10 @@ const Testimonial = () => {
               </div>
             </div>
 
-            {/* Rating */}
-            {/* <div className="text-yellow-500 text-sm">
-              {Array.from({ length: t.rating }).map((_, i) => (
-                <span key={i}>★</span>
-              ))}
-              {/* {Array.from({ length: 5 - t.rating }).map((_, i) => (
-                <span key={i} className="text-gray-300">
-                  ★
-                </span>
-              ))} }
-            </div> */}
-
             {/* Comment */}
-            <p className="text-sm text-gray-800 leading-relaxed">{t.comment}</p>
-
-            {/* Reactions
-            <div className="flex space-x-4 text-sm text-gray-500">
-              <div className="flex items-center space-x-1">
-                <span>👍</span>
-                <span>{t.likes}</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <span>💬</span>
-                <span>{t.comments}</span>
-              </div>
-            </div> */}
+            <p className="text-sm sm:text-base text-gray-800 leading-relaxed">
+              {t.comment}
+            </p>
 
             {/* Divider */}
             {index < testimonials.length - 1 && (
