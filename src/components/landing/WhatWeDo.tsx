@@ -52,7 +52,7 @@ const WhatWeDo = () => {
   };
 
   return (
-    <section className="py-24 px-6 bg-[url('/bg2.jpg')] bg-cover bg-center bg-no-repeat relative">
+    <section className="py-24 px-6 bg-[url('/bg3.png')] bg-cover bg-center bg-no-repeat relative">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-center text-3xl md:text-5xl font-serif font-bold text-[#5C4033] mb-16 tracking-wide">
           What Do We Do?
@@ -77,7 +77,7 @@ const WhatWeDo = () => {
                         {service.title}
                       </h3>
                     </div>
-                    <p className="text-[#3A3A3A] text-base leading-relaxed font-light">
+                    <p className="text-[#3A3A3A] text-base leading-relaxed font-normal">
                       {service.description}
                     </p>
                   </div>

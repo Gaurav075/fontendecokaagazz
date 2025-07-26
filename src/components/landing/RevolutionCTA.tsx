@@ -20,9 +20,9 @@ const RevolutionCTA = () => {
       Be part of our sustainable movement transforming waste into beautiful
       paper products.
     </p>
-    <Link to="/contact">
+    <Link to="/community">
       <button className="bg-white text-black px-6 py-3 rounded-md flex items-center mx-auto hover:bg-gray-100 transition-colors">
-        Get Involved
+        Join Our Community
         <ArrowRight className="ml-2 h-5 w-5" />
       </button>
     </Link>
