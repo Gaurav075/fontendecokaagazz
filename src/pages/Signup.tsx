@@ -38,13 +38,12 @@ const Signup = () => {
 const handleSendOtp = async () => {
   const input = form.inputValue?.trim() || "";
   const fullname = form.fullname?.trim() || "";
-  const isPhone = /^[0-9]{10}$/.test(input);
   const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
 
   const newErrors: Record<string, string> = {};
   if (!fullname) newErrors.fullname = "Full name is required.";
-  if (!input || (!isPhone && !isEmail)) {
-    newErrors.inputValue = "Enter a valid email or 10-digit phone.";
+  if (!input || !isEmail) {
+    newErrors.inputValue = "Enter a valid email address.";
   }
 
   setErrors(newErrors);
@@ -56,19 +55,17 @@ const handleSendOtp = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         fullname,
-        email: isEmail ? input : undefined,
-        phone: isPhone ? input : undefined,
+        email: input,
       }),
     });
 
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Failed to send OTP");
 
-    // Update form state to store email or phone for next step
+    // Update form state with email only
     setForm((prev) => ({
       ...prev,
-      email: isEmail ? input : "",
-      phone: isPhone ? input : "",
+      email: input,
     }));
 
     setOtpSent(true);
@@ -78,6 +75,7 @@ const handleSendOtp = async () => {
     setErrors({ inputValue: err.message });
   }
 };
+
 
 
 const handleResendOtp = async () => {
@@ -153,6 +151,7 @@ const handleSignup = async (e: React.FormEvent) => {
 
       alert("Signup successful 🎉");
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
     setUser(data.user); // ✅ updates header reactively
     navigate("/");
     } catch (err: any) {
@@ -202,15 +201,15 @@ const handleSignup = async (e: React.FormEvent) => {
               </div>
 
               <div>
-                   <label className="text-sm font-medium">Email or Phone:</label>
+                  <label className="text-sm font-medium">Email:</label>
                   <div className="flex gap-2">
                     <input
-                      type="text"
+                      type="email" // ✅ Only accepts email input
                       name="inputValue"
                       value={form.inputValue}
                       onChange={handleChange}
                       className="flex-grow border-b border-gray-400 py-2 focus:outline-none"
-                      placeholder="Enter Email or 10-digit Phone"
+                      placeholder="Enter your email"
                     />
                     <button
                       type="button"
@@ -224,11 +223,12 @@ const handleSignup = async (e: React.FormEvent) => {
                     >
                       {otpSent ? "OTP Sent" : "Send OTP"}
                     </button>
-                </div>
+                  </div>
                   {errors.inputValue && (
                     <p className="text-red-500 text-xs">{errors.inputValue}</p>
                   )}
                 </div>
+
 
                 {otpSent && (
                 <div>

@@ -14,7 +14,7 @@ import {
 import { useCart } from "../context/CartContext";
 
 const Header = () => {
-   const { user } = useContext(AuthContext);
+   const { user,loading } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -108,17 +108,29 @@ const Header = () => {
         </Link>
 
         {/* Login/Signup */}
-        {user ? (
-        <Link to="/profile">
-          <img src={user.profilePic || "/dummy-men.png"} alt="Profile" className="w-8 h-8 rounded-full" />
-        </Link>
-      ) : (
-        <div className="flex gap-4">
-          <Link to="/login" className="text-sm text-[#3d3121] hover:text-kaagazz-green transition">
-          Login / Signup
-        </Link>
-        </div>
-      )}
+       {loading ? (
+  // While loading, show nothing or a spinner (optional)
+  <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+) : user ? (
+  <Link to="/profile">
+    <img
+      src={user.profilePic || "/dummy-men.png"}
+      alt="Profile"
+      className="w-8 h-8 rounded-full"
+    />
+  </Link>
+) : (
+  <div className="flex gap-4">
+    <Link
+      to="/login"
+      className="text-sm text-[#3d3121] hover:text-kaagazz-green transition"
+    >
+      Login / Signup
+    </Link>
+  </div>
+)}
+
+
       </nav>
 
       {/* Mobile Nav Toggle */}
