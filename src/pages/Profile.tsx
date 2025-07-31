@@ -46,7 +46,7 @@ const Profile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/update-profile`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/update-user`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
