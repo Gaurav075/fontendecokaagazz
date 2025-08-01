@@ -1,12 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { products } from "../data/product";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
+import RelatedProducts from "../components/shop/RelatedProducts";
 
 const ProductDetails = () => {
+  const [product, setProduct] = useState<any>();
   const { id } = useParams<{ id: string }>();
-  const product = products.find((p) => p.id === id);
   const { addToCart } = useCart();
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -15,6 +15,37 @@ const ProductDetails = () => {
   useEffect(() => {
     setSelectedImageIndex(0);
     setFeedback("");
+
+    const fetchProductWithId = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/product/${id}`);
+        const data = await response.json();
+        if (data.success && data.product) {
+          const prod = data.product;
+
+          // compute discounted price
+          const discountedPrice = Math.round(prod.originalPrice * (1 - prod.discountPercent / 100));
+
+          setProduct({
+            id: prod._id,
+            title: prod.title,
+            description: prod.description,
+            images: prod.images,
+            price: prod.originalPrice,
+            discountedPrice,
+            stockLeft: prod.stock,
+            isBulkAvailable: prod.tags.includes("bulk"),
+            bulkMinQty: 10, // hardcoded or adjust if provided in future
+            certifiedSustainable: prod.tags.includes("eco-friendly"),
+            category: prod.category,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    fetchProductWithId();
   }, [id]);
 
   if (!product) {
@@ -52,7 +83,6 @@ const ProductDetails = () => {
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Product Images */}
           <div className="space-y-6">
             <div className="w-full">
               <img
@@ -76,7 +106,6 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* Product Info */}
           <div className="space-y-6">
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 mt-2">
               {title}
@@ -87,7 +116,6 @@ const ProductDetails = () => {
             </p>
             <p className="text-base text-neutral-700 leading-7">{description}</p>
 
-            {/* Price & Stock */}
             <div className="space-y-2 mt-2">
               <div className="flex items-center gap-3">
                 <p className="text-3xl font-extrabold text-green-700">₹{discountedPrice}</p>
@@ -106,7 +134,6 @@ const ProductDetails = () => {
               )}
             </div>
 
-            {/* Action Buttons */}
             <div className="flex flex-col gap-4 mt-6">
               <div className="flex flex-wrap gap-4">
                 <button
@@ -120,9 +147,14 @@ const ProductDetails = () => {
                 >
                   🛒 Add to Cart
                 </button>
-                <button className="bg-gray-100 text-black border border-gray-300 px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition self-start">
-                📦 Bulk Order
-              </button>
+                <Link
+                to={`/products/${id}/bulk`}
+                >
+                                <button className="bg-gray-100 text-black border border-gray-300 px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition self-start">
+                  📦 Bulk Order
+                </button>
+                </Link>
+
               </div>
               {feedback && (
                 <div className="text-green-600 text-sm font-medium mt-2">{feedback}</div>
@@ -130,46 +162,9 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-
-        {/* Related Products */}
-        <section className="mt-24 pt-14">
-          <h2 className="text-2xl font-bold text-neutral-800 mb-6 border-b pb-2">Related Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            {products
-              .filter((p) => p.category === category && p.id !== id)
-              .slice(0, 3)
-              .map((related) => (
-                <Link to={`/products/${related.id}`} key={related.id}>
-                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group border border-gray-100">
-                    <div className="relative">
-                      <img
-                        src={related.images?.[0] || related.image}
-                        alt={related.title}
-                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <span className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
-                        {Math.round(((related.price - related.discountedPrice) / related.price) * 100)}% OFF
-                      </span>
-                    </div>
-                    <div className="p-4 space-y-1">
-                      <h3 className="text-lg font-semibold text-neutral-800 group-hover:text-black">
-                        {related.title}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <p className="text-green-700 font-bold text-base">₹{related.discountedPrice}</p>
-                        <span className="text-sm line-through text-gray-400">₹{related.price}</span>
-                      </div>
-                      <div className="flex gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className="text-yellow-400 text-xs">★</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </section>
+        <div className="py-7 px-4 w-full">
+            <RelatedProducts currentProductId={product._id} />
+        </div>
       </main>
     </>
   );

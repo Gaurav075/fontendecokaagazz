@@ -1,20 +1,53 @@
 import Header from "../components/Header";
-import { products } from "../data/product";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { IoFilter } from "react-icons/io5"; // For filter icon on mobile
+import { useEffect, useState } from "react";
+import { IoFilter } from "react-icons/io5";
 
 const categories = ["All", "Stationery", "Gift Sets", "Paper"];
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [products, setProducts] = useState([]);
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((p) => p.category === selectedCategory);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const url =
+          selectedCategory === "All"
+            ? `${import.meta.env.VITE_BACKEND_URL}/api/product/list`
+            : `${import.meta.env.VITE_BACKEND_URL}/api/product/category/${selectedCategory}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        setProducts(data.products || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching products", err);
+        setError("Failed to load products.");
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [selectedCategory]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-10">{error}</div>;
+  }
 
   return (
     <>
@@ -23,7 +56,9 @@ const AllProducts = () => {
       <section className="bg-[#f6f4ef] px-6 py-10 font-serif text-[#1e1e1e]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-14 text-center">
-            <h2 className="text-5xl font-bold tracking-tight">Ecokaagazz Collection</h2>
+            <h2 className="text-5xl font-bold tracking-tight">
+              Ecokaagazz Collection
+            </h2>
             <p className="mt-2 text-lg text-gray-600">
               Curated elegance. Sustainable luxury.
             </p>
@@ -44,16 +79,19 @@ const AllProducts = () => {
           <div className="flex gap-10 flex-col lg:flex-row">
             {/* Desktop Sidebar Filter */}
             <div className="hidden lg:block w-[250px] bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-gray-200 sticky top-28 self-start">
-              <h3 className="text-xl font-semibold mb-4 tracking-tight">Categories</h3>
+              <h3 className="text-xl font-semibold mb-4 tracking-tight">
+                Categories
+              </h3>
               <ul className="space-y-3">
                 {categories.map((cat) => (
                   <li
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
-                      ${selectedCategory === cat
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-gray-600 border-gray-300 hover:border-black"
+                      ${
+                        selectedCategory === cat
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-gray-600 border-gray-300 hover:border-black"
                       }`}
                   >
                     {cat}
@@ -75,9 +113,10 @@ const AllProducts = () => {
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
-                        ${selectedCategory === cat
-                          ? "bg-black text-white border-black"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-black"
+                        ${
+                          selectedCategory === cat
+                            ? "bg-black text-white border-black"
+                            : "bg-white text-gray-600 border-gray-300 hover:border-black"
                         }`}
                     >
                       {cat}
@@ -89,16 +128,16 @@ const AllProducts = () => {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
-              {filteredProducts.map((product) => (
+               {products.map((product) => (
                 <Link
-                  to={`/products/${product.id}`}
-                  key={product.id}
+                  to={`/products/${product._id}`}
+                  key={product._id}
                   className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all group"
                 >
                   {/* Product Image */}
                   <div className="w-full aspect-[4/5] overflow-hidden">
                     <img
-                      src={product.images[0]}
+                      src={product.images?.[0]}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
@@ -106,21 +145,33 @@ const AllProducts = () => {
 
                   {/* Product Content */}
                   <div className="p-4 space-y-2">
-                    <h3 className="text-base font-semibold truncate">{product.title}</h3>
-                    <p className="text-xs text-gray-500 line-clamp-2">{product.description}</p>
+                    <h3 className="text-base font-semibold truncate">
+                      {product.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-2">
+                      {product.description}
+                    </p>
 
                     <div className="text-yellow-500 text-xs">
-                      {"★".repeat(Math.floor(product.rating))}
+                      {"★".repeat(Math.floor(product.rating || 4))}
                       <span className="text-gray-400 ml-1">
                         ({Math.floor(Math.random() * 2000) + 1000})
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 text-sm font-medium">
-                      <span>₹{product.discountedPrice}</span>
-                      <span className="line-through text-gray-400">₹{product.price}</span>
+                      <span>
+                        ₹
+                        {Math.floor(
+                          product.originalPrice *
+                            (1 - product.discountPercent / 100)
+                        )}
+                      </span>
+                      <span className="line-through text-gray-400">
+                        ₹{product.originalPrice}
+                      </span>
                       <span className="text-red-500 text-xs">
-                        -{Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
+                        -{product.discountPercent}%
                       </span>
                     </div>
 

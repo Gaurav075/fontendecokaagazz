@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
 import AllProducts from "./pages/AllProducts";
+import BulkOrder from './pages/Bulk'
 import ProductDetails from "./pages/ProductDetails";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import Signup from "./pages/Signup"
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/shop" element={<Shop />} />
             <Route path="/products" element={<AllProducts />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/products/:id/bulk" element={<BulkOrder />} />
             <Route path="/cart" element={<Cart />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path = "/signup" element={<Signup/>}/>
