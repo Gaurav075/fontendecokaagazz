@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
+import Profile from "./pages/Profile";
 import AllProducts from "./pages/AllProducts";
 import BulkOrder from './pages/Bulk'
 import ProductDetails from "./pages/ProductDetails";
@@ -20,6 +21,7 @@ import PartnerWithUs from "./pages/PartnerWithUs";
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider } from "./context/authContext";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import Order from "./pages/Order";
@@ -40,6 +42,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <AuthProvider>
+          {/* Wrap your application with AuthProvider to provide auth context */}
         <CartProvider>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -51,6 +55,7 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path = "/signup" element={<Signup/>}/>
+            <Route path="/profile" element={<Profile />} />
             <Route path = "/login" element={<Login/>}/>
             <Route path="/partner" element={<PartnerWithUs />} />
             <Route path="/contact" element={<Contact />} />
@@ -68,6 +73,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CartProvider>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

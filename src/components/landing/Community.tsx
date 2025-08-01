@@ -15,9 +15,9 @@ const Community = () => {
             <li className="whitespace-nowrap">🤝 Collaborate on real-world projects</li>
             <li className="whitespace-nowrap">🗳️ Influence future initiatives</li>
           </ul>
-          <Link to="/community">
+          <Link to="/partner">
             <button className="mt-4 px-6 py-3 bg-[#5D4037] text-white rounded-full text-sm hover:bg-[#3e2f22] transition-colors duration-300">
-              Join Our Community
+              Become a Community Partner
             </button>
           </Link>
         </div>
