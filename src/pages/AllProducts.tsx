@@ -1,13 +1,23 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { IoFilter } from "react-icons/io5";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper", "Chitrayan"];
 
 const AllProducts = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialCategory = queryParams.get("category") || "All";
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+
+  // Sync state if URL changes (optional but robust)
+  useEffect(() => {
+    const cat = new URLSearchParams(location.search).get("category");
+    if (cat && cat !== selectedCategory) {
+      setSelectedCategory(cat);
+    }
+  }, [location.search]);
+
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -49,6 +59,8 @@ const AllProducts = () => {
     return <div className="text-center text-red-500 mt-10">{error}</div>;
   }
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Header />
@@ -86,7 +98,10 @@ const AllProducts = () => {
                 {categories.map((cat) => (
                   <li
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => {
+                      setSelectedCategory(cat);
+                      navigate(`/products?category=${encodeURIComponent(cat)}`);
+                    }}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
                       ${
                         selectedCategory === cat
@@ -110,6 +125,9 @@ const AllProducts = () => {
                       key={cat}
                       onClick={() => {
                         setSelectedCategory(cat);
+                        navigate(
+                          `/products?category=${encodeURIComponent(cat)}`
+                        );
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
@@ -160,18 +178,7 @@ const AllProducts = () => {
                     </div>
 
                     <div className="flex items-center gap-2 text-sm font-medium">
-                      <span>
-                        ₹
-                        {Math.floor(
-                          product.originalPrice *
-                            (1 - product.discountPercent / 100)
-                        )}
-                      </span>
-                      <span className="line-through text-gray-400">
-                        ₹{product.originalPrice}
-                      </span>
-                      <span className="text-red-500 text-xs">
-                        -{product.discountPercent}%
+
                       </span>
                     </div>
 
