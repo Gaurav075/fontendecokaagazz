@@ -1,14 +1,24 @@
 import React from "react";
 
 const HeroSection = () => (
-  <div className="relative h-[350px] w-full font-serif">
+  <div className="relative h-[360px] md:h-[420px] w-full font-serif overflow-hidden">
+    {/* Background Image */}
     <img
-      src="/carousel3.png"
+      src="/carousel.png"
       alt="Sustainability Banner"
-      className="absolute inset-0 w-full h-full object-cover opacity-70"
+      className="absolute inset-0 w-full h-full object-cover brightness-75"
     />
-    <div className="absolute inset-0 bg-gradient-to-t from-beige to-transparent flex justify-center items-center">
-      <h1 className="text-4xl md:text-5xl text-white font-bold text-center px-6 leading-snug">
+
+    {/* Gradient Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-[#4E342E]/70 via-transparent to-transparent" />
+
+    {/* Heading */}
+    <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-8">
+      <h1
+        className="text-white text-center font-bold leading-tight drop-shadow-md
+                  max-w-[90vw] md:max-w-4xl lg:max-w-full
+                  text-[20px] sm:text-[24px] md:text-[30px] lg:text-[36px] xl:text-[42px]
+                  whitespace-normal lg:whitespace-nowrap">
         Sustainability at Kaagazz: Preserving Nature, One Page at a Time
       </h1>
     </div>

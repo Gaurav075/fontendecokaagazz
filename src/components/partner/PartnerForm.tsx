@@ -1,70 +1,77 @@
-import { useState } from 'react';
-import emailjs from '@emailjs/browser';
-
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID!;
-const TEMPLATE_USER_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_USER_ID!;
-const TEMPLATE_ADMIN_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ADMIN_ID!;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY!;
+import { useState } from "react";
 
 const PartnerWithUs = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    service: '',
-    phone: '',
-    timeFrame: '',
-    message: '',
+    name: "",
+    company: "",
+    email: "",
+    service: "",
+    phone: "",
+    timeFrame: "",
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const services = [
-    'CSR',
-    'Company Drive',
-    'Print With Us',
-    'Sustainability Collaboration',
-    'Others',
+    "CSR",
+    "Company Drive",
+    "Print With Us",
+    "Sustainability Collaboration",
+    "Others",
   ];
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form reload
     setIsSubmitting(true);
-    setStatus('');
-
-    const templateParams = {
-      ...formData,
-      time: new Date().toLocaleString(),
-    };
+    setStatus("");
 
     try {
-      // Send confirmation to user
-      await emailjs.send(SERVICE_ID, TEMPLATE_USER_ID, templateParams, PUBLIC_KEY);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/partner/connect`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullname: formData.name,
+            companyName: formData.company,
+            email: formData.email,
+            phone: formData.phone,
+            serviceType: formData.service,
+            estimatedTime: formData.timeFrame,
+            notes: formData.message,
+          }),
+        }
+      );
 
-      // Send form data to admin
-      await emailjs.send(SERVICE_ID, TEMPLATE_ADMIN_ID, templateParams, PUBLIC_KEY);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData?.error || "Form submission failed");
+      }
 
-      setStatus('Form submitted successfully. Thank you!');
+      setStatus("✅ Form submitted successfully. We'll contact you soon!");
       setFormData({
-        name: '',
-        company: '',
-        email: '',
-        service: '',
-        phone: '',
-        timeFrame: '',
-        message: '',
+        name: "",
+        company: "",
+        email: "",
+        service: "",
+        phone: "",
+        timeFrame: "",
+        message: "",
       });
     } catch (error) {
-      console.error('Error sending emails:', error);
-      setStatus('Something went wrong. Please try again later.');
+      console.error("Error submitting form:", error);
+      setStatus("❌ Something went wrong. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -77,9 +84,14 @@ const PartnerWithUs = () => {
           Partner With Us
         </h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="flex flex-col">
-            <label className="text-sm font-medium text-neutral-700 mb-1">Full Name</label>
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-neutral-700 mb-1">
+              Full Name
+            </label>
             <input
               type="text"
               name="name"
@@ -91,7 +103,9 @@ const PartnerWithUs = () => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-neutral-700 mb-1">Company Name</label>
+            <label className="text-sm font-medium text-neutral-700 mb-1">
+              Company Name
+            </label>
             <input
               type="text"
               name="company"
@@ -103,7 +117,9 @@ const PartnerWithUs = () => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-neutral-700 mb-1">Email</label>
+            <label className="text-sm font-medium text-neutral-700 mb-1">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -115,7 +131,9 @@ const PartnerWithUs = () => {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-neutral-700 mb-1">Phone Number</label>
+            <label className="text-sm font-medium text-neutral-700 mb-1">
+              Phone Number
+            </label>
             <input
               type="tel"
               name="phone"
@@ -127,7 +145,9 @@ const PartnerWithUs = () => {
           </div>
 
           <div className="flex flex-col md:col-span-2">
-            <label className="text-sm font-medium text-neutral-700 mb-1">Service Type</label>
+            <label className="text-sm font-medium text-neutral-700 mb-1">
+              Service Type
+            </label>
             <select
               name="service"
               required
@@ -179,9 +199,17 @@ const PartnerWithUs = () => {
               disabled={isSubmitting}
               className="bg-black text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-neutral-800 transition-all duration-300"
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              {isSubmitting ? "Submitting..." : "Submit Request"}
             </button>
-            {status && <p className="mt-4 text-sm text-neutral-600">{status}</p>}
+            {status && (
+              <p
+                className={`mt-4 text-sm font-medium ${
+                  status.startsWith("✅") ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {status}
+              </p>
+            )}
           </div>
         </form>
       </div>
