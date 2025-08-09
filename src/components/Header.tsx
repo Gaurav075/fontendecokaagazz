@@ -109,15 +109,20 @@ const Header = () => {
 
         {/* Login/Signup */}
        {loading ? (
-  // While loading, show nothing or a spinner (optional)
   <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
 ) : user ? (
   <Link to="/profile">
-    <img
-      src={user.profilePic || "/dummy-men.png"}
-      alt="Profile"
-      className="w-8 h-8 rounded-full"
-    />
+    <div
+      className="w-8 h-8 rounded-full flex items-center justify-center font-semibold shadow-sm"
+      style={{
+        backgroundColor: "#D2B48C", // light brown circle
+        color: "#3d3121",           // dark brown letter
+      }}
+    >
+      {(user.name || user.fullname || user.username || "U")
+        .charAt(0)
+        .toUpperCase()}
+    </div>
   </Link>
 ) : (
   <div className="flex gap-4">
@@ -129,8 +134,6 @@ const Header = () => {
     </Link>
   </div>
 )}
-
-
       </nav>
 
       {/* Mobile Nav Toggle */}
@@ -156,15 +159,34 @@ const Header = () => {
           <Link to="/chitrayan" className="text-[#3d3121]" onClick={toggleMobileMenu}>Chitrayan</Link>
           <Link to="/cart" className="text-[#3d3121]" onClick={toggleMobileMenu}>Cart</Link>
           {user ? (
-            <Link to="/profile" className="flex items-center gap-2 text-[#3d3121]" onClick={toggleMobileMenu}>
-              <img src={user.profilePic || "/dummy-men.png"} alt="Profile" className="w-6 h-6 rounded-full" />
-              <span>Profile</span>
-            </Link>
-          ) : (
-            <Link to="/login" className="text-[#3d3121]" onClick={toggleMobileMenu}>
-              Login / Signup
-            </Link>
-          )}
+          <Link
+            to="/profile"
+            className="flex items-center gap-2 text-[#3d3121]"
+            onClick={toggleMobileMenu}
+          >
+            <div
+              className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-semibold shadow-sm"
+              style={{
+                backgroundColor: "#D2B48C", // light brown circle
+                color: "#3d3121"           // dark brown text
+              }}
+            >
+              {(user.name || user.fullname || user.username || "U")
+                .charAt(0)
+                .toUpperCase()}
+            </div>
+            <span>Profile</span>
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className="text-[#3d3121]"
+            onClick={toggleMobileMenu}
+          >
+            Login / Signup
+          </Link>
+        )}
+
         </div>
       </div>
     </header>
