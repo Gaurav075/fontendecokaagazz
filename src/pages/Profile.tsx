@@ -67,15 +67,6 @@ const Profile = () => {
       alert("Update failed");
     }
   };
-
-//   useEffect(() => {
-//   if (!loading && user) {
-//     setForm(user);
-//   }
-//   if (!loading && !user) {
-//     navigate("/login");
-//   }
-// }, [user, loading]);
 useEffect(() => {
   if (!loading && user) {
     setForm(user); // get user from context, no need to hit /me again
@@ -99,13 +90,26 @@ useEffect(() => {
       <main className="min-h-[calc(100vh-160px)] bg-[#fefaf4] flex justify-center items-center px-4">
         <div className="bg-white rounded-2xl shadow-md max-w-md w-full p-6 space-y-4">
           <div className="text-center">
+          {user.profilePic ? (
             <img
-              src={user.profilePic || "/dummy-men.png"}
+              src={user.profilePic}
               alt="Profile"
               className="w-24 h-24 rounded-full mx-auto shadow"
             />
-          </div>
-
+          ) : (
+            <div
+              className="w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow text-4xl font-bold"
+              style={{
+                backgroundColor: "#D2B48C", // light brown
+                color: "#3d3121",           // dark brown
+              }}
+            >
+              {(user.name || user.fullname || user.username || "U")
+                .charAt(0)
+                .toUpperCase()}
+            </div>
+          )}
+        </div>
           {/* Editable Form */}
           <div className="space-y-4">
             <input

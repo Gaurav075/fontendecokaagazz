@@ -1,3 +1,4 @@
+// pages/partner.tsx
 import PartnerForm from '../components/partner/PartnerForm';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
