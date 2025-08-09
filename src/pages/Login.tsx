@@ -42,38 +42,56 @@ const Login = () => {
   };
 
   const handleVerifyCode = async () => {
-    const value = form.identifier.trim();
-    const { otp } = form;
+  const value = form.identifier.trim();
+  const { otp } = form;
 
-    const newErrors: Record<string, string> = {};
-    if (!otp || otp.length !== 6) newErrors.otp = "Enter a valid 6-digit code.";
+  const newErrors: Record<string, string> = {};
+  if (!otp || otp.length !== 6) newErrors.otp = "Enter a valid 6-digit code.";
 
-    const isEmail = /^\S+@\S+\.\S+$/.test(value);
-    if (!isEmail) newErrors.identifier = "Invalid email.";
+  const isEmail = /^\S+@\S+\.\S+$/.test(value);
+  if (!isEmail) newErrors.identifier = "Invalid email.";
 
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
 
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email: value, otp }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Verification failed");
+
+    // Save user and token
+    localStorage.setItem("token", data.accessToken);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    setUser(data.user);
+
+    // ✅ IMMEDIATELY CALL REFRESH to ensure the cookie is read and accessToken is fresh
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`, {
+      const refreshRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/refresh-token`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email: value, otp }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Verification failed");
-
-      alert("Login successful 🎉");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      navigate("/");
-    } catch (err: any) {
-      setErrors({ otp: err.message || "Login failed" });
+      const refreshData = await refreshRes.json();
+      if (refreshRes.ok && refreshData.accessToken) {
+        localStorage.setItem("token", refreshData.accessToken);
+      }
+    } catch (refreshErr) {
+      console.error("Refresh token error after login:", refreshErr);
     }
-  };
+
+    alert("Login successful 🎉");
+    navigate("/");
+  } catch (err: any) {
+    setErrors({ otp: err.message || "Login failed" });
+  }
+};
+
 
   const handleResendOtp = async () => {
     const value = form.identifier.trim();

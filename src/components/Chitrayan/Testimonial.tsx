@@ -23,8 +23,8 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <section className="bg-white py-10 sm:py-12 px-2 sm:px-6 lg:px-8 max-w-4xl mx-auto rounded-xl overflow-hidden">
-      <h2 className="font-semibold text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10 text-center">
+    <section className="bg-white py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative w-full rounded-xl overflow-hidden">
+      <h2 className="font-semibold text-3xl sm:text-4xl md:text-4xl mb-10 text-center">
         Customer Testimonials
       </h2>
       <div className="space-y-8 sm:space-y-10">
