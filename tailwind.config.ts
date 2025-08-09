@@ -88,7 +88,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        'texture': "url('/public/lovable-uploads/704ff350-8c03-48fb-870e-8b89618f79a7.png')",
+        'texture': "url('lovable-uploads/704ff350-8c03-48fb-870e-8b89618f79a7.png')",
         'paper': "url('/paper-texture.png')",
       },
     },
