@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
-import {useContext} from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Home,
   Users,
@@ -10,15 +11,20 @@ import {
   ShoppingCart,
   AlbumIcon,
   ChevronDown,
+  User,
+  Package,
+  LogOut,
 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 const Header = () => {
-   const { user,loading } = useContext(AuthContext);
+  const { user, setUser, loading } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
   const { totalItems } = useCart();
+  
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -32,7 +38,35 @@ const Header = () => {
   const handleMouseLeave = () => {
     hoverTimeout.current = setTimeout(() => {
       setHoveredMenu(null);
-    }, 500); // 3 seconds
+    }, 500);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const latestToken = localStorage.getItem("token"); 
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${latestToken}`,
+        },
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Logout failed");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("Logout failed");
+    }
+  };
+
+  // Get user's first character for avatar
+  const getUserInitial = () => {
+    return (user.name || user.fullname || user.username || "U")
+      .charAt(0)
+      .toUpperCase();
   };
 
   return (
@@ -107,33 +141,93 @@ const Header = () => {
           )}
         </Link>
 
-        {/* Login/Signup */}
-       {loading ? (
-  <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
-) : user ? (
-  <Link to="/profile">
-    <div
-      className="w-8 h-8 rounded-full flex items-center justify-center font-semibold shadow-sm"
-      style={{
-        backgroundColor: "#D2B48C", // light brown circle
-        color: "#3d3121",           // dark brown letter
-      }}
-    >
-      {(user.name || user.fullname || user.username || "U")
-        .charAt(0)
-        .toUpperCase()}
-    </div>
-  </Link>
-) : (
-  <div className="flex gap-4">
-    <Link
-      to="/login"
-      className="text-sm text-[#3d3121] hover:text-kaagazz-green transition"
-    >
-      Login / Signup
-    </Link>
-  </div>
-)}
+        {/* Profile/Login Section */}
+        {loading ? (
+          // While loading, show loading placeholder
+          <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+        ) : user ? (
+          // Profile Dropdown
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter("profile")}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition">
+              {/* Profile Image or Character Avatar */}
+              {user.profilePic ? (
+                <img
+                  src={user.profilePic}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
+                />
+              ) : (
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-semibold shadow-sm border-2 border-gray-200"
+                  style={{
+                    backgroundColor: "#D2B48C", // light brown circle
+                    color: "#3d3121",           // dark brown letter
+                  }}
+                >
+                  {getUserInitial()}
+                </div>
+              )}
+              <ChevronDown size={16} className="text-[#3d3121]" />
+            </button>
+            
+            {hoveredMenu === "profile" && (
+              <div className="absolute right-0 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 w-48 z-50 py-2">
+                {/* User Info */}
+                <div className="px-4 py-2 border-b border-gray-100">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user.fullname || user.name}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate">
+                    {user.email}
+                  </p>
+                </div>
+                
+                {/* Profile Link */}
+                <Link 
+                  to="/profile" 
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                  onClick={() => setHoveredMenu(null)}
+                >
+                  <User size={16} />
+                  <span>My Profile</span>
+                </Link>
+                
+                {/* My Orders Link */}
+                <Link 
+                  to="/my-orders" 
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                  onClick={() => setHoveredMenu(null)}
+                >
+                  <Package size={16} />
+                  <span>My Orders</span>
+                </Link>
+                
+                {/* Logout Button */}
+                <button 
+                  onClick={handleLogout}
+                  className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition w-full text-left border-t border-gray-100 mt-1"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          // Login/Signup for non-authenticated users
+          <div className="flex gap-4">
+            <Link
+              to="/login"
+              className="text-sm text-[#3d3121] hover:text-kaagazz-green transition"
+            >
+              Login / Signup
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Mobile Nav Toggle */}
@@ -158,35 +252,63 @@ const Header = () => {
           <Link to="/shop" className="text-[#3d3121]" onClick={toggleMobileMenu}>Store</Link>
           <Link to="/chitrayan" className="text-[#3d3121]" onClick={toggleMobileMenu}>Chitrayan</Link>
           <Link to="/cart" className="text-[#3d3121]" onClick={toggleMobileMenu}>Cart</Link>
+          
           {user ? (
-          <Link
-            to="/profile"
-            className="flex items-center gap-2 text-[#3d3121]"
-            onClick={toggleMobileMenu}
-          >
-            <div
-              className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-semibold shadow-sm"
-              style={{
-                backgroundColor: "#D2B48C", // light brown circle
-                color: "#3d3121"           // dark brown text
-              }}
-            >
-              {(user.name || user.fullname || user.username || "U")
-                .charAt(0)
-                .toUpperCase()}
-            </div>
-            <span>Profile</span>
-          </Link>
-        ) : (
-          <Link
-            to="/login"
-            className="text-[#3d3121]"
-            onClick={toggleMobileMenu}
-          >
-            Login / Signup
-          </Link>
-        )}
-
+            <>
+              {/* User Info in Mobile */}
+              <div className="border-t border-gray-200 pt-4">
+                <div className="flex items-center gap-3 mb-3">
+                  {/* Mobile Profile Image or Character Avatar */}
+                  {user.profilePic ? (
+                    <img 
+                      src={user.profilePic} 
+                      alt="Profile" 
+                      className="w-8 h-8 rounded-full object-cover border-2 border-gray-200" 
+                    />
+                  ) : (
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold shadow-sm border-2 border-gray-200"
+                      style={{
+                        backgroundColor: "#D2B48C", // light brown circle
+                        color: "#3d3121"           // dark brown text
+                      }}
+                    >
+                      {getUserInitial()}
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-sm font-medium text-[#3d3121]">{user.fullname || user.name}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+                
+                <Link to="/profile" className="flex items-center gap-2 text-[#3d3121] py-2" onClick={toggleMobileMenu}>
+                  <User size={16} />
+                  <span>My Profile</span>
+                </Link>
+                
+                <Link to="/my-orders" className="flex items-center gap-2 text-[#3d3121] py-2" onClick={toggleMobileMenu}>
+                  <Package size={16} />
+                  <span>My Orders</span>
+                </Link>
+                
+                <button 
+                  onClick={() => {
+                    handleLogout();
+                    toggleMobileMenu();
+                  }}
+                  className="flex items-center gap-2 text-red-600 py-2 w-full text-left"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <Link to="/login" className="text-[#3d3121]" onClick={toggleMobileMenu}>
+              Login / Signup
+            </Link>
+          )}
         </div>
       </div>
     </header>
