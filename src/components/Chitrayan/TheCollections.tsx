@@ -93,7 +93,6 @@
 
 // export default TheCollections;
 
-<<<<<<< HEAD
 // const kit = [
 //   {
 //     title: "Madhubani Magic Kit",
@@ -116,27 +115,6 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-=======
-const kits = [
-  {
-    title: "Madhubani Magic Kit",
-    description:
-      "Create vibrant Madhubani paintings with this all-inclusive kit.",
-    image: "/Chitrayan/Featured Kits/kit1.png",
-  },
-  {
-    title: "Kalamkari Canvas Kit",
-    description:
-      "Craft intricate Kalamkari designs on canvas with our premium kit.",
-    image: "/Chitrayan/Featured Kits/kit2.png",
-  },
-  {
-    title: "Warli Wonders Kit",
-    description: "Explore the rustic charm of Warli art with this unique kit.",
-    image: "/Chitrayan/Featured Kits/kit3.png",
-  },
-];
->>>>>>> f69762ae34a39a5e29cd9d559c74b6d11859c896
 
 const TheCollections = () => {
   const [kits, setKits] = useState([]);
@@ -221,11 +199,10 @@ const TheCollections = () => {
   }
 
   return (
-    <section className="py-10 sm:py-12 relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden">
-      <h2 className="font-semibold text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10 text-center">
+    <section className="py-12 relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden">
+      <h2 className="font-semibold text-3xl sm:text-4xl md:text-4xl mb-10 text-center">
         Featured Kits
       </h2>
-<<<<<<< HEAD
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-2">
         {kits.map((kit) => (
           <Link 
@@ -286,20 +263,6 @@ const TheCollections = () => {
                     View Details
                   </span>
                 </div>
-=======
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-2">
-        {kits.map((kit, index) => (
-          <a href="/products?category=Chitrayan" key={index}>
-            <div className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
-              <img
-                src={kit.image}
-                alt={kit.title}
-                className="w-full h-56 sm:h-64 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg sm:text-xl font-medium mb-2">{kit.title}</h3>
-                <p className="text-gray-600 text-sm sm:text-base">{kit.description}</p>
->>>>>>> f69762ae34a39a5e29cd9d559c74b6d11859c896
               </div>
             </div>
           </Link>
