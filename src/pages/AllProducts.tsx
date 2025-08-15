@@ -13,6 +13,15 @@ const AllProducts = () => {
   const [error, setError] = useState("");
   const [products, setProducts] = useState([]);
 
+
+
+  function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -146,7 +155,7 @@ const AllProducts = () => {
                   {/* Product Content */}
                   <div className="p-4 space-y-2">
                     <h3 className="text-base font-semibold truncate">
-                      {product.title}
+                      {capitalizeWords(product.title)}
                     </h3>
                     <p className="text-xs text-gray-500 line-clamp-2">
                       {product.description}

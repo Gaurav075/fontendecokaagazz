@@ -6,6 +6,13 @@ const BestPicksSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   useEffect(() => {
     const fetchTopPicks = async () => {
       try {
@@ -116,16 +123,10 @@ const BestPicksSection = () => {
                   alt={product.title}
                   className="aspect-[4/5] h-60 w-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                {/* Discount badge */}
-                {product.discountPercent > 0 && (
-                  <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                    -{product.discountPercent}%
-                  </div>
-                )}
               </div>
               
               <h4 className="font-semibold group-hover:text-green-600 transition-colors line-clamp-2">
-                {product.title}
+                {capitalizeWords(product.title)}
               </h4>
               <p className="text-xs text-gray-600 mt-1 line-clamp-2">
                 {product.description}

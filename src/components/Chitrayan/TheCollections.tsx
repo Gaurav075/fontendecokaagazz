@@ -121,6 +121,13 @@ const TheCollections = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  function capitalizeWords(str:string) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   useEffect(() => {
     async function fetchChitrayan() {
       try {
@@ -216,21 +223,15 @@ const TheCollections = () => {
                   src={kit.images?.[0] || kit.image || "/placeholder-image.jpg"}
                   alt={kit.title}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                {/* Optional: Add a badge for discount */}
-                {kit.discountPercent > 0 && (
-                  <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                    -{kit.discountPercent}%
-                  </div>
-                )}
+                />       
               </div>
               
               <div className="p-4">
                 <h3 className="text-xl font-medium mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
-                  {kit.title}
+                  {capitalizeWords(kit.title)}
                 </h3>
                 <p className="text-gray-600 text-sm mb-3 line-clamp-3">
-                  {kit.description}
+                  {capitalizeWords(kit.description)}
                 </p>
                 
                 {/* Price Section */}

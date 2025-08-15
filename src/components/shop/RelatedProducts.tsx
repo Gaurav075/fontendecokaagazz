@@ -41,7 +41,7 @@ const RelatedProducts = ({ currentProductId }: { currentProductId: string }) => 
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
-                  {Math.round(product.discountPercent)}% OFF
+                  {Math.floor(product.discountPercent)}% OFF
                 </span>
               </div>
               <div className="p-4 space-y-1">

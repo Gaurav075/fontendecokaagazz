@@ -6,6 +6,13 @@ const BulkOrderForm = () => {
   const { id } = useParams<{ id: string }>();
   const { user, loading } = useContext(AuthContext);
 
+   function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   const [product, setProduct] = useState<any>(null);
   const [quantity, setQuantity] = useState(10);
   const [formData, setFormData] = useState({
@@ -107,10 +114,10 @@ const BulkOrderForm = () => {
               className="w-32 h-32 object-contain rounded-xl border"
             />
             <div>
-              <h3 className="text-xl font-semibold text-neutral-900">{product?.title}</h3>
+              <h3 className="text-xl font-semibold text-neutral-900">{capitalizeWords(product?.title)}</h3>
               <p className="text-sm text-neutral-600">{product?.description}</p>
               <p className="text-green-600 font-semibold mt-2">
-                ₹{product.originalPrice * (1 - product.discountPercent / 100)}
+                ₹{Math.floor(product.originalPrice * (1 - product.discountPercent / 100))}
               </p>
             </div>
           </div>
