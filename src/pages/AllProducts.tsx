@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IoFilter } from "react-icons/io5";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper","Chitrayan"];
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
