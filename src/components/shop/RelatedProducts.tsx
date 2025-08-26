@@ -49,7 +49,7 @@ const RelatedProducts = ({ currentProductId }: { currentProductId: string }) => 
                   {product.title}
                 </h3>
                 <div className="flex items-center gap-2">
-                  <p className="text-green-700 font-bold text-base">₹{product.originalPrice*(1-product.discountPercent/100)}</p>
+                  <p className="text-green-700 font-bold text-base">₹{Math.floor(product.originalPrice*(1-product.discountPercent/100))}</p>
                   <span className="text-sm line-through text-gray-400">₹{product.originalPrice}</span>
                 </div>
                 <div className="flex gap-1">
