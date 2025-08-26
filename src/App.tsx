@@ -31,6 +31,9 @@ import AllBlogs from "./components/community/AllBlogs";
 import BlogDetail from "./components/community/blogFolder/BlogDetail";
 import Chitrayan from "./pages/Chitrayan";
 import TheCollections from "./components/Chitrayan/TheCollections";
+import KaagazzPrint from "./pages/Print";
+import MarriagePrint from "./pages/MarriagePrint";
+import MarriageForm from "./pages/MarriageForm";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +64,9 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/community" element={<Community />} />
             <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/KaagazzPrint" element={<KaagazzPrint />} />
+            <Route path="/marriage" element={<MarriagePrint />} />
+            <Route path="/marriage/:id" element={<MarriageForm />} />
             <Route path="/order" element={<Order />} />
             <Route path="/order/completed" element={<OrderComplete />} />
             <Route path="*" element={<NotFound />} />

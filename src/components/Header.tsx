@@ -93,6 +93,9 @@ const Header = () => {
               <Link to="/chitrayan" className="block px-4 py-2 text-sm hover:bg-gray-100">
                 Chitrayan
               </Link>
+              <Link to="/KaagazzPrint" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                Kaagazz Print
+              </Link>
             </div>
           )}
         </div>

@@ -13,6 +13,7 @@ import Testimonials from "../components/sustainability/Testimonials";
 import Founders from "../components/landing/Founders";
 import Community from "../components/landing/Community";
 import RevolutionCTA from "../components/landing/RevolutionCTA";
+import KaagazzPrint from "./Print";
 
 const Index = () => {
   return (
@@ -32,6 +33,7 @@ const Index = () => {
         <Testimonials />
         <Founders />
         <RevolutionCTA />
+        {/* <KaagazzPrint /> */}
       </main>
       <Footer />
     </div>
