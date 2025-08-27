@@ -34,6 +34,8 @@ import TheCollections from "./components/Chitrayan/TheCollections";
 import KaagazzPrint from "./pages/Print";
 import MarriagePrint from "./pages/MarriagePrint";
 import MarriageForm from "./pages/MarriageForm";
+import BabyShowerPrint from "./pages/BabyShowerPrint";
+import BabyShowerForm from "./pages/BabyShowerForm";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +69,8 @@ const App = () => (
             <Route path="/KaagazzPrint" element={<KaagazzPrint />} />
             <Route path="/marriage" element={<MarriagePrint />} />
             <Route path="/marriage/:id" element={<MarriageForm />} />
+            <Route path="/babyshower" element={<BabyShowerPrint />} />
+            <Route path="/babyshower/:id" element={<BabyShowerForm />} />
             <Route path="/order" element={<Order />} />
             <Route path="/order/completed" element={<OrderComplete />} />
             <Route path="/my-orders" element={<MyOrder />} />
