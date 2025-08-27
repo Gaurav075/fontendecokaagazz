@@ -10,7 +10,7 @@ import HowItWorks from "../components/landing/HowItWorks";
 import Goals from "../components/landing/Goals";
 import Products from "../components/landing/Products";
 import Testimonials from "../components/sustainability/Testimonials";
-import Founders from "../components/landing/Founders";
+// import Founders from "../components/landing/Founders";
 import Community from "../components/landing/Community";
 import RevolutionCTA from "../components/landing/RevolutionCTA";
 import KaagazzPrint from "./Print";
@@ -31,7 +31,7 @@ const Index = () => {
         <Community />
         <Products />
         <Testimonials />
-        <Founders />
+        {/* <Founders /> */}
         <RevolutionCTA />
         {/* <KaagazzPrint /> */}
       </main>

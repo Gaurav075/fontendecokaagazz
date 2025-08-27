@@ -31,10 +31,44 @@ const PartnerWithUs = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+
+    const name = formData.name.trim();
+    const company = formData.company.trim();
+    const email = formData.email.trim();
+    const phone = formData.phone.trim();
+
+    // Name check
+    if (!name) return "❌ Full name is required";
+
+    // Company check
+    if (!company) return "❌ Company name is required";
+
+    // Email format check
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) return "❌ Please enter a valid email address";
+
+    // Phone must be exactly 10 digits (numbers only)
+    if (!/^\d{10}$/.test(phone))
+      return "❌ Phone number should be exactly 10 digits";
+
+    // Service selection
+    if (!formData.service) return "❌ Please select a service type";
+
+    return null; // All good
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent form reload
-    setIsSubmitting(true);
+    e.preventDefault();
     setStatus("");
+
+    const errorMsg = validateForm();
+    if (errorMsg) {
+      setStatus(errorMsg);
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch(
@@ -43,13 +77,13 @@ const PartnerWithUs = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            fullname: formData.name,
-            companyName: formData.company,
-            email: formData.email,
-            phone: formData.phone,
+            fullname: formData.name.trim(),
+            companyName: formData.company.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
             serviceType: formData.service,
-            estimatedTime: formData.timeFrame,
-            notes: formData.message,
+            estimatedTime: formData.timeFrame.trim(),
+            notes: formData.message.trim(),
           }),
         }
       );
@@ -88,6 +122,7 @@ const PartnerWithUs = () => {
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
+
           <div className="flex flex-col">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Full Name
@@ -101,6 +136,7 @@ const PartnerWithUs = () => {
               className="border border-neutral-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black bg-[#fcfcfc]"
             />
           </div>
+
 
           <div className="flex flex-col">
             <label className="text-sm font-medium text-neutral-700 mb-1">
@@ -116,6 +152,7 @@ const PartnerWithUs = () => {
             />
           </div>
 
+      
           <div className="flex flex-col">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Email
@@ -130,6 +167,7 @@ const PartnerWithUs = () => {
             />
           </div>
 
+          {/* Phone */}
           <div className="flex flex-col">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Phone Number
@@ -140,10 +178,12 @@ const PartnerWithUs = () => {
               required
               value={formData.phone}
               onChange={handleChange}
+              placeholder="10 digit phone number"
               className="border border-neutral-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black bg-[#fcfcfc]"
             />
           </div>
 
+          {/* Service */}
           <div className="flex flex-col md:col-span-2">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Service Type
@@ -166,6 +206,7 @@ const PartnerWithUs = () => {
             </select>
           </div>
 
+          {/* Time Frame */}
           <div className="flex flex-col md:col-span-2">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Estimated Time Frame
@@ -180,6 +221,7 @@ const PartnerWithUs = () => {
             />
           </div>
 
+          {/* Notes */}
           <div className="flex flex-col md:col-span-2">
             <label className="text-sm font-medium text-neutral-700 mb-1">
               Additional Notes (Optional)
@@ -193,6 +235,7 @@ const PartnerWithUs = () => {
             ></textarea>
           </div>
 
+          {/* Submit */}
           <div className="md:col-span-2 text-center">
             <button
               type="submit"

@@ -12,6 +12,14 @@ const ProductDetails = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
 
+
+   function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   useEffect(() => {
     setSelectedImageIndex(0);
     setFeedback("");
@@ -24,11 +32,11 @@ const ProductDetails = () => {
           const prod = data.product;
 
           // compute discounted price
-          const discountedPrice = Math.round(prod.originalPrice * (1 - prod.discountPercent / 100));
+          const discountedPrice = Math.floor(prod.originalPrice * (1 - prod.discountPercent / 100));
 
           setProduct({
             id: prod._id,
-            title: prod.title,
+            title:capitalizeWords(prod.title),
             description: prod.description,
             images: prod.images,
             price: prod.originalPrice,
@@ -68,7 +76,7 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
-      title: product.title,
+      title: capitalizeWords(product.title),
       price: product.discountedPrice,
       quantity: 1,
       image: product.images[0],
@@ -108,7 +116,7 @@ const ProductDetails = () => {
 
           <div className="space-y-6">
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 mt-2">
-              {title}
+              {capitalizeWords(title)}
             </h1>
             <p className="text-sm text-neutral-500 italic">
               {certifiedSustainable ? "🌿 Certified Sustainable • " : ""}
@@ -121,7 +129,7 @@ const ProductDetails = () => {
                 <p className="text-3xl font-extrabold text-green-700">₹{discountedPrice}</p>
                 <span className="text-lg line-through text-gray-400">₹{price}</span>
                 <span className="text-sm text-green-600 font-medium">
-                  ({Math.round(((price - discountedPrice) / price) * 100)}% OFF)
+                  ({Math.floor(((price - discountedPrice) / price) * 100)}% OFF)
                 </span>
               </div>
               <p className={`text-sm font-medium ${stockLeft > 0 ? "text-gray-600" : "text-red-500"}`}>

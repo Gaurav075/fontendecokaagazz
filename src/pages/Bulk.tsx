@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BulkOrderForm from "../components/order/BulkForm";
-
+ 
 const BulkOrder = () => {
   return (
     <>

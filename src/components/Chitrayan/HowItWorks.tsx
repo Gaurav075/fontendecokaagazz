@@ -30,12 +30,11 @@ const steps = [
 const HowItWorks = () => {
   return (
     <section className="w-full">
-      <div className="max-w-6xl py-16 px-6 mx-auto text-center bg-white">
-        <h2 className="font-semibold text-3xl sm:text-4xl md:text-4xl mb-10 text-center">
+      <div className="max-w-6xl py-10 sm:py-16 px-2 sm:px-6 mx-auto text-center bg-white">
+        <h2 className="font-semibold text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10 text-center">
           How To Use
         </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -47,7 +46,7 @@ const HowItWorks = () => {
               <div className="text-gray-500 font-medium text-sm mb-1">
                 Step {step.stepno}
               </div>
-              <h3 className="font-semibold text-lg text-gray-800">
+              <h3 className="font-semibold text-base sm:text-lg text-gray-800">
                 {step.title}
               </h3>
               <p className="text-gray-600 text-sm mt-1">{step.info}</p>

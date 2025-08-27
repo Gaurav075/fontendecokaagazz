@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HashRouter } from 'react-router-dom';
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -26,6 +25,7 @@ import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import Order from "./pages/Order";
 import OrderComplete from "./pages/OrderComplete";
+import MyOrder from './pages/MyOrder'
 // import Blog from "./components/community/Blog"
 import AllBlogs from "./components/community/AllBlogs";
 import BlogDetail from "./components/community/blogFolder/BlogDetail";
@@ -69,6 +69,7 @@ const App = () => (
             <Route path="/marriage/:id" element={<MarriageForm />} />
             <Route path="/order" element={<Order />} />
             <Route path="/order/completed" element={<OrderComplete />} />
+            <Route path="/my-orders" element={<MyOrder />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Index />} />
             <Route path="/allBlogs" element={<AllBlogs />} />

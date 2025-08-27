@@ -1,11 +1,8 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { IoFilter } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper", "Chitrayan"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper","Chitrayan"];
 
 const AllProducts = () => {
   const location = useLocation();
@@ -13,7 +10,7 @@ const AllProducts = () => {
   const initialCategory = queryParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-  // Sync state if URL changes
+  // Sync state if URL changes (optional but robust)
   useEffect(() => {
     const cat = new URLSearchParams(location.search).get("category");
     if (cat && cat !== selectedCategory) {
@@ -25,6 +22,15 @@ const AllProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [products, setProducts] = useState([]);
+
+
+
+  function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -61,8 +67,6 @@ const AllProducts = () => {
   if (error) {
     return <div className="text-center text-red-500 mt-10">{error}</div>;
   }
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -101,10 +105,7 @@ const AllProducts = () => {
                 {categories.map((cat) => (
                   <li
                     key={cat}
-                    onClick={() => {
-                      setSelectedCategory(cat);
-                      navigate(`/products?category=${encodeURIComponent(cat)}`);
-                    }}
+                    onClick={() => setSelectedCategory(cat)}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
                       ${
                         selectedCategory === cat
@@ -128,9 +129,6 @@ const AllProducts = () => {
                       key={cat}
                       onClick={() => {
                         setSelectedCategory(cat);
-                        navigate(
-                          `/products?category=${encodeURIComponent(cat)}`
-                        );
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
@@ -167,7 +165,7 @@ const AllProducts = () => {
                   {/* Product Content */}
                   <div className="p-4 space-y-2">
                     <h3 className="text-base font-semibold truncate">
-                      {product.title}
+                      {capitalizeWords(product.title)}
                     </h3>
                     <p className="text-xs text-gray-500 line-clamp-2">
                       {product.description}
@@ -182,9 +180,7 @@ const AllProducts = () => {
 
                     {/* Price or any other detail could go here */}
                     <div className="flex items-center gap-2 text-sm font-medium">
-                      {/* Example price display */}
-                      <span className="text-black">
-                        ₹{product.price || "N/A"}
+
                       </span>
                     </div>
 

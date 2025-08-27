@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
+import { AuthContext } from "../context/authContext";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const { items, updateQuantity, removeFromCart } = useCart();
+  const { user, loading } = useContext(AuthContext);
 
   const handleQuantityChange = (id: string, delta: number) => {
     updateQuantity(id, delta);
@@ -108,11 +111,40 @@ const CartPage = () => {
                 <span>Total</span>
                 <span>₹{totalPrice.toFixed(2)}</span>
               </div>
-              <Link to="/order" className="mt-3">
-              <button className="w-full bg-[#3C2F2F] hover:bg-[#2D2323] text-white py-3 rounded-full text-sm font-medium tracking-wide shadow-lg transition">
-                Proceed to Checkout
-              </button>
-              </Link>
+              
+              {/* Conditional Checkout Button */}
+              {loading ? (
+                <div className="w-full bg-gray-300 text-gray-500 py-3 rounded-full text-sm font-medium text-center">
+                  Loading...
+                </div>
+              ) : user ? (
+                <Link to="/order" className="mt-3">
+                  <button className="w-full bg-[#3C2F2F] hover:bg-[#2D2323] text-white py-3 rounded-full text-sm font-medium tracking-wide shadow-lg transition">
+                    Proceed to Checkout
+                  </button>
+                </Link>
+              ) : (
+                <div className="space-y-3">
+                  <div className="text-center p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                    <p className="text-sm text-amber-700 mb-2">
+                      Please login to proceed with checkout
+                    </p>
+                  </div>
+                  <Link to="/login" className="block">
+                    <button className="w-full bg-[#3C2F2F] hover:bg-[#2D2323] text-white py-3 rounded-full text-sm font-medium tracking-wide shadow-lg transition">
+                      Login to Checkout
+                    </button>
+                  </Link>
+                  <div className="text-center">
+                    <p className="text-xs text-neutral-500">
+                      Don't have an account?{" "}
+                      <Link to="/register" className="text-[#3C2F2F] hover:underline font-medium">
+                        Sign up here
+                      </Link>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

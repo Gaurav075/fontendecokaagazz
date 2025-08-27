@@ -111,5 +111,21 @@ export const products: Product[] = [
     images: ["/artisinal/1.png", "/artisinal/2.png", "/artisinal/3.png",],
     category: "Stationery",
     certifiedSustainable: true,
+  },
+  {
+    id: "prod-007",
+    title: "Madhubani Kit",
+    description: "Delve into creativity with the Chitrayan Madhubani Kit - a vibrant DIY journey into timeless Indian folk art.",
+    price: 999,
+    discountedPrice: 899,
+    stockLeft: 48,
+    isBulkAvailable: true,
+    bulkMinQty: 10,
+    rating: 4.8,
+    rank: 1,
+    image: "/chitrayanKits/1.png",
+    images: ["/chitrayanKits/kit1.png"],
+    category: "Chitrayan",
+    certifiedSustainable: true,
   }
 ];
