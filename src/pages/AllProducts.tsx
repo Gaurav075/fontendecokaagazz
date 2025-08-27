@@ -1,6 +1,9 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { IoFilter } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const categories = ["All", "Stationery", "Gift Sets", "Paper","Chitrayan"];
 
@@ -10,7 +13,7 @@ const AllProducts = () => {
   const initialCategory = queryParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-  // Sync state if URL changes (optional but robust)
+  // Sync state if URL changes
   useEffect(() => {
     const cat = new URLSearchParams(location.search).get("category");
     if (cat && cat !== selectedCategory) {
@@ -180,7 +183,9 @@ const AllProducts = () => {
 
                     {/* Price or any other detail could go here */}
                     <div className="flex items-center gap-2 text-sm font-medium">
-
+                      {/* Example price display */}
+                      <span className="text-black">
+                        ₹{product.price || "N/A"}
                       </span>
                     </div>
 
