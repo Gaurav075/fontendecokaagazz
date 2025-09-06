@@ -3,6 +3,13 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 const KaagazzPrint = () => {
+  const tabs = [
+    { name: "Print Book", path: "/printbook" },
+    { name: "Certificates", path: "/certificates" },
+    { name: "Business Cards", path: "/business-cards" },
+    { name: "Quick Print", path: "/quick-print" },
+  ];
+
   return (
     <>
       <Header />
@@ -19,13 +26,14 @@ const KaagazzPrint = () => {
 
           {/* Tabs */}
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            {["Print Book", "Certificates", "Event", "Custom Print"].map((tab) => (
-              <button
-                key={tab}
+            {tabs.map((tab) => (
+              <Link
+                key={tab.name}
+                to={tab.path}
                 className="px-5 py-2 text-sm font-medium rounded-full border border-gray-300 bg-white shadow-sm hover:bg-[#5D4037] hover:text-white transition-all"
               >
-                {tab}
-              </button>
+                {tab.name}
+              </Link>
             ))}
           </div>
         </div>
