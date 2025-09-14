@@ -167,10 +167,6 @@ const OrderForm: React.FC = () => {
       if (!res || !(window as any).Razorpay) {
         throw new Error("Razorpay SDK failed to load");
       }
-
-      console.log("Creating order with products:", paymentData);
-
-      // Create order on backend
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/payment/create-order`,
         {
@@ -188,7 +184,6 @@ const OrderForm: React.FC = () => {
       }
 
       const orderData = await response.json();
-      console.log("Order creation response:", orderData);
 
       if (!orderData.success || !orderData.order?.id) {
         throw new Error(orderData.message || "Order creation failed");
@@ -206,7 +201,6 @@ const OrderForm: React.FC = () => {
         order_id: orderData.order.id,
 
         handler: async function (response: any) {
-          console.log("Payment successful:", response);
 
           try {
             const token = localStorage.getItem("token");
@@ -237,7 +231,7 @@ const OrderForm: React.FC = () => {
             }
 
             const verifyData = await verifyRes.json();
-            console.log("Verification response:", verifyData);
+
 
             if (verifyData.success) {
               alert(
@@ -280,7 +274,7 @@ const OrderForm: React.FC = () => {
         theme: { color: "#27ae60" },
         modal: {
           ondismiss: () => {
-            console.log("Payment modal dismissed");
+
             setLoading(false);
           },
         },

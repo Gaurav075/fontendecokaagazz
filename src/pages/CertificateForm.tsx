@@ -43,8 +43,6 @@ const CertificateForm = () => {
       return;
     }
 
-    // TODO: integrate with CartContext / API
-    console.log("📜 Certificate Order:", formData);
 
     alert("Certificate order added to cart!");
     navigate("/cart");

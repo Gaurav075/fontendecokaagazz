@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import { IoFilter } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper","Chitrayan"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper", "Chitrayan"];
 
 const AllProducts = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const initialCategory = queryParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
@@ -26,14 +27,41 @@ const AllProducts = () => {
   const [error, setError] = useState("");
   const [products, setProducts] = useState([]);
 
-
-
   function capitalizeWords(str) {
-  return str
-    .split(" ")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
+    return str
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
+  // Function to handle category change and update URL
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    
+    // Update URL without page refresh
+    const newSearchParams = new URLSearchParams();
+    if (category !== "All") {
+      newSearchParams.set("category", category);
+    }
+    
+    const newUrl = newSearchParams.toString() 
+      ? `${location.pathname}?${newSearchParams.toString()}`
+      : location.pathname;
+    
+    navigate(newUrl, { replace: true });
+  };
+
+  // Function to calculate discounted price
+  const calculatePrice = (originalPrice, discountPercent = 0) => {
+    if (!originalPrice || originalPrice === 0) return "N/A";
+    
+    if (discountPercent > 0) {
+      const discountedPrice = originalPrice - (originalPrice * discountPercent / 100);
+      return discountedPrice.toFixed(0);
+    }
+    
+    return originalPrice.toString();
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,7 +75,11 @@ const AllProducts = () => {
         const res = await fetch(url);
         const data = await res.json();
 
-        setProducts(data.products || []);
+        if (data.success) {
+          setProducts(data.products || []);
+        } else {
+          setError(data.message || "Failed to load products.");
+        }
         setLoading(false);
       } catch (err) {
         console.error("Error fetching products", err);
@@ -108,7 +140,7 @@ const AllProducts = () => {
                 {categories.map((cat) => (
                   <li
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
                       ${
                         selectedCategory === cat
@@ -131,7 +163,7 @@ const AllProducts = () => {
                     <li
                       key={cat}
                       onClick={() => {
-                        setSelectedCategory(cat);
+                        handleCategoryChange(cat);
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
@@ -150,51 +182,70 @@ const AllProducts = () => {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
-              {products.map((product) => (
-                <Link
-                  to={`/products/${product._id}`}
-                  key={product._id}
-                  className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all group"
-                >
-                  {/* Product Image */}
-                  <div className="w-full aspect-[4/5] overflow-hidden">
-                    <img
-                      src={product.images?.[0]}
-                      alt={product.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-
-                  {/* Product Content */}
-                  <div className="p-4 space-y-2">
-                    <h3 className="text-base font-semibold truncate">
-                      {capitalizeWords(product.title)}
-                    </h3>
-                    <p className="text-xs text-gray-500 line-clamp-2">
-                      {product.description}
-                    </p>
-
-                    <div className="text-yellow-500 text-xs">
-                      {"★".repeat(Math.floor(product.rating || 4))}
-                      <span className="text-gray-400 ml-1">
-                        ({Math.floor(Math.random() * 2000) + 1000})
-                      </span>
+              {products.length === 0 ? (
+                <div className="col-span-full text-center text-gray-500 py-10">
+                  No products found in this category.
+                </div>
+              ) : (
+                products.map((product) => (
+                  <Link
+                    to={`/products/${product._id}`}
+                    key={product._id}
+                    className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all group"
+                  >
+                    {/* Product Image */}
+                    <div className="w-full aspect-[4/5] overflow-hidden">
+                      <img
+                        src={product.images?.[0]}
+                        alt={product.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
 
-                    {/* Price or any other detail could go here */}
-                    <div className="flex items-center gap-2 text-sm font-medium">
-                      {/* Example price display */}
-                      <span className="text-black">
-                        ₹{product.price || "N/A"}
-                      </span>
-                    </div>
+                    {/* Product Content */}
+                    <div className="p-4 space-y-2">
+                      <h3 className="text-base font-semibold truncate">
+                        {capitalizeWords(product.title)}
+                      </h3>
+                      <p className="text-xs text-gray-500 line-clamp-2">
+                        {product.description}
+                      </p>
 
-                    <button className="mt-2 px-3 py-1.5 bg-black text-white text-xs font-medium rounded-full hover:bg-gray-800 transition-all">
-                      Shop Now
-                    </button>
-                  </div>
-                </Link>
-              ))}
+                      <div className="text-yellow-500 text-xs">
+                        {"★".repeat(Math.floor(product.rating || 4))}
+                        <span className="text-gray-400 ml-1">
+                          ({Math.floor(Math.random() * 2000) + 1000})
+                        </span>
+                      </div>
+
+                      {/* Price Display */}
+                      <div className="flex items-center gap-2 text-sm font-medium">
+                        {product.discountPercent > 0 ? (
+                          <>
+                            <span className="text-black">
+                              ₹{calculatePrice(product.originalPrice, product.discountPercent)}
+                            </span>
+                            <span className="text-gray-500 line-through text-xs">
+                              ₹{product.originalPrice}
+                            </span>
+                            <span className="text-green-600 text-xs">
+                              {product.discountPercent}% off
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-black">
+                            ₹{calculatePrice(product.originalPrice)}
+                          </span>
+                        )}
+                      </div>
+
+                      <button className="mt-2 px-3 py-1.5 bg-black text-white text-xs font-medium rounded-full hover:bg-gray-800 transition-all">
+                        Shop Now
+                      </button>
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         </div>

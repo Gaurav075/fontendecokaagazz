@@ -49,14 +49,7 @@ const BirthdayForm = () => {
       return;
     }
 
-    // TODO: integrate with CartContext/API
-    console.log("🛒 Add to Cart payload:", {
-      productType: "BirthdayInvite",
-      themeId: id,
-      themeTitle: theme.title,
-      ...formData,
-    });
-
+  
     alert("Added to cart!");
     navigate("/cart");
   };
