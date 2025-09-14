@@ -48,13 +48,7 @@ const BabyShowerForm = () => {
       return;
     }
 
-    // TODO: integrate with CartContext/API
-    console.log("🛒 Add to Cart payload:", {
-      productType: "BabyShowerInvite",
-      themeId: id,
-      themeTitle: theme.title,
-      ...formData,
-    });
+    
 
     alert("Added to cart!");
     navigate("/cart");
