@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HashRouter } from 'react-router-dom';
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -15,6 +14,7 @@ import Community from "./pages/Community";
 import Sustainability from "./pages/Sustainability";
 import Profile from "./pages/Profile";
 import AllProducts from "./pages/AllProducts";
+import BulkOrder from './pages/Bulk'
 import ProductDetails from "./pages/ProductDetails";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import Signup from "./pages/Signup"
@@ -25,11 +25,26 @@ import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import Order from "./pages/Order";
 import OrderComplete from "./pages/OrderComplete";
+import MyOrder from './pages/MyOrder'
 // import Blog from "./components/community/Blog"
 import AllBlogs from "./components/community/AllBlogs";
 import BlogDetail from "./components/community/blogFolder/BlogDetail";
 import Chitrayan from "./pages/Chitrayan";
 import TheCollections from "./components/Chitrayan/TheCollections";
+import KaagazzPrint from "./pages/Print";
+import MarriagePrint from "./pages/MarriagePrint";
+import MarriageForm from "./pages/MarriageForm";
+import BabyShowerPrint from "./pages/BabyShowerPrint";
+import BabyShowerForm from "./pages/BabyShowerForm";
+import BirthdayPrint from "./pages/BirthdayPrint";
+import BirthdayForm from "./pages/BirthdayPrintForm";
+import AnniversaryPrint from "./pages/AniversaryPrint";
+import AnniversaryForm from "./pages/AniversaryForm";
+import PrintBookForm from "./pages/PrintBookForm";
+import CertificateForm from "./pages/CertificateForm";
+import CustomPrintForm from "./pages/CustomPrintForm";
+import BusinessCardForm from "./pages/BusinessCardForm";  
+import QuickPrintForm from "./pages/QuickPrintForm";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +65,7 @@ const App = () => (
             <Route path="/shop" element={<Shop />} />
             <Route path="/products" element={<AllProducts />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/products/:id/bulk" element={<BulkOrder />} />
             <Route path="/cart" element={<Cart />} />
             {/* <Route path="/blog" element={<Blog />} /> */}
             <Route path = "/signup" element={<Signup/>}/>
@@ -59,8 +75,23 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/community" element={<Community />} />
             <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/KaagazzPrint" element={<KaagazzPrint />} />
+            <Route path="/marriage" element={<MarriagePrint />} />
+            <Route path="/marriage/:id" element={<MarriageForm />} />
+            <Route path="/babyshower" element={<BabyShowerPrint />} />
+            <Route path="/babyshower/:id" element={<BabyShowerForm />} />
+            <Route path="/birthday" element={<BirthdayPrint />} />
+            <Route path="/birthday/:id" element={<BirthdayForm />} />
+            <Route path="/anniversary" element={<AnniversaryPrint />} />
+            <Route path="/anniversary/:id" element={<AnniversaryForm />} />
+            <Route path="/printbook" element={<PrintBookForm />} />
+            <Route path="/certificates" element={<CertificateForm />} />
+            <Route path="/custom-print" element={<CustomPrintForm />} />
+            <Route path="/business-cards" element={<BusinessCardForm />} />
+            <Route path="/quick-print" element={<QuickPrintForm />} />
             <Route path="/order" element={<Order />} />
             <Route path="/order/completed" element={<OrderComplete />} />
+            <Route path="/my-orders" element={<MyOrder />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Index />} />
             <Route path="/allBlogs" element={<AllBlogs />} />

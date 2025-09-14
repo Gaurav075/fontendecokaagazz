@@ -1,13 +1,11 @@
 import Header from "../components/Header";
-import { products } from "../data/product";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { IoFilter } from "react-icons/io5"; // For filter icon on mobile
+import { useState, useEffect } from "react";
+import { IoFilter } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-const categories = ["All", "Stationery", "Gift Sets", "Paper", "Chitrayan"];
+const categories = ["All", "Stationery", "Gift Sets", "Paper","Chitrayan"];
 
 const AllProducts = () => {
   const location = useLocation();
@@ -15,7 +13,7 @@ const AllProducts = () => {
   const initialCategory = queryParams.get("category") || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-  // Sync state if URL changes (optional but robust)
+  // Sync state if URL changes
   useEffect(() => {
     const cat = new URLSearchParams(location.search).get("category");
     if (cat && cat !== selectedCategory) {
@@ -24,13 +22,54 @@ const AllProducts = () => {
   }, [location.search]);
 
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [products, setProducts] = useState([]);
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((p) => p.category === selectedCategory);
 
-  const navigate = useNavigate();
+
+  function capitalizeWords(str) {
+  return str
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const url =
+          selectedCategory === "All"
+            ? `${import.meta.env.VITE_BACKEND_URL}/api/product/list`
+            : `${import.meta.env.VITE_BACKEND_URL}/api/product/category/${selectedCategory}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        setProducts(data.products || []);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching products", err);
+        setError("Failed to load products.");
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [selectedCategory]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-10">{error}</div>;
+  }
 
   return (
     <>
@@ -69,10 +108,7 @@ const AllProducts = () => {
                 {categories.map((cat) => (
                   <li
                     key={cat}
-                    onClick={() => {
-                      setSelectedCategory(cat);
-                      navigate(`/products?category=${encodeURIComponent(cat)}`);
-                    }}
+                    onClick={() => setSelectedCategory(cat)}
                     className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
                       ${
                         selectedCategory === cat
@@ -96,9 +132,6 @@ const AllProducts = () => {
                       key={cat}
                       onClick={() => {
                         setSelectedCategory(cat);
-                        navigate(
-                          `/products?category=${encodeURIComponent(cat)}`
-                        );
                         setIsMobileFilterOpen(false);
                       }}
                       className={`cursor-pointer text-sm px-3 py-1 rounded-full transition-all border 
@@ -117,16 +150,16 @@ const AllProducts = () => {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
-              {filteredProducts.map((product) => (
+              {products.map((product) => (
                 <Link
-                  to={`/products/${product.id}`}
-                  key={product.id}
+                  to={`/products/${product._id}`}
+                  key={product._id}
                   className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all group"
                 >
                   {/* Product Image */}
                   <div className="w-full aspect-[4/5] overflow-hidden">
                     <img
-                      src={product.images[0]}
+                      src={product.images?.[0]}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
@@ -135,32 +168,24 @@ const AllProducts = () => {
                   {/* Product Content */}
                   <div className="p-4 space-y-2">
                     <h3 className="text-base font-semibold truncate">
-                      {product.title}
+                      {capitalizeWords(product.title)}
                     </h3>
                     <p className="text-xs text-gray-500 line-clamp-2">
                       {product.description}
                     </p>
 
                     <div className="text-yellow-500 text-xs">
-                      {"★".repeat(Math.floor(product.rating))}
+                      {"★".repeat(Math.floor(product.rating || 4))}
                       <span className="text-gray-400 ml-1">
                         ({Math.floor(Math.random() * 2000) + 1000})
                       </span>
                     </div>
 
+                    {/* Price or any other detail could go here */}
                     <div className="flex items-center gap-2 text-sm font-medium">
-                      <span>₹{product.discountedPrice}</span>
-                      <span className="line-through text-gray-400">
-                        ₹{product.price}
-                      </span>
-                      <span className="text-red-500 text-xs">
-                        -
-                        {Math.round(
-                          ((product.price - product.discountedPrice) /
-                            product.price) *
-                            100
-                        )}
-                        %
+                      {/* Example price display */}
+                      <span className="text-black">
+                        ₹{product.price || "N/A"}
                       </span>
                     </div>
 

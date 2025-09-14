@@ -7,7 +7,7 @@ const Community = () => {
         {/* Left Side: Text + Button */}
         <div className="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
           <h2 className="text-4xl font-serif font-bold text-[#3e2f22] mb-6">
-            Our Community
+            Join the Movement
           </h2>
           <ul className="mb-6 space-y-4 text-[#4b3b30] text-lg">
             <li className="whitespace-nowrap">🌱 Connect with sustainability enthusiasts</li>
@@ -17,11 +17,10 @@ const Community = () => {
           </ul>
           <Link to="/partner">
             <button className="mt-4 px-6 py-3 bg-[#5D4037] text-white rounded-full text-sm hover:bg-[#3e2f22] transition-colors duration-300">
-              Become a Community Partner
+              Become a Partner
             </button>
           </Link>
         </div>
-
         {/* Right Side: Image */}
         <div className="md:w-1/2">
           <img
