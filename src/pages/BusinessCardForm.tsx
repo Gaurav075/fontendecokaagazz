@@ -47,8 +47,7 @@ const BusinessCardForm = () => {
       return;
     }
 
-    // TODO: integrate with CartContext / API
-    console.log("💼 Business Card Order:", formData);
+
 
     alert("Business card order added to cart!");
     navigate("/cart");

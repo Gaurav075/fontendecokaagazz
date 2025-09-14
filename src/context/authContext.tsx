@@ -14,7 +14,6 @@ export const AuthContext = createContext<{
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(() => {
     const storedUser = localStorage.getItem("user");
-    console.log("🟡 Initial user from localStorage:", storedUser);
     return storedUser ? JSON.parse(storedUser) : null;
   });
   const [loading, setLoading] = useState(true);
@@ -22,19 +21,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       let token = localStorage.getItem("token");
-      console.log("🔐 Token from localStorage:", token);
 
       try {
         let res: Response | null = null;
 
         if (token) {
-          console.log("➡️ Hitting /me with token");
           res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log("🧾 /me response status:", res.status);
         } else {
           console.log("⚠️ No token in localStorage");
         }
@@ -49,8 +45,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             }
           );
 
-          console.log("🧾 /refresh-token status:", refreshRes.status);
-
           if (!refreshRes.ok) {
             console.log("❌ Refresh token invalid");
             localStorage.removeItem("token");
@@ -61,12 +55,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }
 
           const refreshData = await refreshRes.json();
-          console.log("✅ New token received:", refreshData.accessToken);
 
           localStorage.setItem("token", refreshData.accessToken);
           token = refreshData.accessToken;
 
-          console.log("➡️ Retrying /me with new token");
           res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +68,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         if (res && res.ok) {
           const data = await res.json();
-          console.log("✅ /me success, user:", data.user);
           setUser(data.user);
           localStorage.setItem("user", JSON.stringify(data.user));
         } else {
