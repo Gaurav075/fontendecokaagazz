@@ -1,203 +1,700 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useContext, useState, ChangeEvent, FormEvent } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
+import * as fabric from "fabric";
+import { 
+  Bold, 
+  Italic, 
+  AlignLeft, 
+  AlignCenter, 
+  AlignRight,
+  Download,
+  Trash2,
+  Plus
+} from "lucide-react";
 
-const babyShowerThemes: Record<string, { title: string; image: string }> = {
-  "1": { title: "Sweet Pastels", image: "/images/baby1.jpg" },
-  "2": { title: "Floral Baby Bliss", image: "/images/baby2.jpg" },
-  "3": { title: "Modern Minimal", image: "/images/baby3.jpg" },
+const babyShowerDesigns: Record<string, {
+  title: string;
+  image: string | null;
+  template: {
+    backgroundColor: string;
+    elements: Array<{
+      type: 'text';
+      text: string;
+      top: number;
+      left: number;
+      fontSize: number;
+      fontFamily: string;
+      fontWeight?: string;
+      color?: string;
+      binding?: string;
+    }>;
+  };
+}> = {
+  "1": {
+    title: "Sweet Pastels",
+    image: "/templates/baby1.png",
+    template: {
+      backgroundColor: "#f9fbff",
+      elements: [
+        { type: "text", text: "[Parents To Be]", top: 120, left: 120, fontSize: 28, fontFamily: "serif", fontWeight: "bold", color: "#2d4f91", binding: "parentsToBe" },
+        { type: "text", text: "[Date]", top: 200, left: 120, fontSize: 16, fontFamily: "serif", binding: "date" },
+        { type: "text", text: "[Time]", top: 200, left: 260, fontSize: 16, fontFamily: "serif", binding: "time" },
+        { type: "text", text: "[Venue]", top: 240, left: 160, fontSize: 16, fontFamily: "serif", binding: "venue" },
+        { type: "text", text: "[RSVP]", top: 280, left: 160, fontSize: 14, fontFamily: "serif", binding: "rsvp" },
+      ],
+    },
+  },
+  "2": {
+    title: "Floral Baby Bliss",
+    image: "/templates/baby2.png",
+    template: {
+      backgroundColor: "#fff9f3",
+      elements: [
+        { type: "text", text: "[Parents To Be]", top: 120, left: 120, fontSize: 28, fontFamily: "serif", fontWeight: "bold", color: "#8b6b21", binding: "parentsToBe" },
+        { type: "text", text: "[Date]", top: 200, left: 120, fontSize: 16, fontFamily: "serif", binding: "date" },
+        { type: "text", text: "[Time]", top: 200, left: 260, fontSize: 16, fontFamily: "serif", binding: "time" },
+        { type: "text", text: "[Venue]", top: 240, left: 160, fontSize: 16, fontFamily: "serif", binding: "venue" },
+        { type: "text", text: "[RSVP]", top: 280, left: 160, fontSize: 14, fontFamily: "serif", binding: "rsvp" },
+      ],
+    },
+  },
+  "3": {
+    title: "Modern Minimal",
+    image: "/templates/baby3.png",
+    template: {
+      backgroundColor: "#f6f6f6",
+      elements: [
+        { type: "text", text: "[Parents To Be]", top: 120, left: 120, fontSize: 28, fontFamily: "serif", fontWeight: "bold", color: "#333333", binding: "parentsToBe" },
+        { type: "text", text: "[Date]", top: 200, left: 120, fontSize: 16, fontFamily: "serif", binding: "date" },
+        { type: "text", text: "[Time]", top: 200, left: 260, fontSize: 16, fontFamily: "serif", binding: "time" },
+        { type: "text", text: "[Venue]", top: 240, left: 160, fontSize: 16, fontFamily: "serif", binding: "venue" },
+        { type: "text", text: "[RSVP]", top: 280, left: 160, fontSize: 14, fontFamily: "serif", binding: "rsvp" },
+      ],
+    },
+  },
 };
 
 const BabyShowerForm = () => {
-  const { id } = useParams<{ id: string }>();
-  const theme = id ? babyShowerThemes[id] : null;
+  const [activeTemplateId, setActiveTemplateId] = useState("1");
+  const [customUpload, setCustomUpload] = useState<string | null>(null);
+
+  const design =
+    activeTemplateId === "upload"
+      ? {
+          title: "Custom Upload",
+          image: customUpload,
+          template: { backgroundColor: "#ffffff", elements: [] as any[] },
+        }
+      : babyShowerDesigns[activeTemplateId];
+
   const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const boundObjectsRef = useRef<Record<string, fabric.Text>>({});
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [selectedObject, setSelectedObject] = useState<any>(null);
+
   const [formData, setFormData] = useState({
-    parentsToBe: "",     // e.g., "Ananya & Rohan"
+    parentsToBe: "",
     date: "",
     time: "",
     venue: "",
     rsvp: "",
-    themeColors: "",     // optional
-    hostedBy: "",        // optional
-    notes: "",           // optional
+    extraNotes: "",
   });
 
-  if (!theme) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-lg text-gray-600">Theme not found</p>
-      </div>
-    );
-  }
+  const [textProperties, setTextProperties] = useState({
+    fontSize: 16,
+    fontFamily: "serif",
+    fontWeight: "normal" as "normal" | "bold",
+    fontStyle: "normal" as "normal" | "italic",
+    textDecoration: "",
+    textAlign: "left" as "left" | "center" | "right",
+    fill: "#000000",
+    text: "",
+  });
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
+  useEffect(() => {
+    if (!design) return;
+
+    const fabricCanvas = new fabric.Canvas(canvasRef.current as HTMLCanvasElement, {
+      width: 400,
+      height: 600,
+      backgroundColor: design.template.backgroundColor || "#ffffff",
+    });
+
+    const loadCanvasContent = async () => {
+      fabricCanvas.backgroundImage = null;
+
+      if (design.image) {
+        try {
+          const img = await fabric.Image.fromURL(design.image as string);
+          img.scaleToWidth(fabricCanvas.getWidth());
+          img.scaleToHeight(fabricCanvas.getHeight());
+          fabricCanvas.backgroundImage = img;
+        } catch (error) {
+          console.error("Error loading image:", error);
+        }
+      }
+
+      design.template.elements.forEach((element) => {
+        if (element.type === "text") {
+          const textObj = new fabric.Text(element.text, {
+            left: element.left,
+            top: element.top,
+            fontSize: element.fontSize,
+            fontFamily: element.fontFamily,
+            fontWeight: (element.fontWeight as any) || "normal",
+            fill: element.color || "#000000",
+          });
+
+          if (element.binding) {
+            (textObj as any).binding = element.binding;
+            boundObjectsRef.current[element.binding] = textObj;
+          }
+
+          fabricCanvas.add(textObj);
+        }
+      });
+
+      fabricCanvas.renderAll();
+    };
+
+    loadCanvasContent();
+
+    const updateTextProperties = (obj: any) => {
+      if (obj && obj.type === "text") {
+        setTextProperties({
+          fontSize: obj.fontSize,
+          fontFamily: obj.fontFamily,
+          fontWeight: obj.fontWeight,
+          fontStyle: obj.fontStyle,
+          textDecoration: obj.textDecoration || "",
+          textAlign: obj.textAlign,
+          fill: obj.fill,
+          text: obj.text,
+        });
+      }
+    };
+
+    const handleSelectionCreated = (e: any) => {
+      setSelectedObject(e.selected[0]);
+      updateTextProperties(e.selected[0]);
+    };
+    const handleSelectionUpdated = (e: any) => {
+      setSelectedObject(e.selected[0]);
+      updateTextProperties(e.selected[0]);
+    };
+    const handleSelectionCleared = () => {
+      setSelectedObject(null);
+    };
+
+    fabricCanvas.on("selection:created", handleSelectionCreated);
+    fabricCanvas.on("selection:updated", handleSelectionUpdated);
+    fabricCanvas.on("selection:cleared", handleSelectionCleared);
+
+    setCanvas(fabricCanvas);
+
+    fabricCanvas.on("text:changed", (e: any) => {
+      const obj = e.target as fabric.Text & { binding?: string };
+      if (obj && obj.type === "text" && obj.binding) {
+        setFormData((prev) => ({
+          ...prev,
+          [obj.binding!]: obj.text || "",
+        }));
+      }
+    });
+
+    return () => {
+      fabricCanvas.dispose();
+      setCanvas(null);
+    };
+  }, [activeTemplateId, customUpload, design]);
+
+  const updateSelectedText = (property: string, value: string | number) => {
+    if (selectedObject && selectedObject.type === "text" && canvas) {
+      selectedObject.set(property, value);
+      canvas.renderAll();
+      setTextProperties((prev) => ({ ...prev, [property]: value as any }));
+
+      const bindingKey = (selectedObject as any).binding;
+      if (property === "text" && bindingKey) {
+        setFormData((prev) => ({
+          ...prev,
+          [bindingKey]: value as string,
+        }));
+      }
+    }
   };
 
-  const handleAddToCart = (e: FormEvent) => {
+  const addNewText = () => {
+    if (!canvas) return;
+
+    const textObj = new fabric.Text("New Text", {
+      left: 100,
+      top: 100,
+      fontSize: 16,
+      fontFamily: "serif",
+      fill: "#000000",
+    });
+
+    canvas.add(textObj);
+    canvas.setActiveObject(textObj);
+    canvas.renderAll();
+  };
+
+  const deleteSelected = () => {
+    if (selectedObject && canvas) {
+      canvas.remove(selectedObject);
+      canvas.renderAll();
+    }
+  };
+
+  const downloadDesign = () => {
+    if (!canvas) return;
+
+    const imageSrc = canvas.toDataURL({
+      multiplier: 1,
+      format: "png",
+      quality: 1,
+    });
+
+    const a = document.createElement("a");
+    a.href = imageSrc;
+    a.download = `${design?.title.replace(/\s+/g, "_")}_invitation.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    const obj = boundObjectsRef.current[name];
+    if (obj && canvas) {
+      obj.set("text", value || "");
+      canvas.setActiveObject(obj);
+      canvas.renderAll();
+
+      setSelectedObject(obj);
+      setTextProperties((prev) => ({
+        ...prev,
+        text: value || "",
+      }));
+    }
+  };
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (!user) {
       navigate("/login");
       return;
     }
 
-    
+    if (!canvas || !design) return;
 
-    alert("Added to cart!");
+    const canvasData = canvas.toJSON();
+    const designData = {
+      template: design,
+      formData,
+      canvasData,
+      preview: canvas.toDataURL(),
+    };
+
+    console.log("🛒 Added to cart:", designData);
+    alert("✅ Design added to cart successfully!");
     navigate("/cart");
   };
+
+  if (!design) {
+    return (
+      <>
+        <Header />
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-lg text-gray-600">Design not found</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
       <Header />
 
-      <section className="bg-[#f6f4ef] px-6 py-16 min-h-screen font-serif">
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md">
-          <div className="flex flex-col items-center text-center mb-6">
-            <img
-              src={theme.image}
-              alt={theme.title}
-              className="w-48 h-48 object-cover rounded-xl shadow"
-            />
-            <h2 className="text-3xl font-bold text-[#3e2f22] mt-4">{theme.title}</h2>
-            <p className="text-gray-600 mt-2">
-              Customize your baby shower invitation with the details below.
+      <div className="bg-[#f6f4ef] min-h-screen">
+        <div className="text-center py-8">
+          <h1 className="text-3xl font-bold text-[#3e2f22]">
+            Customize: {design.title}
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Design the perfect baby shower invitation
+          </p>
+        </div>
+
+        {loading ? (
+          <p className="text-center text-gray-500">Checking login status...</p>
+        ) : !user ? (
+          <div className="text-center py-16">
+            <p className="text-lg text-gray-700 mb-4">
+              Please <span className="font-semibold">login/signup</span> to
+              customize and add this design to the cart.
             </p>
+            <Link
+              to="/login"
+              className="inline-block px-6 py-2 bg-[#5D4037] text-white rounded-full hover:bg-[#3e2f22] transition-all"
+            >
+              Login / Signup
+            </Link>
           </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-6 px-6 pb-16">
+            <div className="lg:w-1/4 bg-white rounded-lg p-6 shadow-md h-fit">
+              <h3 className="text-lg font-semibold mb-4 text-[#3e2f22]">
+                Baby Shower Details
+              </h3>
 
-          {loading ? (
-            <p className="text-center text-gray-500">Checking login status…</p>
-          ) : !user ? (
-            <div className="text-center">
-              <p className="text-lg text-gray-700 mb-4">
-                Please <span className="font-semibold">login/signup</span> to add this theme to your cart.
-              </p>
-              <Link
-                to="/login"
-                className="inline-block px-6 py-2 bg-[#5D4037] text-white rounded-full hover:bg-[#3e2f22] transition-all"
-              >
-                Login / Signup
-              </Link>
-            </div>
-          ) : (
-            <form className="space-y-5" onSubmit={handleAddToCart}>
-              <div>
-                <label className="block text-sm font-medium">Parent(s)-to-be *</label>
-                <input
-                  type="text"
-                  name="parentsToBe"
-                  value={formData.parentsToBe}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder='e.g., "Ananya & Rohan"'
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-4 mb-6">
                 <div>
-                  <label className="block text-sm font-medium">Date *</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Parent(s)-to-be
+                  </label>
+                  <input
+                    type="text"
+                    name="parentsToBe"
+                    value={formData.parentsToBe}
+                    onChange={handleFormChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                    placeholder="e.g., Ananya & Rohan"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Date</label>
                   <input
                     type="date"
                     name="date"
                     value={formData.date}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                    required
+                    onChange={handleFormChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium">Time *</label>
+                  <label className="block text-sm font-medium mb-1">Time</label>
                   <input
                     type="time"
                     name="time"
                     value={formData.time}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                    required
+                    onChange={handleFormChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Venue</label>
+                  <input
+                    type="text"
+                    name="venue"
+                    value={formData.venue}
+                    onChange={handleFormChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                    placeholder="Enter venue"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    RSVP Contact
+                  </label>
+                  <input
+                    type="text"
+                    name="rsvp"
+                    value={formData.rsvp}
+                    onChange={handleFormChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                    placeholder="Enter contact"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium">Venue *</label>
-                <input
-                  type="text"
-                  name="venue"
-                  value={formData.venue}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder="Event address / location"
-                  required
-                />
+              {selectedObject && selectedObject.type === "text" && (
+                <>
+                  <hr className="my-4" />
+                  <h4 className="text-md font-semibold mb-3 text-[#3e2f22]">
+                    Text Editor
+                  </h4>
+
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Text Content
+                      </label>
+                      <textarea
+                        value={textProperties.text}
+                        onChange={(e) =>
+                          updateSelectedText("text", e.target.value)
+                        }
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-sm font-medium mb-1">
+                          Font Size
+                        </label>
+                        <input
+                          type="number"
+                          value={textProperties.fontSize}
+                          onChange={(e) =>
+                            updateSelectedText(
+                              "fontSize",
+                              parseInt(e.target.value, 10)
+                            )
+                          }
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                          min={8}
+                          max={72}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-1">
+                          Color
+                        </label>
+                        <input
+                          type="color"
+                          value={textProperties.fill}
+                          onChange={(e) =>
+                            updateSelectedText("fill", e.target.value)
+                          }
+                          className="w-full border border-gray-300 h-10 rounded-lg"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Font Family
+                      </label>
+                      <select
+                        value={textProperties.fontFamily}
+                        onChange={(e) =>
+                          updateSelectedText("fontFamily", e.target.value)
+                        }
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                      >
+                        <option value="serif">Serif</option>
+                        <option value="sans-serif">Sans Serif</option>
+                        <option value="cursive">Cursive</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="monospace">Monospace</option>
+                      </select>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateSelectedText(
+                            "fontWeight",
+                            textProperties.fontWeight === "bold"
+                              ? "normal"
+                              : "bold"
+                          )
+                        }
+                        className={`flex-1 px-3 py-2 border rounded-lg text-sm flex items-center justify-center gap-1 ${
+                          textProperties.fontWeight === "bold"
+                            ? "bg-[#5D4037] text-white"
+                            : "bg-white text-gray-700"
+                        }`}
+                      >
+                        <Bold size={16} />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateSelectedText(
+                            "fontStyle",
+                            textProperties.fontStyle === "italic"
+                              ? "normal"
+                              : "italic"
+                          )
+                        }
+                        className={`flex-1 px-3 py-2 border rounded-lg text-sm flex items-center justify-center gap-1 ${
+                          textProperties.fontStyle === "italic"
+                            ? "bg-[#5D4037] text-white"
+                            : "bg-white text-gray-700"
+                        }`}
+                      >
+                        <Italic size={16} />
+                      </button>
+                    </div>
+
+                    <div className="flex gap-1">
+                      <button
+                        type="button"
+                        onClick={() => updateSelectedText("textAlign", "left")}
+                        className={`flex-1 px-2 py-2 border rounded-lg text-sm flex items-center justify-center ${
+                          textProperties.textAlign === "left"
+                            ? "bg-[#5D4037] text-white"
+                            : "bg-white text-gray-700"
+                        }`}
+                      >
+                        <AlignLeft size={16} />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => updateSelectedText("textAlign", "center")}
+                        className={`flex-1 px-2 py-2 border rounded-lg text-sm flex items-center justify-center ${
+                          textProperties.textAlign === "center"
+                            ? "bg-[#5D4037] text-white"
+                            : "bg-white text-gray-700"
+                        }`}
+                      >
+                        <AlignCenter size={16} />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => updateSelectedText("textAlign", "right")}
+                        className={`flex-1 px-2 py-2 border rounded-lg text-sm flex items-center justify-center ${
+                          textProperties.textAlign === "right"
+                            ? "bg-[#5D4037] text-white"
+                            : "bg-white text-gray-700"
+                        }`}
+                      >
+                        <AlignRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="lg:w-1/2 bg-white rounded-lg p-6 shadow-md">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-[#3e2f22]">
+                  Design Canvas
+                </h3>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={addNewText}
+                    className="px-3 py-2 bg-[#5D4037] text-white rounded-lg text-sm flex items-center gap-1 hover:bg-[#3e2f22] transition-all"
+                  >
+                    <Plus size={16} />
+                    Add Text
+                  </button>
+
+                  <button
+                    onClick={deleteSelected}
+                    disabled={!selectedObject}
+                    className="px-3 py-2 bg-red-600 text-white rounded-lg text-sm flex items-center gap-1 hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+
+                  <button
+                    onClick={downloadDesign}
+                    className="px-3 py-2 bg-green-600 text-white rounded-lg text-sm flex items-center gap-1 hover:bg-green-700 transition-all"
+                  >
+                    <Download size={16} />
+                  </button>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium">RSVP Contact *</label>
-                <input
-                  type="text"
-                  name="rsvp"
-                  value={formData.rsvp}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder="Phone or email"
-                  required
-                />
+              <div className="flex justify-center">
+                <div className="border border-gray-300 rounded-lg overflow-hidden">
+                  <canvas ref={canvasRef} />
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:w-1/4 bg-white rounded-lg p-6 shadow-md h-fit">
+              <h3 className="text-lg font-semibold mb-4 text-[#3e2f22]">
+                Other Templates
+              </h3>
+
+              <div className="space-y-4">
+                {Object.entries(babyShowerDesigns).map(([templateId, template]) => (
+                  <button
+                    key={templateId}
+                    onClick={() => setActiveTemplateId(templateId)}
+                    className={`block w-full border-2 rounded-lg p-3 transition-all text-left ${
+                      templateId === activeTemplateId
+                        ? "border-[#5D4037] bg-[#5D4037]/10"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                  >
+                    <img
+                      src={template.image || ""}
+                      alt={template.title}
+                      className="w-full h-24 object-cover rounded-lg mb-2"
+                    />
+                    <h4 className="text-sm font-medium text-center">
+                      {template.title}
+                    </h4>
+                  </button>
+                ))}
+
+                <label className="mb-10 p-2 border rounded cursor-pointer border-gray-300">
+                  Upload
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          if (typeof reader.result === "string") {
+                            setCustomUpload(reader.result);
+                            setActiveTemplateId("upload");
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                </label>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium">Theme / Color Palette (optional)</label>
-                <input
-                  type="text"
-                  name="themeColors"
-                  value={formData.themeColors}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder='e.g., "Pastels, Clouds & Stars"'
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Hosted By (optional)</label>
-                <input
-                  type="text"
-                  name="hostedBy"
-                  value={formData.hostedBy}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder="Organizer’s name(s)"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Special Notes (optional)</label>
+              <div className="mt-8 pt-6 border-t border-gray-200">
                 <textarea
-                  rows={3}
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                  placeholder="Dress code, parking info, surprises, etc."
+                  name="extraNotes"
+                  value={formData.extraNotes}
+                  onChange={handleFormChange}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                  rows={4}
+                  placeholder="Additional notes or customization requests..."
                 />
-              </div>
 
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-[#5D4037] text-white rounded-full hover:bg-[#3e2f22] transition-all"
-              >
-                Add to Cart
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
+                <button
+                  onClick={handleAddToCart}
+                  className="w-full mt-4 px-4 py-3 bg-[#5D4037] text-white rounded-lg font-medium hover:bg-[#3e2f22] transition-all"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       <Footer />
     </>
