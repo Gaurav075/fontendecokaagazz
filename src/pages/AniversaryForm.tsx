@@ -40,7 +40,7 @@ const anniversaryDesigns: Record<
 > = {
   "1": {
     title: "Elegant Roses",
-    image: "/templates/anniversary1.png",
+    image: "/templates/aniversary1.png",
     template: {
       backgroundColor: "#fff5f7",
       elements: [
@@ -106,7 +106,7 @@ const anniversaryDesigns: Record<
   },
   "2": {
     title: "Silver Jubilee",
-    image: "/templates/anniversary2.png",
+    image: "/templates/aniversary2.png",
     template: {
       backgroundColor: "#f7f7f7",
       elements: [
@@ -172,7 +172,7 @@ const anniversaryDesigns: Record<
   },
   "3": {
     title: "Golden Celebration",
-    image: "/templates/anniversary3.png",
+    image: "/templates/aniversary3.png",
     template: {
       backgroundColor: "#fffaf0",
       elements: [
