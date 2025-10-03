@@ -46,25 +46,28 @@ const KaagazzPrint = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Marriage */}
-            <div className="bg-white border border-gray-200 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all">
-              <img
-                src="/marriage.jpg"
-                alt="Marriage"
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-5 space-y-3">
-                <h4 className="font-semibold text-lg">Marriage</h4>
-                <p className="text-sm text-gray-600">
-                  Timeless invitations for your special day, printed on exquisite,
-                  eco-friendly paper.
-                </p>
-                <Link to="/marriage">
-                  <button className="mt-2 px-4 py-2 bg-[#5D4037] text-white text-sm rounded-full hover:bg-[#3e2f22] transition-all">
-                    Explore Designs
-                  </button>
-                </Link>
-              </div>
-            </div>
+            {/* Marriage */}
+<div className="bg-white border border-gray-200 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all">
+  <img
+    src="/marriage.jpg"
+    alt="Marriage"
+    className="w-full h-48 object-cover"
+  />
+  <div className="p-5 space-y-3">
+    <h4 className="font-semibold text-lg">Marriage</h4>
+    <p className="text-sm text-gray-600">
+      Timeless invitations for your special day, printed on exquisite,
+      eco-friendly paper.
+    </p>
+    {/* THE FIX: Changed link to point directly to the first template */}
+    <Link to="/marriage">
+      <button className="mt-2 px-4 py-2 bg-[#5D4037] text-white text-sm rounded-full hover:bg-[#3e2f22] transition-all">
+        Explore Designs
+      </button>
+    </Link>
+  </div>
+</div>
+
 
             {/* Baby Shower */}
             <div className="bg-white border border-gray-200 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all">

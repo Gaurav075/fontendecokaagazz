@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PNG to Fabric JSON</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/6.0.0/fabric.min.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="400" height="600"></canvas>
+<script>
+  const canvas = new fabric.Canvas('canvas');
+
+  // Load your PNG
+  fabric.Image.fromURL('/templates/marriage1.png', function(img) {
+    // Scale & center
+    const scaleX = canvas.width / img.width;
+    const scaleY = canvas.height / img.height;
+    const scale = Math.min(scaleX, scaleY);
+
+    img.scale(scale);
+    img.set({
+      left: canvas.width / 2,
+      top: canvas.height / 2,
+      originX: 'center',
+      originY: 'center',
+      selectable: false
+    });
+    canvas.add(img);
+
+    // Add editable text (optional)
+    const text = new fabric.Textbox('[Bride Name] ❤️ [Groom Name]', {
+      left: canvas.width / 2,
+      top: 50,
+      originX: 'center',
+      originY: 'center',
+      fontSize: 24,
+      fill: '#000',
+      textAlign: 'center'
+    });
+    canvas.add(text);
+
+    canvas.renderAll();
+
+    // Export JSON
+    const json = canvas.toJSON();
+    console.log('Fabric JSON:', JSON.stringify(json, null, 2));
+
+    alert('Check console for Fabric JSON');
+  });
+</script>
+</body>
+</html>

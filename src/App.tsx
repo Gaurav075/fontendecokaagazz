@@ -37,7 +37,7 @@ import MarriageForm from "./pages/MarriageForm";
 import BabyShowerPrint from "./pages/BabyShowerPrint";
 import BabyShowerForm from "./pages/BabyShowerForm";
 import BirthdayPrint from "./pages/BirthdayPrint";
-import BirthdayForm from "./pages/BirthdayPrintForm";
+import BirthdayPrintForm from "./pages/BirthdayPrintForm";
 import AnniversaryPrint from "./pages/AniversaryPrint";
 import AnniversaryForm from "./pages/AniversaryForm";
 import PrintBookForm from "./pages/PrintBookForm";
@@ -76,14 +76,14 @@ const App = () => (
             <Route path="/community" element={<Community />} />
             <Route path="/sustainability" element={<Sustainability />} />
             <Route path="/KaagazzPrint" element={<KaagazzPrint />} />
-            <Route path="/marriage" element={<MarriagePrint />} />
-            <Route path="/marriage/:id" element={<MarriageForm />} />
-            <Route path="/babyshower" element={<BabyShowerPrint />} />
-            <Route path="/babyshower/:id" element={<BabyShowerForm />} />
-            <Route path="/birthday" element={<BirthdayPrint />} />
-            <Route path="/birthday/:id" element={<BirthdayForm />} />
-            <Route path="/anniversary" element={<AnniversaryPrint />} />
-            <Route path="/anniversary/:id" element={<AnniversaryForm />} />
+            <Route path="/marriage" element={<MarriageForm />} />
+
+            <Route path="/babyshower" element={<BabyShowerForm />} />
+            {/* <Route path="/babyshower/:id" element={<BabyShowerForm />} /> */}
+            <Route path="/birthday" element={<BirthdayPrintForm />} />
+            {/* <Route path="/birthday/:id" element={<BirthdayForm />} /> */}
+            <Route path="/anniversary" element={<AnniversaryForm />} />
+            {/* <Route path="/anniversary/:id" element={<AnniversaryForm />} /> */}
             <Route path="/printbook" element={<PrintBookForm />} />
             <Route path="/certificates" element={<CertificateForm />} />
             <Route path="/custom-print" element={<CustomPrintForm />} />
